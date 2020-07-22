@@ -1,16 +1,42 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, css } from "styled-components";
 import reset from "styled-reset";
 
-export const GlobalStyle = createGlobalStyle`
-${reset}
+const font = css`
+  @font-face {
+    font-family: "RIDIBatang";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_twelve@1.0/RIDIBatang.woff")
+      format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+`;
 
-* {
+export const GlobalStyle = createGlobalStyle`
+  ${reset};
+  ${font};
+
+  * {
     box-sizing: border-box;
-    font-size: 10px;
+    font-size: 16px;
+    font-family : "RIDIBatang";
   }
 
-html, body {
- font-size : 1.6rem;
-}
+  button {
+    background: inherit;
+    border: none;
+    box-shadow: none;
+    border-radius: 0;
+    padding: 0;
+    overflow: visible;
+    cursor: pointer;
+    outline : none;
+  }
 
+  input {
+    border : none;
+  }
+
+  .interval {
+    margin-bottom : 1.2rem;
+  }
 `;
