@@ -5,7 +5,7 @@ import sample_4 from "../assets/images/sample-4.jpg";
 
 export const introBooks = {
   iosBooks: {
-    title: "IOS 관련 추천 서적",
+    carouselTitle: "IOS 관련 추천 서적",
     bookList: [
       {
         bookTitle: "지금의 비행산업은 어떻게 형성됐나",
@@ -30,7 +30,7 @@ export const introBooks = {
     ],
   },
   frontEndBooks: {
-    title: "FE 관련 추천 서적",
+    carouselTitle: "FE 관련 추천 서적",
     bookList: [
       {
         bookTitle: "지금의 비행산업은 어떻게 형성됐나",
@@ -55,7 +55,7 @@ export const introBooks = {
     ],
   },
   backEndBooks: {
-    title: "BE 관련 추천 서적",
+    carouselTitle: "BE 관련 추천 서적",
     bookList: [
       {
         bookTitle: "지금의 비행산업은 어떻게 형성됐나",
@@ -80,7 +80,7 @@ export const introBooks = {
     ],
   },
   cultureBooks: {
-    title: "교양 관련 추천 서적",
+    carouselTitle: "교양 관련 추천 서적",
     bookList: [
       {
         bookTitle: "지금의 비행산업은 어떻게 형성됐나",
