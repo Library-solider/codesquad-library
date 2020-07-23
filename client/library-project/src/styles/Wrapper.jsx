@@ -22,6 +22,9 @@ export const Wrapper = styled.div`
   .carousel_item {
     padding: ${({ theme: { paddings } }) => paddings.small};
     .book_title {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       padding: ${({ theme: { paddings } }) => paddings.small};
       font-weight: bold;
       text-align: center;
