@@ -15,6 +15,7 @@ export const Wrapper = styled.div`
 
   .title {
     font-weight: bold;
+    margin: ${({ theme: { verticalInterval } }) => verticalInterval.base};
     font-size: ${({ theme: { fontSizes } }) => fontSizes.xxxl};
   }
 

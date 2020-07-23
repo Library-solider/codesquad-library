@@ -26,6 +26,10 @@ const interval = {
   xxl: calcRem(200),
 };
 
+const verticalInterval = {
+  base: `${calcRem(10)} 0 ${calcRem(10)} 0`,
+};
+
 const deviceSizes = {
   mobileS: "320px",
   mobileM: "375px",
@@ -57,6 +61,7 @@ const theme = {
   device,
   paddings,
   interval,
+  verticalInterval,
 };
 
 export default theme;
