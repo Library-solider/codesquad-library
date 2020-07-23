@@ -5,6 +5,7 @@ import theme from "./styles/theme";
 
 import Navbar from "./components/navbar/Navbar";
 import Search from "./components/search/Search";
+import IntroBooks from "./components/introBooks/IntroBooks";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <GlobalStyle />
         <Navbar />
         <Search />
+        <IntroBooks />
       </ThemeProvider>
     </div>
   );
