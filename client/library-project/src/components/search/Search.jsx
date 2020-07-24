@@ -3,7 +3,7 @@ import styled from "styled-components";
 import book from "../../assets/images/book-image.jpg";
 import { FiSearch } from "react-icons/fi";
 
-const MAIN_TITLE = "CODE SQUAD LIBEARY";
+const MAIN_TITLE = "📖CODESQUAD";
 const INTRODUCTION = "각 언어별 서적 및 다양한 종류의 서적이 준비돼 있습니다.";
 
 const Search = () => {
@@ -29,7 +29,6 @@ const Search = () => {
     </SearchWrapper>
   );
 };
-
 const SearchWrapper = styled.div`
   position: relative;
   width: 100vw;
@@ -60,6 +59,7 @@ const SearchInner = styled.div`
   .search_form {
     display: flex;
     width: 50vw;
+    margin-bottom: ${({ theme: { margins } }) => margins.base};
   }
 
   .search_btn {
@@ -78,7 +78,7 @@ const SearchInner = styled.div`
 
   .title {
     font-weight: 800;
-    margin-bottom: 10px;
+    margin-bottom: ${({ theme: { margins } }) => margins.base};
     font-size: ${({ theme }) => theme.fontSizes.titleSize};
   }
 `;
