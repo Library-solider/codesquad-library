@@ -34,6 +34,10 @@ export const GlobalStyle = createGlobalStyle`
 
   input {
     border : none;
+
+    :focus  {
+     outline : none;
+    }
   }
 
   .interval {
