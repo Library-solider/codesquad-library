@@ -25,6 +25,7 @@ const NavbarWrapper = styled.div`
   align-items: center;
   padding: ${({ theme }) => theme.paddings.xl};
   font-size: ${({ theme }) => theme.fontSizes.base};
+  background-color: ${({ theme: { colors } }) => colors.gray_1};
 `;
 
 const Logo = styled.div`
