@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useContext } from "react";
 
-import styled, { withTheme } from "styled-components";
+import styled, { ThemeContext } from "styled-components";
 import { Button } from "../../styles/Button";
 
-const Navbar = (props) => {
-  const { theme } = props;
+const Navbar = () => {
+  const themeContext = useContext(ThemeContext);
 
   return (
     <NavbarWrapper>
       <Logo></Logo>
-      <Button fillColor={theme.colors.green_1} textColor={theme.colors.white}>
+      <Button
+        fillColor={themeContext.colors.green_1}
+        textColor={themeContext.colors.white}
+      >
         Login
       </Button>
     </NavbarWrapper>
@@ -28,4 +31,4 @@ const Logo = styled.div`
   font-size: ${({ theme }) => theme.fontSizes.xl};
 `;
 
-export default withTheme(Navbar);
+export default Navbar;
