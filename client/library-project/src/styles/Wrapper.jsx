@@ -21,6 +21,7 @@ export const Wrapper = styled.div`
 
   .carousel_item {
     padding: ${({ theme: { paddings } }) => paddings.small};
+
     .book_title {
       overflow: hidden;
       text-overflow: ellipsis;
@@ -29,8 +30,19 @@ export const Wrapper = styled.div`
       font-weight: bold;
       text-align: center;
     }
+
+    .writer {
+      text-align: center;
+      color: ${({ theme: { colors } }) => colors.gray_2};
+    }
+
     img {
       width: inherit;
+      box-shadow: ${({ theme: { boxShadow } }) => boxShadow.boxShadow_1};
+      cursor: pointer;
+      :hover {
+        opacity: 0.7;
+      }
     }
   }
 `;
