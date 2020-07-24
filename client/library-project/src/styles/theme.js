@@ -28,6 +28,15 @@ const margins = {
   xxxl: calcRem(18),
 };
 
+const radius = {
+  xSmall: calcRem(4),
+  small: calcRem(6),
+  base: calcRem(8),
+  lg: calcRem(10),
+  xl: calcRem(12),
+  xxl: calcRem(14),
+};
+
 const interval = {
   base: calcRem(50),
   lg: calcRem(100),
@@ -53,6 +62,7 @@ const colors = {
   gray_1: "#222222",
   gray_2: "#767676",
   green_1: "#3cb46e",
+  blue: "#0366d6",
 };
 
 const device = {
@@ -78,6 +88,7 @@ const theme = {
   interval,
   verticalInterval,
   gradient,
+  radius,
 };
 
 export default theme;
