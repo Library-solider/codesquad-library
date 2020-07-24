@@ -13,7 +13,7 @@ const CAROUSEL_SETTINGS = {
   slidesToScroll: 1,
   responsive: [
     {
-      breakpoint: 768,
+      breakpoint: 769,
       settings: {
         slidesToShow: 3,
         slidesToScroll: 1,
@@ -41,6 +41,7 @@ const BookCarousel = (props) => {
       <div className="carousel_item">
         <img src={el.bookImage} alt="book cover" />
         <div className="book_title">{el.bookTitle}</div>
+        <div className="writer">{el.writer}</div>
       </div>
     );
   });
