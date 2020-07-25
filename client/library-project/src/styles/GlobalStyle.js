@@ -18,8 +18,8 @@ export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
     font-size: 16px;
-    font-family : "RIDIBatang";
   }
+
 
   button {
     background: inherit;
@@ -34,7 +34,13 @@ export const GlobalStyle = createGlobalStyle`
 
   input {
     border : none;
+
+    :focus  {
+     outline : none;
+    }
   }
+
+  a {color: #fff; text-decoration: none; outline: none}
 
   .interval {
     margin-bottom : 1.2rem;
