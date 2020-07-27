@@ -1,12 +1,6 @@
 spring:
   profiles:
     active: local
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude: env,beans
-        include: "*"
 
 ---
 spring:
