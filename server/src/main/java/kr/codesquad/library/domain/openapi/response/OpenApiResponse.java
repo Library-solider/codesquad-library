@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-public class OpenApiItemList {
+public class OpenApiResponse {
 
-    private final List<OpenApiResponseDto> item = new ArrayList<>();
+    private final List<OpenApiBookDataResponse> item = new ArrayList<>();
 }

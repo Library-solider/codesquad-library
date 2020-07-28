@@ -1,6 +1,6 @@
 package kr.codesquad.library.controller;
 
-import kr.codesquad.library.domain.openapi.response.OpenApiResponseDto;
+import kr.codesquad.library.domain.openapi.response.OpenApiBookDataResponse;
 import kr.codesquad.library.service.OpenApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -16,7 +16,7 @@ public class OpenApiController {
     private final OpenApiService openApiService;
 
     @GetMapping("/v1/books/{isbn}")
-    public ResponseEntity<OpenApiResponseDto> getBookData(@PathVariable String isbn) {
-        return new ResponseEntity<>(openApiService.requestBook(isbn), HttpStatus.OK);
+    public ResponseEntity<OpenApiBookDataResponse> getBookData(@PathVariable String isbn) {
+        return new ResponseEntity<>(openApiService.requestBookData(isbn), HttpStatus.OK);
     }
 }
