@@ -1,12 +1,6 @@
 spring:
   profiles:
     active: local
-management:
-  endpoints:
-    web:
-      exposure:
-        exclude: env,beans
-        include: "*"
 
 ---
 spring:
@@ -25,6 +19,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+
+interpark:
+  url: http://book.interpark.com/api/search.api
+  key: 3EC5D629CEC08F5BCA2D9A06828BEA9DFD97B235FE96531999FB084FFA68CBEA
+  output: json
+  queryType: isbn
 
 logging:
   level:
