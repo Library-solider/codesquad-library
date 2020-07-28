@@ -10,7 +10,7 @@ const Navbar = () => {
 
   return (
     <NavbarWrapper>
-      <Logo>
+      <Logo href="/">
         <img src={codesquad_logo} alt="codesquad logo" />
       </Logo>
       <Search />
@@ -40,7 +40,8 @@ const LoginButton = styled(Button)`
   order: 1;
 `;
 
-const Logo = styled.div`
+const Logo = styled.a`
+  cursor: pointer;
   img {
     width: 4.5rem;
     height: 3.5rem;
