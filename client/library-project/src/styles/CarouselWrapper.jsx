@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Wrapper = styled.div`
+export const CarouselWrapper = styled.div`
   width: 100vw;
   display: flex;
   align-items: center;
