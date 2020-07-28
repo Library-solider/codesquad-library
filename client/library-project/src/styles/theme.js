@@ -7,6 +7,7 @@ const fontSizes = {
   xl: calcRem(20),
   xxl: calcRem(22),
   xxxl: calcRem(24),
+  h3: calcRem(30),
   titleSize: calcRem(50),
 };
 
@@ -28,6 +29,14 @@ const margins = {
   xxxl: calcRem(18),
 };
 
+const lineHeight = {
+  base: calcRem(30),
+  lg: calcRem(36),
+  xl: calcRem(42),
+  xxl: calcRem(48),
+  xxxl: calcRem(54),
+};
+
 const radius = {
   xSmall: calcRem(4),
   small: calcRem(6),
@@ -46,6 +55,18 @@ const interval = {
 
 const verticalInterval = {
   base: `${calcRem(10)} 0 ${calcRem(10)} 0`,
+  lg: `${calcRem(12)} 0 ${calcRem(12)} 0`,
+  xl: `${calcRem(14)} 0 ${calcRem(14)} 0`,
+  xxl: `${calcRem(16)} 0 ${calcRem(16)} 0`,
+  xxxl: `${calcRem(18)} 0 ${calcRem(18)} 0`,
+};
+
+const horizontalInterval = {
+  base: `0 ${calcRem(10)} 0 ${calcRem(10)}`,
+  lg: `0 ${calcRem(12)} 0 ${calcRem(12)}`,
+  xl: `0 ${calcRem(14)} 0 ${calcRem(14)}`,
+  xxl: `0 ${calcRem(16)} 0 ${calcRem(16)}`,
+  xxxl: `0 ${calcRem(18)} 0 ${calcRem(18)}`,
 };
 
 const deviceSizes = {
@@ -91,6 +112,8 @@ const theme = {
   margins,
   interval,
   verticalInterval,
+  horizontalInterval,
+  lineHeight,
   gradient,
   radius,
   boxShadow,
