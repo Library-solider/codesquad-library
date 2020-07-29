@@ -17,6 +17,8 @@ public class Book {
     private Long id;
 
     private String title;
+
+    @Column(length = 2048)
     private String description;
     private String author;
     private String publisher;
@@ -24,7 +26,7 @@ public class Book {
     @Column(name = "publication_date")
     private LocalDate publicationDate;
 
-    @Column(name = "image_url")
+    @Column(name = "image_url", length = 512)
     private String imageUrl;
 
     private String isbn;
