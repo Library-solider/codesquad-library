@@ -1,5 +1,6 @@
 package kr.codesquad.library.domain.book;
 
+import kr.codesquad.library.domain.book.response.BooksResponse;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -37,8 +38,16 @@ public class Book {
     @Column(name = "recommend_count")
     private Integer recommendCount;
 
-    public void addImageAndDescription(String imageUrl, String description) {
-        this.imageUrl = imageUrl;
-        this.description = description;
+    public BooksResponse toResponse() {
+        return BooksResponse.builder()
+                .id(id)
+                .imageUrl(imageUrl)
+                .title(title)
+                .author(author)
+                .publisher(publisher)
+                .recommendCount(recommendCount)
+                .publicationDate(publicationDate)
+                .build();
     }
+
 }
