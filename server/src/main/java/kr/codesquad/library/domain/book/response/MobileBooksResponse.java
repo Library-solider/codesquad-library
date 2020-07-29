@@ -11,9 +11,9 @@ public class MobileBooksResponse {
 
     private final Long categoryId;
     private final String categoryTitle = MOBILE_BOOK;
-    private final List<BooksResponse> books;
+    private final List<BookResponse> books;
 
-    public MobileBooksResponse(Long categoryId, List<BooksResponse> books) {
+    public MobileBooksResponse(Long categoryId, List<BookResponse> books) {
         this.categoryId = categoryId;
         this.books = books;
     }

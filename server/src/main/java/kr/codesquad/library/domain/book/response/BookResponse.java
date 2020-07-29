@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDate;
 
 @Getter
-public class BooksResponse {
+public class BookResponse {
 
     private final Long id;
     private final String imageUrl;
@@ -17,8 +17,8 @@ public class BooksResponse {
     private final LocalDate publicationDate;
 
     @Builder
-    public BooksResponse(Long id, String imageUrl, String author, String title, String publisher,
-                         int recommendCount, LocalDate publicationDate) {
+    public BookResponse(Long id, String imageUrl, String author, String title, String publisher,
+                        int recommendCount, LocalDate publicationDate) {
         this.id = id;
         this.imageUrl = imageUrl;
         this.title = title;
