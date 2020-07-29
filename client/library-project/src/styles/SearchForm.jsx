@@ -3,6 +3,7 @@ import styled from "styled-components";
 export const SearchForm = styled.div`
   display: flex;
   width: 50vw;
+  position: relative;
 
   input {
     width: inherit;
@@ -15,6 +16,16 @@ export const SearchForm = styled.div`
     display: flex;
     width: 50vw;
     margin-bottom: ${({ theme: { margins } }) => margins.base};
+  }
+
+  .search_result {
+    position: absolute;
+    z-index: 2;
+    bottom: -100%;
+    width: 100%;
+    padding: ${({ theme: { paddings } }) => paddings.lg};
+    border-radius: ${({ theme: { radius } }) => radius.xSmall};
+    background-color: ${({ theme: { colors } }) => colors.white};
   }
 
   .search_btn {
