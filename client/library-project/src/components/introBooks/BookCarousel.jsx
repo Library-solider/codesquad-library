@@ -1,5 +1,5 @@
 import React from "react";
-import { Wrapper } from "../../styles/Wrapper";
+import { CarouselWrapper } from "../../styles/CarouselWrapper";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -47,12 +47,12 @@ const BookCarousel = (props) => {
   });
 
   return (
-    <Wrapper>
+    <CarouselWrapper>
       <div className="inner">
         <div className="title">{carouselTitle}</div>
         <Slider {...CAROUSEL_SETTINGS}>{carouselItems}</Slider>
       </div>
-    </Wrapper>
+    </CarouselWrapper>
   );
 };
 
