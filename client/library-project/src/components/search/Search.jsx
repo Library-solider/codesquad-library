@@ -9,7 +9,7 @@ const Search = () => {
       <button className="search_btn">
         <FiSearch />
       </button>
-      <div className="search_result"></div>
+      {/* <div className="search_result"></div> */}
     </SearchForm>
   );
 };
