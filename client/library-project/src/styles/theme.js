@@ -12,6 +12,7 @@ const fontSizes = {
 };
 
 const paddings = {
+  xs: calcRem(4),
   small: calcRem(8),
   base: calcRem(10),
   lg: calcRem(12),
@@ -30,6 +31,7 @@ const margins = {
 };
 
 const lineHeight = {
+  small: calcRem(24),
   base: calcRem(30),
   lg: calcRem(36),
   xl: calcRem(42),
