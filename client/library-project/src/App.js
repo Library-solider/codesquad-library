@@ -1,13 +1,17 @@
 import React from "react";
+import { Route, Switch } from "react-router-dom";
+
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/GlobalStyle";
 import theme from "./styles/theme";
 
+// Default Layout
 import Navbar from "./components/navbar/Navbar";
-import Search from "./components/search/Search";
-import IntroBooks from "./components/introBooks/IntroBooks";
 import CopyRight from "./components/copyRight/CopyRight";
-import Category from "./components/category/Category";
+
+// Route Component
+import IntroPage from "./page/IntroPage";
+import DetailBook from "./components/detailBook/DetailBook";
 
 const App = () => {
   return (
@@ -15,9 +19,10 @@ const App = () => {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Navbar />
-        <Search />
-        <Category />
-        <IntroBooks />
+        <Switch>
+          <Route path="/" component={IntroPage} exact="true" />
+          <Route path="/bookdetail/:id" component={DetailBook} />
+        </Switch>
         <CopyRight />
       </ThemeProvider>
     </div>
