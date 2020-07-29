@@ -20,6 +20,9 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 16px;
   }
 
+  body {
+    height: 100%;    
+  }
 
   button {
     background: inherit;
