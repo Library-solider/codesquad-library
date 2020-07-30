@@ -5,6 +5,8 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import BookItem from "../bookItem/BookItem";
+
 const CAROUSEL_SETTINGS = {
   dots: true,
   infinite: true,
@@ -38,11 +40,7 @@ const BookCarousel = (props) => {
 
   const carouselItems = bookList.map((el) => {
     return (
-      <div className="carousel_item">
-        <img src={el.bookImage} alt="book cover" />
-        <div className="book_title">{el.bookTitle}</div>
-        <div className="writer">{el.writer}</div>
-      </div>
+      <BookItem image={el.bookImage} title={el.bookTitle} author={el.writer} />
     );
   });
 
