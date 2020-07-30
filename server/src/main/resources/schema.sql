@@ -1,14 +1,14 @@
 DROP TABLE IF EXISTS preference;
 DROP TABLE IF EXISTS rental;
-DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS role;
+DROP TABLE IF EXISTS account;
 DROP TABLE IF EXISTS book;
 DROP TABLE IF EXISTS category;
 DROP TABLE IF EXISTS bookcase;
 
 CREATE TABLE role
 (
-    role_id SMALLINT AUTO_INCREMENT,
+    role_id BIGINT AUTO_INCREMENT,
     name    VARCHAR(64),
     PRIMARY KEY (role_id)
 );
@@ -18,14 +18,14 @@ CREATE TABLE account
     account_id   BIGINT AUTO_INCREMENT,
     name         VARCHAR(128) NOT NULL,
     github_token VARCHAR(256) NOT NULL,
-    role_id      SMALLINT,
+    role_id      BIGINT,
     PRIMARY KEY (account_id),
     FOREIGN KEY (role_id) REFERENCES role (role_id)
 );
 
 CREATE TABLE bookcase
 (
-    bookcase_id SMALLINT AUTO_INCREMENT,
+    bookcase_id BIGINT AUTO_INCREMENT,
     name        VARCHAR(64)  NOT NULL,
     location    VARCHAR(128) NOT NULL,
     PRIMARY KEY (bookcase_id)
@@ -33,9 +33,9 @@ CREATE TABLE bookcase
 
 CREATE TABLE category
 (
-    category_id SMALLINT AUTO_INCREMENT,
+    category_id BIGINT AUTO_INCREMENT,
     title       VARCHAR(128) NOT NULL,
-    bookcase_id SMALLINT,
+    bookcase_id BIGINT,
     PRIMARY KEY (category_id),
     FOREIGN KEY (bookcase_id) REFERENCES bookcase (bookcase_id)
 );
@@ -52,7 +52,7 @@ CREATE TABLE book
     isbn             VARCHAR(128),
     out_of_stock     BOOLEAN,
     recommend_count  INT DEFAULT 0,
-    category_id      SMALLINT,
+    category_id      BIGINT,
     PRIMARY KEY (book_id),
     FOREIGN KEY (category_id) REFERENCES category (category_id)
 );
