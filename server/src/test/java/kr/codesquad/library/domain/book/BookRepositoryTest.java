@@ -57,7 +57,7 @@ class BookRepositoryTest {
 
         books.save(book);
 
-        List<Book> MobileBooks = books.findTop6BookByCategoryId(1L);
+        List<Book> MobileBooks = books.findTop6bookByCategoryIdOrderByRecommendCountDesc(1L);
         assertThat(MobileBooks.get(0).getTitle()).isEqualTo(book.getTitle());
     }
 }

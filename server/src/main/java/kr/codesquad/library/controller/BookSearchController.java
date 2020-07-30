@@ -1,17 +1,26 @@
 package kr.codesquad.library.controller;
 
-import kr.codesquad.library.domain.book.response.MainBookResponse;
+import io.swagger.annotations.ApiOperation;
+import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.global.api.ApiResult;
-import org.springframework.http.ResponseEntity;
+import kr.codesquad.library.service.BookSearchService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
+import static kr.codesquad.library.global.api.ApiResult.OK;
+
+@RequiredArgsConstructor
 @RestController
 public class BookSearchController {
 
-    @GetMapping("/books/main")
-    public ResponseEntity<ApiResult<MainBookResponse>> getMainBooks() {
+    private final BookSearchService bookSearchService;
 
-        return null;
+    @GetMapping("/books/main")
+    public ApiResult<List<BooksByCategoryResponse>> getMainBooks() {
+
+        return OK(bookSearchService.findMainBooks());
     }
 }

@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    List<Book> findTop6BookByCategoryId(Long categoryId);
+    List<Book> findTop6bookByCategoryIdOrderByRecommendCountDesc(Long categoryId);
 }

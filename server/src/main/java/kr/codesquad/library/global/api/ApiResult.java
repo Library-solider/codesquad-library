@@ -14,20 +14,20 @@ public class ApiResult<T> {
 
     private final HttpStatus statusMessage;
 
-    private final T response;
+    private final T data;
 
     private final ApiError error;
 
-    private ApiResult(boolean status, int statusCode, HttpStatus statusMessage, T response, ApiError error) {
+    private ApiResult(boolean status, int statusCode, HttpStatus statusMessage, T data, ApiError error) {
         this.status = status;
         this.statusCode = statusCode;
         this.statusMessage = statusMessage;
-        this.response = response;
+        this.data = data;
         this.error = error;
     }
 
-    public static <T> ApiResult<T> OK(T response) {
-        return new ApiResult<>(true, HttpStatus.OK.value(), HttpStatus.OK, response, null);
+    public static <T> ApiResult<T> OK(T data) {
+        return new ApiResult<>(true, HttpStatus.OK.value(), HttpStatus.OK, data, null);
     }
 
 //    public static ApiResult ERROR(Exception exception, HttpStatus status) {
