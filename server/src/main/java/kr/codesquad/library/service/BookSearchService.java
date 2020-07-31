@@ -41,7 +41,7 @@ public class BookSearchService {
 
     @Transactional(readOnly = true)
     public List<BookResponse> findTop6BooksByCategory(Long id) {
-        List<Book> findBookByCategory = bookRepository.findTop6ByCategoryIdOrderByRecommendCountDesc(id);
+        List<Book> findBookByCategory = bookRepository.findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(id);
         return findBookByCategory.stream().map(Book::toResponse).collect(Collectors.toList());
     }
 
