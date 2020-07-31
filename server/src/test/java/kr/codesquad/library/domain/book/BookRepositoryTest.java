@@ -8,6 +8,8 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.TestPropertySource;
 
 import javax.transaction.Transactional;
@@ -64,5 +66,19 @@ class BookRepositoryTest {
 
         List<Book> MobileBooks = books.findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(1L);
         assertThat(MobileBooks.get(0).getTitle()).isEqualTo(book.getTitle());
+    }
+
+    @CsvSource({"0, 20, 1"})
+    @ParameterizedTest
+    public void 첫번째_카테고리페이지가져오기(int page, int size, Long categoryId) {
+
+        PageRequest pageRequest = PageRequest.of(page, size);
+
+        Page<Book> page1 = books.findByCategoryIdOrderByPublicationDateDesc(categoryId, pageRequest);
+
+        assertThat(page1.getTotalElements()).isEqualTo(39);
+        assertThat(page1.getTotalPages()).isEqualTo(2);
+        assertThat(page1.getNumber()).isEqualTo(page);
+        assertThat(page1.getSize()).isEqualTo(size);
     }
 }
