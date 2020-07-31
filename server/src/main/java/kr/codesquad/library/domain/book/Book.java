@@ -5,12 +5,14 @@ import kr.codesquad.library.domain.category.Category;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
 import static javax.persistence.FetchType.*;
 
+@ToString
 @NoArgsConstructor
 @Getter
 @Entity

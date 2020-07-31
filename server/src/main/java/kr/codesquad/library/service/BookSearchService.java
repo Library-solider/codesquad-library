@@ -6,12 +6,16 @@ import kr.codesquad.library.domain.book.response.BookResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.domain.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static kr.codesquad.library.domain.book.BookVO.PAGESIZE;
 
 @RequiredArgsConstructor
 @Service
@@ -30,19 +34,40 @@ public class BookSearchService {
     }
 
     @Transactional(readOnly = true)
-    public BooksByCategoryResponse findTop6BooksAndCategoryById(Long id) {
+    public BooksByCategoryResponse findTop6BooksAndCategoryById(Long categoryId) {
         return BooksByCategoryResponse.builder()
-                .categoryId(id)
-                .categoryTitle(categoryRepository.findById(id).orElseThrow(()
-                        -> new IllegalStateException(" 해당하는 카테고리는 없습니다.")).getTitle())
-                .books(findTop6BooksByCategory(id))
+                .categoryId(categoryId)
+                .categoryTitle(categoryRepository.findById(categoryId).orElseThrow(()
+                        -> new IllegalStateException("해당하는 " + categoryId + "의 카테고리는 없습니다.")).getTitle())
+                .bookCount(bookRepository.countByCategoryId(categoryId))
+                .books(findTop6BooksByCategory(categoryId))
                 .build();
     }
 
     @Transactional(readOnly = true)
-    public List<BookResponse> findTop6BooksByCategory(Long id) {
-        List<Book> findBookByCategory = bookRepository.findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(id);
+    public List<BookResponse> findTop6BooksByCategory(Long categoryId) {
+        List<Book> findBookByCategory = bookRepository.
+                findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(categoryId);
         return findBookByCategory.stream().map(Book::toResponse).collect(Collectors.toList());
     }
 
+    @Transactional
+    public BooksByCategoryResponse findByCategory(Long categoryId, int page) {
+        return BooksByCategoryResponse.builder()
+                .categoryId(categoryId)
+                .categoryTitle(categoryRepository.findById(categoryId).orElseThrow(()
+                        -> new IllegalStateException("해당하는 " + categoryId + "의 카테고리는 없습니다.")).getTitle())
+                .bookCount(bookRepository.countByCategoryId(categoryId))
+                .books(findByCategoryIdBooks(categoryId, page))
+                .build();
+    }
+
+    @Transactional
+    public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
+        PageRequest pageRequest = PageRequest.of(page - 1, PAGESIZE);
+        Page<Book> bookPage = bookRepository.findByCategoryIdOrderByPublicationDateDesc(categoryId, pageRequest);
+        List<Book> bookList = bookPage.getContent();
+
+        return bookList.stream().map(Book::toResponse).collect(Collectors.toList());
+    }
 }
