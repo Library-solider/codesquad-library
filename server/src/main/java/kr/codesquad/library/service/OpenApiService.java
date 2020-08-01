@@ -20,7 +20,6 @@ public class OpenApiService {
     private final RestTemplate restTemplate;
     private final OpenApiParameter apiParameter;
 
-
     @Transactional(readOnly = true)
     public OpenApiBookDataResponse requestBookData(String isbn) {
         String requestUrl = UriComponentsBuilder.fromHttpUrl(apiParameter.getUrl())
