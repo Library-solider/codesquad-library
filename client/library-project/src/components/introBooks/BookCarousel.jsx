@@ -36,18 +36,23 @@ const CAROUSEL_SETTINGS = {
 };
 
 const BookCarousel = (props) => {
-  const { carouselTitle, bookList } = props;
+  const { categoryTitle, books } = props;
 
-  const carouselItems = bookList.map((el) => {
+  const carouselItems = books.map((el) => {
     return (
-      <BookItem image={el.bookImage} title={el.bookTitle} author={el.writer} />
+      <BookItem
+        key={el.id}
+        image={el.imageUrl}
+        title={el.title}
+        author={el.author}
+      />
     );
   });
 
   return (
     <CarouselWrapper>
       <div className="inner">
-        <div className="title">{carouselTitle}</div>
+        <div className="title">{categoryTitle}</div>
         <Slider {...CAROUSEL_SETTINGS}>{carouselItems}</Slider>
       </div>
     </CarouselWrapper>
