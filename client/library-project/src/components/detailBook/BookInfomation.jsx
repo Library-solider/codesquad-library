@@ -14,7 +14,7 @@ const BookInfomation = ({
   publicationDate,
 }) => {
   const themeContext = useContext(ThemeContext);
-  const [rentalClosed, setRentalClosed] = useState(true);
+  const [rentalClosed, setRentalClosed] = useState(false);
 
   const onClickRentalBtn = () => setRentalClosed(!rentalClosed);
 
