@@ -43,7 +43,11 @@ export const GlobalStyle = createGlobalStyle`
     }
   }
 
-  a {color: #fff; text-decoration: none; outline: none}
+  a {
+    color: ${({ theme: { colors } }) => colors.white};
+    text-decoration: none;
+    outline: none
+    }
 
   .interval {
     margin-bottom : 1.2rem;
