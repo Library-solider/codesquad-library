@@ -1,40 +1,24 @@
 import React from "react";
 import styled from "styled-components";
-import { FaMobileAlt } from "react-icons/fa";
-import { RiComputerLine } from "react-icons/ri";
-import { FiCpu } from "react-icons/fi";
-import { BsServer } from "react-icons/bs";
-import { GiBookshelf } from "react-icons/gi";
 
-const Category = () => {
+import { CATEGORY_LIST_DATA } from "../../constants/category";
+
+const Category = ({ fillColor, fontColor, isActive }) => {
+  const categoryList = CATEGORY_LIST_DATA.map((el) => {
+    return (
+      <CategoryLink
+        href={el.HREF}
+        isActive={isActive === el.CATEGORY_ID ? true : false}
+      >
+        <el.ICON />
+        <div>{el.CATEGORY_TITLE}</div>
+      </CategoryLink>
+    );
+  });
+
   return (
-    <CategoryWrapper>
-      <CategoryInner>
-        <CategoryLink href="/category/frontend">
-          <RiComputerLine />
-          <div>프론트엔드</div>
-        </CategoryLink>
-
-        <CategoryLink href="/category/backend">
-          <BsServer />
-          <div>백엔드</div>
-        </CategoryLink>
-
-        <CategoryLink href="/category/mobile">
-          <FaMobileAlt />
-          <div>모바일</div>
-        </CategoryLink>
-
-        <CategoryLink href="/category/computerscience">
-          <FiCpu />
-          <div>컴퓨터공학/IT</div>
-        </CategoryLink>
-
-        <CategoryLink href="/category/culturebook">
-          <GiBookshelf />
-          <div>교양서적</div>
-        </CategoryLink>
-      </CategoryInner>
+    <CategoryWrapper fillColor={fillColor} fontColor={fontColor}>
+      <CategoryInner>{categoryList}</CategoryInner>
     </CategoryWrapper>
   );
 };
@@ -43,12 +27,10 @@ const CategoryWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
-
-  svg {
-    width: 3rem;
-    height: 3rem;
-    color: ${({ theme: { colors } }) => colors.black};
-    margin-bottom: ${({ theme: { margins } }) => margins.small};
+  background-color: ${(props) => props.fillColor};
+  svg,
+  div {
+    color: ${(props) => props.fontColor};
   }
 `;
 
@@ -68,21 +50,24 @@ const CategoryLink = styled.a`
   font-weight: bold;
   text-align: center;
   padding: 1.875rem;
-  color: ${({ theme: { colors } }) => colors.black};
+
+  svg,
+  div {
+    color: ${(props) => props.isActive && props.theme.colors.blue};
+  }
 
   svg {
     width: 3rem;
     height: 3rem;
-    color: ${({ theme: { colors } }) => colors.black};
     margin-bottom: ${({ theme: { margins } }) => margins.small};
     transition: 0.3s;
   }
 
   :hover {
+    div,
     svg {
       color: ${({ theme: { colors } }) => colors.blue};
     }
-    color: ${({ theme: { colors } }) => colors.blue};
   }
 `;
 
