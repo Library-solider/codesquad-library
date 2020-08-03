@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import book from "../../assets/images/book-image.jpg";
 
-const MAIN_TITLE = "📖 CODESQUAD LIBRARY";
+const MAIN_TITLE = "CODESQUAD LIBRARY";
 const INTRODUCTION = "각 언어별 서적 및 다양한 종류의 서적이 준비돼 있습니다.";
 
 const Introduce = () => {
@@ -46,6 +46,7 @@ const IntroduceInner = styled.div`
   background: ${({ theme: { gradient } }) => gradient.gradient_1};
 
   .title {
+    font-style: italic;
     font-weight: 800;
     margin-bottom: ${({ theme: { margins } }) => margins.base};
     font-size: ${({ theme }) => theme.fontSizes.titleSize};
