@@ -1,7 +1,6 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
-import styled from "styled-components";
 import {
   PaginationWrapper,
   PaginationInner,
@@ -9,11 +8,13 @@ import {
   Page,
   MoveButton,
 } from "./paginationStyle";
-
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
-import { MIN_PAGINATION } from "../../utils/search";
+
+import { calcUpdatePagination } from "../../utils/query";
 
 const Pagination = ({ totalItem, itemPerPage, showPageCount, currentPage }) => {
+  const location = useHistory().location;
+
   const totalPage = Math.ceil(totalItem / itemPerPage);
   const totalPagination = Math.ceil(totalPage / showPageCount);
   const currentPaginationPosition = Math.ceil(currentPage / showPageCount);
@@ -27,9 +28,10 @@ const Pagination = ({ totalItem, itemPerPage, showPageCount, currentPage }) => {
         {isShowingPreviousButton && (
           <MoveButton>
             <NavLink
-              to={`/search?q=test-search&page=${
+              to={calcUpdatePagination(
+                location,
                 (currentPaginationPosition - 2) * showPageCount + 1
-              }`}
+              )}
             >
               <GoChevronLeft />
             </NavLink>
@@ -46,7 +48,7 @@ const Pagination = ({ totalItem, itemPerPage, showPageCount, currentPage }) => {
 
             return (
               <Page isActive={currentPage === moveToPage}>
-                <NavLink to={`/search?q=test-search&page=${moveToPage}`}>
+                <NavLink to={calcUpdatePagination(location, moveToPage)}>
                   {moveToPage}
                 </NavLink>
               </Page>
@@ -56,9 +58,10 @@ const Pagination = ({ totalItem, itemPerPage, showPageCount, currentPage }) => {
         {isShowingNextButton && (
           <MoveButton>
             <NavLink
-              to={`/search?q=test-search&page=${
+              to={calcUpdatePagination(
+                location,
                 currentPaginationPosition * showPageCount + 1
-              }`}
+              )}
             >
               <GoChevronRight />
             </NavLink>
