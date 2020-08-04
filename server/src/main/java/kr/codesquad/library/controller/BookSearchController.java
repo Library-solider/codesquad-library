@@ -6,6 +6,8 @@ import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.global.api.ApiResult;
 import kr.codesquad.library.service.BookSearchService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,18 +24,18 @@ public class BookSearchController {
 
     @ApiOperation(value = "메인페이지 API")
     @GetMapping("/main")
-    public ApiResult<List<BooksByCategoryResponse>> getMainBooks() {
+    public ResponseEntity<ApiResult<List<BooksByCategoryResponse>>> getMainBooks() {
 
-        return OK(bookSearchService.findMainBooks());
+        return new ResponseEntity<>(OK(bookSearchService.findMainBooks()), HttpStatus.OK);
     }
 
     @ApiOperation(value = "카테고리별 페이지가져오기")
     @GetMapping("/category/{categoryId}")
-    public ApiResult<BooksByCategoryResponse> getCategoryBooks(
+    public ResponseEntity<ApiResult<BooksByCategoryResponse>> getCategoryBooks(
             @PathVariable Long categoryId,
             @RequestParam(value = "page", defaultValue = "1") int page) {
 
-        return OK(bookSearchService.findByCategory(categoryId, page));
+        return new ResponseEntity<>(OK(bookSearchService.findByCategory(categoryId, page)), HttpStatus.OK);
     }
 
 }

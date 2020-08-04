@@ -60,7 +60,7 @@ class BookRepositoryTest {
                 .outOfStock(inStock)
                 .recommendCount(recommend)
                 .build();
-        book.setCategory(mobile);
+        book.setCategoryToTest(mobile);
 
         books.save(book);
 

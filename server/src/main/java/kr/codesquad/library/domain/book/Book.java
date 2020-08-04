@@ -1,6 +1,5 @@
 package kr.codesquad.library.domain.book;
 
-import kr.codesquad.library.domain.book.response.BookResponse;
 import kr.codesquad.library.domain.category.Category;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,9 +9,8 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.time.LocalDate;
 
-import static javax.persistence.FetchType.*;
+import static javax.persistence.FetchType.LAZY;
 
-@ToString
 @NoArgsConstructor
 @Getter
 @Entity
@@ -39,10 +37,10 @@ public class Book {
     private String isbn;
 
     @Column(name = "out_of_stock")
-    private Boolean outOfStock;
+    private boolean outOfStock;
 
     @Column(name = "recommend_count")
-    private Integer recommendCount;
+    private int recommendCount;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "category_id")
@@ -50,7 +48,7 @@ public class Book {
 
     @Builder
     private Book(Long id, String title, String description, String author, String publisher,
-                 LocalDate publicationDate, String imageUrl, String isbn, Boolean outOfStock, Integer recommendCount) {
+                 LocalDate publicationDate, String imageUrl, String isbn, boolean outOfStock, int recommendCount) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -63,20 +61,7 @@ public class Book {
         this.recommendCount = recommendCount;
     }
 
-    public void setCategory(Category category) {
+    public void setCategoryToTest(Category category) {
         this.category = category;
     }
-
-    public BookResponse toResponse() {
-        return BookResponse.builder()
-                .id(id)
-                .imageUrl(imageUrl)
-                .title(title)
-                .author(author)
-                .publisher(publisher)
-                .recommendCount(recommendCount)
-                .publicationDate(publicationDate)
-                .build();
-    }
-
 }

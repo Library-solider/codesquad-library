@@ -1,10 +1,13 @@
 package kr.codesquad.library.domain.book.response;
 
+import kr.codesquad.library.domain.book.Book;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
+@ToString
 @Getter
 public class BookResponse {
 
@@ -26,5 +29,17 @@ public class BookResponse {
         this.publisher = publisher;
         this.recommendCount = recommendCount;
         this.publicationDate = publicationDate;
+    }
+
+    public static BookResponse of(Book book) {
+        return BookResponse.builder()
+                .id(book.getId())
+                .imageUrl(book.getImageUrl())
+                .title(book.getTitle())
+                .author(book.getAuthor())
+                .publisher(book.getPublisher())
+                .publicationDate(book.getPublicationDate())
+                .recommendCount(book.getRecommendCount())
+                .build();
     }
 }

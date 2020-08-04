@@ -48,7 +48,7 @@ public class BookSearchService {
     public List<BookResponse> findTop6BooksByCategory(Long categoryId) {
         List<Book> findBookByCategory = bookRepository.
                 findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(categoryId);
-        return findBookByCategory.stream().map(Book::toResponse).collect(Collectors.toList());
+        return findBookByCategory.stream().map(BookResponse::of).collect(Collectors.toList());
     }
 
     @Transactional
@@ -68,6 +68,6 @@ public class BookSearchService {
         Page<Book> bookPage = bookRepository.findByCategoryIdOrderByPublicationDateDesc(categoryId, pageRequest);
         List<Book> bookList = bookPage.getContent();
 
-        return bookList.stream().map(Book::toResponse).collect(Collectors.toList());
+        return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
     }
 }
