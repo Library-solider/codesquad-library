@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static kr.codesquad.library.domain.book.BookVO.PAGESIZE;
+import static kr.codesquad.library.domain.book.BookVO.PAGE_SIZE;
 
 @RequiredArgsConstructor
 @Service
@@ -64,7 +64,7 @@ public class BookSearchService {
 
     @Transactional
     public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, PAGESIZE);
+        PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE);
         Page<Book> bookPage = bookRepository.findByCategoryIdOrderByPublicationDateDesc(categoryId, pageRequest);
         List<Book> bookList = bookPage.getContent();
 
