@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static kr.codesquad.library.domain.book.BookVO.PAGESIZE;
+import static kr.codesquad.library.domain.book.BookVO.PAGE_SIZE;
 
 @RequiredArgsConstructor
 @Service
@@ -48,7 +48,7 @@ public class BookSearchService {
     public List<BookResponse> findTop6BooksByCategory(Long categoryId) {
         List<Book> findBookByCategory = bookRepository.
                 findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(categoryId);
-        return findBookByCategory.stream().map(Book::toResponse).collect(Collectors.toList());
+        return findBookByCategory.stream().map(BookResponse::of).collect(Collectors.toList());
     }
 
     @Transactional
@@ -64,10 +64,10 @@ public class BookSearchService {
 
     @Transactional
     public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, PAGESIZE);
+        PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE);
         Page<Book> bookPage = bookRepository.findByCategoryIdOrderByPublicationDateDesc(categoryId, pageRequest);
         List<Book> bookList = bookPage.getContent();
 
-        return bookList.stream().map(Book::toResponse).collect(Collectors.toList());
+        return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
     }
 }
