@@ -10,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.TestPropertySource;
 
 import javax.transaction.Transactional;
@@ -68,13 +69,13 @@ class BookRepositoryTest {
         assertThat(MobileBooks.get(0).getTitle()).isEqualTo(book.getTitle());
     }
 
-    @CsvSource({"0, 20, 1"})
+    @CsvSource({"0, 20, 1, publicationDate"})
     @ParameterizedTest
-    public void 첫번째_카테고리페이지가져오기(int page, int size, Long categoryId) {
+    public void 첫번째_카테고리페이지가져오기(int page, int size, Long categoryId, String property) {
+        Sort sort = Sort.by(Sort.Direction.DESC, property);
+        PageRequest pageRequest = PageRequest.of(page, size, sort);
 
-        PageRequest pageRequest = PageRequest.of(page, size);
-
-        Page<Book> page1 = books.findByCategoryIdOrderByPublicationDateDesc(categoryId, pageRequest);
+        Page<Book> page1 = books.findByCategoryId(categoryId, pageRequest);
 
         assertThat(page1.getTotalElements()).isEqualTo(39);
         assertThat(page1.getTotalPages()).isEqualTo(2);

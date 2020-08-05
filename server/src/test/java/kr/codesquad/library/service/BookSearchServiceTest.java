@@ -19,15 +19,22 @@ class BookSearchServiceTest {
 
     @Test
     public void 각_카테고리_6개의_도서를_가져온다() {
+
+        //when
         List<BookResponse> books = bookSearchService.findTop6BooksByCategory(1L);
 
+        //then
         assertThat(books.size()).isEqualTo(6);
     }
 
     @CsvSource({"1, 1"})
     @ParameterizedTest
     public void 각_카테고리별_도서를_페이지씩_가져온다(Long categoryId, int page) {
+
+        //when
         List<BookResponse> books = bookSearchService.findByCategoryIdBooks(categoryId, page);
+
+        //then
         assertThat(books.size()).isEqualTo(20);
     }
 

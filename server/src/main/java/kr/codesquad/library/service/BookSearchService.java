@@ -4,10 +4,13 @@ import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.book.BookRepository;
 import kr.codesquad.library.domain.book.response.BookResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
+import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.category.CategoryRepository;
+import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,11 +38,12 @@ public class BookSearchService {
 
     @Transactional(readOnly = true)
     public BooksByCategoryResponse findTop6BooksAndCategoryById(Long categoryId) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+
         return BooksByCategoryResponse.builder()
                 .categoryId(categoryId)
-                .categoryTitle(categoryRepository.findById(categoryId).orElseThrow(()
-                        -> new IllegalStateException("해당하는 " + categoryId + "의 카테고리는 없습니다.")).getTitle())
-                .bookCount(bookRepository.countByCategoryId(categoryId))
+                .categoryTitle(category.getTitle())
+                .bookCount(category.getBooks().size())
                 .books(findTop6BooksByCategory(categoryId))
                 .build();
     }
@@ -53,19 +57,21 @@ public class BookSearchService {
 
     @Transactional
     public BooksByCategoryResponse findByCategory(Long categoryId, int page) {
+        Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+
         return BooksByCategoryResponse.builder()
                 .categoryId(categoryId)
-                .categoryTitle(categoryRepository.findById(categoryId).orElseThrow(()
-                        -> new IllegalStateException("해당하는 " + categoryId + "의 카테고리는 없습니다.")).getTitle())
-                .bookCount(bookRepository.countByCategoryId(categoryId))
+                .categoryTitle(category.getTitle())
+                .bookCount(category.getBooks().size())
                 .books(findByCategoryIdBooks(categoryId, page))
                 .build();
     }
 
     @Transactional
     public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE);
-        Page<Book> bookPage = bookRepository.findByCategoryIdOrderByPublicationDateDesc(categoryId, pageRequest);
+        Sort sort = Sort.by(Sort.Direction.DESC, "publicationDate");
+        PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE, sort);
+        Page<Book> bookPage = bookRepository.findByCategoryId(categoryId, pageRequest);
         List<Book> bookList = bookPage.getContent();
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());

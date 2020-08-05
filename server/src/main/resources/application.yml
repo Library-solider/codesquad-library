@@ -29,10 +29,4 @@ interpark:
 logging:
   level:
     web: debug
-    com.codesquad.issue: debug
-    org:
-      hibernate:
-        SQL: debug
-        type:
-          descriptor:
-            sql: trace
+    kr.codesquad.library: debug
