@@ -15,7 +15,8 @@ public enum ErrorCode {
     HANDLE_ACCESS_DENIED(403, "C006", "접근이 거부되었습니다."),
 
     // BookSearch
-    CATEGORY_NOT_FOUND(404, "B001", "해당 카테고리는 존재하지 않습니다."),
+    CATEGORY_NOT_FOUND(404, "B001", "해당 카테고리는 없습니다."),
+    BOOK_NOT_FOUND(404, "B002", "해당 도서는 없습니다."),
 
 
     ;
