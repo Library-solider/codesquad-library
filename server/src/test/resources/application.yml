@@ -17,7 +17,7 @@ spring:
 logging:
   level:
     web: debug
-    com.codesquad.issue: debug
+    kr.codesquad.library: debug
     org:
       hibernate:
         SQL: debug
