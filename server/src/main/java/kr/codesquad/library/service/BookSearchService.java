@@ -5,7 +5,7 @@ import kr.codesquad.library.domain.book.BookRepository;
 import kr.codesquad.library.domain.book.response.BookResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.domain.category.CategoryRepository;
-import kr.codesquad.library.global.error.exception.CategoryNotFoundException;
+import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

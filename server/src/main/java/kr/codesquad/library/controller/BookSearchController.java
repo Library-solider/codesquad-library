@@ -7,14 +7,17 @@ import kr.codesquad.library.global.api.ApiResult;
 import kr.codesquad.library.service.BookSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 import static kr.codesquad.library.global.api.ApiResult.OK;
 
 @RequiredArgsConstructor
 @Api
+@Validated
 @RestController
 @RequestMapping("/v1")
 public class BookSearchController {
@@ -32,7 +35,7 @@ public class BookSearchController {
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<ApiResult<BooksByCategoryResponse>> getCategoryBooks(
             @PathVariable Long categoryId,
-            @RequestParam(value = "page", defaultValue = "1") int page) {
+            @RequestParam(value = "page", defaultValue = "1") @Min(1) int page) {
 
         return ResponseEntity.ok(OK(bookSearchService.findByCategory(categoryId, page)));
     }
