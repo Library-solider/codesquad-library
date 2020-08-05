@@ -1,35 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export const useFetch = (url, updateData) => {
-  const initialFetch = async () => {
-    try {
-      const response = await fetch(url);
-      const initialData = await response.json();
-      updateData(initialData);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+export const useFetch = (url, dependence) => {
+  const [error, setError] = useState(false);
+  const [response, setResponse] = useState(null);
 
   useEffect(() => {
+    const initialFetch = async () => {
+      try {
+        const response = await fetch(url);
+        const initialData = await response.json();
+        setTimeout(() => {
+          setResponse(initialData);
+        }, 300);
+      } catch (error) {
+        setError(error);
+      }
+    };
     initialFetch();
-  }, []);
-};
+  }, [dependence && dependence]);
 
-export const useBookFetch = (requestUrl, updateData, searchQueries) => {
-  const fetchBookList = async () => {
-    try {
-      const response = await fetch(requestUrl);
-      const data = await response.json();
-
-      updateData(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-    fetchBookList();
-  }, [searchQueries.page]);
+  return { response, error };
 };
