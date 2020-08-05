@@ -5,6 +5,7 @@ import kr.codesquad.library.domain.book.BookRepository;
 import kr.codesquad.library.domain.book.response.BookResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.domain.category.CategoryRepository;
+import kr.codesquad.library.global.error.exception.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -37,8 +38,8 @@ public class BookSearchService {
     public BooksByCategoryResponse findTop6BooksAndCategoryById(Long categoryId) {
         return BooksByCategoryResponse.builder()
                 .categoryId(categoryId)
-                .categoryTitle(categoryRepository.findById(categoryId).orElseThrow(()
-                        -> new IllegalStateException("해당하는 " + categoryId + "의 카테고리는 없습니다.")).getTitle())
+                .categoryTitle(categoryRepository.findById(categoryId)
+                        .orElseThrow(CategoryNotFoundException::new).getTitle())
                 .bookCount(bookRepository.countByCategoryId(categoryId))
                 .books(findTop6BooksByCategory(categoryId))
                 .build();
@@ -55,8 +56,8 @@ public class BookSearchService {
     public BooksByCategoryResponse findByCategory(Long categoryId, int page) {
         return BooksByCategoryResponse.builder()
                 .categoryId(categoryId)
-                .categoryTitle(categoryRepository.findById(categoryId).orElseThrow(()
-                        -> new IllegalStateException("해당하는 " + categoryId + "의 카테고리는 없습니다.")).getTitle())
+                .categoryTitle(categoryRepository.findById(categoryId)
+                        .orElseThrow(CategoryNotFoundException::new).getTitle())
                 .bookCount(bookRepository.countByCategoryId(categoryId))
                 .books(findByCategoryIdBooks(categoryId, page))
                 .build();
