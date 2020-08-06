@@ -38,8 +38,8 @@ public class BookDetailResponse {
     }
 
     public static BookDetailResponse of(Book book, Rental rental) {
-        return BookDetailResponse.builder()
-                .booksInStock(book.isOutOfStock())
+        BookDetailResponseBuilder builder = BookDetailResponse.builder();
+                builder.booksInStock(book.isOutOfStock())
                 .title(book.getTitle())
                 .author(book.getAuthor())
                 .imageUrl(book.getImageUrl())
@@ -48,7 +48,11 @@ public class BookDetailResponse {
                 .publicationDate(book.getPublicationDate())
                 .isbn(book.getIsbn())
                 .recommendCount(book.getRecommendCount())
-                .bookBorrower(rental.getAccount().getName())
                 .build();
+        if (!book.isOutOfStock()) {
+            builder.bookBorrower(rental.getAccount().getName());
+            return builder.build();
+        }
+        return builder.build();
     }
 }

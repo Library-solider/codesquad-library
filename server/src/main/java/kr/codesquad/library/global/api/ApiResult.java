@@ -23,6 +23,6 @@ public class ApiResult<T> {
     }
 
     public static <T> ApiResult<T> OK(T data) {
-        return new ApiResult<>(true, 0, "OK", data);
+        return new ApiResult<>(true, 1, "OK", data);
     }
 }

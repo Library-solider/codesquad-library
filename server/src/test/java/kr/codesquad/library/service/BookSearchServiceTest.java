@@ -1,5 +1,6 @@
 package kr.codesquad.library.service;
 
+import kr.codesquad.library.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.domain.book.response.BookResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class BookSearchServiceTest {
@@ -38,4 +40,18 @@ class BookSearchServiceTest {
         assertThat(books.size()).isEqualTo(20);
     }
 
+    @CsvSource({"1"})
+    @ParameterizedTest
+    public void 빌려가지_않은_도서상세정보_가져오기(Long id) throws Exception {
+
+        //when
+        BookDetailResponse bookDetailResponse = bookSearchService.findByBookId(id);
+
+        //then
+        assertAll(
+                () -> assertThat(bookDetailResponse).isNotNull(),
+                () -> assertThat(bookDetailResponse.isBooksInStock()).isTrue(),
+                () -> assertThat(bookDetailResponse.getBookBorrower()).isNull()
+        );
+    }
 }

@@ -8,6 +8,7 @@ import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.category.CategoryRepository;
 import kr.codesquad.library.domain.rental.Rental;
+import kr.codesquad.library.domain.rental.firstclass.Rentals;
 import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
 import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -83,7 +84,8 @@ public class BookSearchService {
     @Transactional(readOnly = true)
     public BookDetailResponse findByBookId(Long bookId) {
         Book findBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
-        Rental rental = findBook.getRentals().get(0);
+        Rentals rentals = new Rentals(findBook.getRentals());
+        Rental rental = rentals.find(findBook);
 
         return BookDetailResponse.of(findBook, rental);
     }
