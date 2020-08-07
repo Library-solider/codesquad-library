@@ -46,7 +46,7 @@ class BookRepositoryTest {
     @CsvSource({"1, title, description, author, publisher, 2020-07-20, image, isbn123, true, 1"})
     @ParameterizedTest
     public void 첫번째카테고리_도서를_가져온다(Long id, String title, String description, String author, String publisher,
-                                 LocalDate localDate, String image, String isbn, Boolean inStock, Integer recommend) {
+                                 LocalDate localDate, String image, String isbn, boolean available, int recommend) {
 
         Category mobile = setup();
         Book book = Book.builder()
@@ -58,7 +58,7 @@ class BookRepositoryTest {
                 .publicationDate(localDate)
                 .imageUrl(image)
                 .isbn(isbn)
-                .outOfStock(inStock)
+                .available(available)
                 .recommendCount(recommend)
                 .build();
         book.setCategoryToTest(mobile);

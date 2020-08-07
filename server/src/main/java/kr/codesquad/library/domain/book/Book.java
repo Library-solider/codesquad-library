@@ -38,8 +38,8 @@ public class Book {
 
     private String isbn;
 
-    @Column(name = "out_of_stock")
-    private boolean outOfStock;
+    @Column(name = "available")
+    private boolean available;
 
     @Column(name = "recommend_count")
     private int recommendCount;
@@ -53,7 +53,7 @@ public class Book {
 
     @Builder
     private Book(Long id, String title, String description, String author, String publisher,
-                 LocalDate publicationDate, String imageUrl, String isbn, boolean outOfStock, int recommendCount) {
+                 LocalDate publicationDate, String imageUrl, String isbn, boolean available, int recommendCount) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -62,7 +62,7 @@ public class Book {
         this.publicationDate = publicationDate;
         this.imageUrl = imageUrl;
         this.isbn = isbn;
-        this.outOfStock = outOfStock;
+        this.available = available;
         this.recommendCount = recommendCount;
     }
 

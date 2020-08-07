@@ -10,7 +10,7 @@ import java.time.LocalDate;
 @Getter
 public class BookDetailResponse {
 
-    private final boolean booksInStock;
+    private final boolean available;
     private final String title;
     private final String author;
     private final String imageUrl;
@@ -22,10 +22,10 @@ public class BookDetailResponse {
     private final String bookBorrower;
 
     @Builder
-    public BookDetailResponse(boolean booksInStock, String title, String author,
+    public BookDetailResponse(boolean available, String title, String author,
                               String imageUrl, String description, String publisher,
                               LocalDate publicationDate, String isbn, int recommendCount, String bookBorrower) {
-        this.booksInStock = booksInStock;
+        this.available = available;
         this.title = title;
         this.author = author;
         this.imageUrl = imageUrl;
@@ -39,7 +39,7 @@ public class BookDetailResponse {
 
     public static BookDetailResponse of(Book book, Rental rental) {
         BookDetailResponseBuilder builder = BookDetailResponse.builder();
-                builder.booksInStock(book.isOutOfStock())
+                builder.available(book.isAvailable())
                 .title(book.getTitle())
                 .author(book.getAuthor())
                 .imageUrl(book.getImageUrl())
@@ -49,7 +49,7 @@ public class BookDetailResponse {
                 .isbn(book.getIsbn())
                 .recommendCount(book.getRecommendCount())
                 .build();
-        if (!book.isOutOfStock()) {
+        if (!book.isAvailable()) {
             builder.bookBorrower(rental.getAccount().getName());
             return builder.build();
         }

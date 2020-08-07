@@ -50,7 +50,7 @@ class BookSearchServiceTest {
         //then
         assertAll(
                 () -> assertThat(bookDetailResponse).isNotNull(),
-                () -> assertThat(bookDetailResponse.isBooksInStock()).isTrue(),
+                () -> assertThat(bookDetailResponse.isAvailable()).isTrue(),
                 () -> assertThat(bookDetailResponse.getBookBorrower()).isNull()
         );
     }
