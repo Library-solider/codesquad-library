@@ -24,7 +24,7 @@ public class BookSearchController {
 
     private final BookSearchService bookSearchService;
 
-    @ApiOperation(value = "메인페이지 API")
+    @ApiOperation(value = "메인페이지")
     @GetMapping("/main")
     public ResponseEntity<ApiResult<List<BooksByCategoryResponse>>> getMainBooks() {
 
@@ -38,6 +38,13 @@ public class BookSearchController {
             @RequestParam(value = "page", defaultValue = "1") @Min(1) int page) {
 
         return ResponseEntity.ok(OK(bookSearchService.findByCategory(categoryId, page)));
+    }
+
+    @ApiOperation(value = "도서 상세페이지")
+    @GetMapping("/books/{bookId}")
+    public ResponseEntity<ApiResult> getBookDetail(@PathVariable Long bookId) {
+
+        return ResponseEntity.ok(OK(bookSearchService.findByBookId(bookId)));
     }
 
 }

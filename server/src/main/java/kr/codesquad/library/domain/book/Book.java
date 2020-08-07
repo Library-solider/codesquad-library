@@ -1,13 +1,15 @@
 package kr.codesquad.library.domain.book;
 
 import kr.codesquad.library.domain.category.Category;
+import kr.codesquad.library.domain.rental.Rental;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -45,6 +47,9 @@ public class Book {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "book")
+    private List<Rental> rentals = new ArrayList<>();
 
     @Builder
     private Book(Long id, String title, String description, String author, String publisher,

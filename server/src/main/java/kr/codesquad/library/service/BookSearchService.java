@@ -2,10 +2,14 @@ package kr.codesquad.library.service;
 
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.book.BookRepository;
+import kr.codesquad.library.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.domain.book.response.BookResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.category.CategoryRepository;
+import kr.codesquad.library.domain.rental.Rental;
+import kr.codesquad.library.domain.rental.firstclass.Rentals;
+import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
 import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -55,7 +59,7 @@ public class BookSearchService {
         return findBookByCategory.stream().map(BookResponse::of).collect(Collectors.toList());
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public BooksByCategoryResponse findByCategory(Long categoryId, int page) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
@@ -67,7 +71,7 @@ public class BookSearchService {
                 .build();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
         Sort sort = Sort.by(Sort.Direction.DESC, "publicationDate");
         PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE, sort);
@@ -76,4 +80,14 @@ public class BookSearchService {
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public BookDetailResponse findByBookId(Long bookId) {
+        Book findBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        Rentals rentals = new Rentals(findBook.getRentals());
+        Rental rental = rentals.find(findBook);
+
+        return BookDetailResponse.of(findBook, rental);
+    }
+
 }
