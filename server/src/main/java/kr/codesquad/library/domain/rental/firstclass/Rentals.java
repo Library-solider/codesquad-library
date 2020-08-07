@@ -16,10 +16,10 @@ public class Rentals {
     }
 
     public Rental find(Book book) {
-        return rentals.isEmpty() ? null : rentals.get(drawByBook(book) - 1);
+        return rentals.isEmpty() ? null : rentals.get(drawByBook(book));
     }
 
     private int drawByBook(Book book) {
-        return book.getRentals().size();
+        return book.getRentals().size() - 1;
     }
 }
