@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -20,9 +19,6 @@ public class Rental {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rental_id")
     private Long id;
-
-    @Column(name = "rented_date_time")
-    private LocalDateTime rentedDateTime;
 
     @Column(name = "begin_date")
     private LocalDate beginDate;
