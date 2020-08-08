@@ -79,7 +79,7 @@ public class BookSearchService {
 
     public BookDetailResponse findByBookId(Long bookId) {
         Book findBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
-        Rentals rentals = new Rentals(findBook.getRentals());
+        Rentals rentals = Rentals.of(findBook.getRentals());
         Rental rental = rentals.find(findBook);
 
         return BookDetailResponse.of(findBook, rental);
