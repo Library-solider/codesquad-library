@@ -15,6 +15,10 @@ public class Rentals {
         this.rentals = rentals;
     }
 
+    public static Rentals of(List<Rental> rentals) {
+        return new Rentals(rentals);
+    }
+
     public Rental find(Book book) {
         return rentals.isEmpty() ? null : rentals.get(drawByBook(book));
     }

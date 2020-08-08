@@ -23,7 +23,7 @@ public class Account {
     @Column(name = "github_token", nullable = false)
     private String githubToken;
 
-    @Column(name = "library_role")
+    @Column(name = "library_role", nullable = false, columnDefinition = "varchar(64) default 'GUEST'")
     @Enumerated(STRING)
     private LibraryRole libraryRole;
 }

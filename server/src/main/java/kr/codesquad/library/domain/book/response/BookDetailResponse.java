@@ -49,10 +49,11 @@ public class BookDetailResponse {
                 .isbn(book.getIsbn())
                 .recommendCount(book.getRecommendCount())
                 .build();
-        if (!book.isAvailable()) {
-            builder.bookBorrower(rental.getAccount().getName());
+        if (book.isAvailable()) {
             return builder.build();
         }
+
+        builder.bookBorrower(rental.getAccountName());
         return builder.build();
     }
 }

@@ -33,4 +33,8 @@ public class Rental {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "account_id")
     private Account account;
+
+    public String getAccountName() {
+        return account.getName();
+    }
 }
