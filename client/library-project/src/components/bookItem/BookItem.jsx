@@ -17,6 +17,7 @@ const BookItemWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
+  justify-content: flex-end;
 
   .book_title {
     width: 100%;
@@ -34,6 +35,7 @@ const BookItemWrapper = styled.div`
   }
 
   img {
+    transition: 0.3s;
     width: 100%;
     box-shadow: ${({ theme: { boxShadow } }) => boxShadow.boxShadow_1};
     cursor: pointer;
