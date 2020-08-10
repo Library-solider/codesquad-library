@@ -15,12 +15,11 @@ import {
   PER_PAGE,
   SHOW_PAGE_COUNT_DESKTOP,
   SHOW_PAGE_COUNT_MOBILE,
-} from "../../utils/search";
+  MIN_PAGINATION,
+} from "../../constants/searchBook";
 
 import { createRequestUrl } from "../../utils/url";
 import { useFetch } from "../../hooks/useFetch";
-
-const DEFULT_CURRENT_PAGE = 1;
 
 const SearchBook = () => {
   // hook
@@ -31,7 +30,7 @@ const SearchBook = () => {
   const parsedSearchQueries = querystring.parse(history.location.search);
   const currentPage = parsedSearchQueries.page
     ? parsedSearchQueries.page
-    : DEFULT_CURRENT_PAGE;
+    : MIN_PAGINATION;
 
   // State
 
