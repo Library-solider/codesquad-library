@@ -1,9 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useIsMobile } from "../../hooks/useMediaQuery";
 import querystring from "query-string";
 
 import { ThemeContext } from "styled-components";
+import { Loading } from "../../styles/Loading";
 import { SearchBookWrapper, SearchBookInner } from "./searchBookStyle";
 
 import BookItem from "../bookItem/BookItem";
@@ -17,47 +18,46 @@ import {
 } from "../../utils/search";
 
 import { createRequestUrl } from "../../utils/url";
-import { useBookFetch } from "../../hooks/useFetch";
+import { useFetch } from "../../hooks/useFetch";
 
 const DEFULT_CURRENT_PAGE = 1;
-const INIT_DATA_STRUCTURE = {
-  data: {
-    bookCount: 1,
-    books: [
-      {
-        id: "",
-        imageUrl: "",
-        title: "",
-        author: "",
-      },
-    ],
-  },
-};
 
 const SearchBook = () => {
   // hook
   const history = useHistory();
 
-  // State
-  const [booksData, setBooksData] = useState(INIT_DATA_STRUCTURE);
-  const { bookCount, books, categoryId } = booksData.data;
-
   // Query String
-  const parsedSearchQueries = querystring.parse(history.location.search);
   const requestUrl = createRequestUrl(history.location);
+  const parsedSearchQueries = querystring.parse(history.location.search);
   const currentPage = parsedSearchQueries.page
     ? parsedSearchQueries.page
     : DEFULT_CURRENT_PAGE;
+
+  // State
+
+  const { response, error } = useFetch(requestUrl, parsedSearchQueries.page);
 
   // Style
   const themeContext = useContext(ThemeContext);
   const { colors } = themeContext;
 
-  const bookList = books.map((el) => {
-    return <BookItem image={el.imageUrl} title={el.title} author={el.author} />;
-  });
+  const isMobile = useIsMobile()
+    ? SHOW_PAGE_COUNT_MOBILE
+    : SHOW_PAGE_COUNT_DESKTOP;
 
-  useBookFetch(requestUrl, setBooksData, parsedSearchQueries);
+  if (!response)
+    return (
+      <Loading>
+        <img
+          src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+          alt=""
+        />
+      </Loading>
+    );
+  if (error) return <div>{error.message}</div>;
+
+  const { bookCount, books, categoryId } = response.data;
+  window.scrollTo(0, 0);
 
   return (
     <>
@@ -67,14 +67,16 @@ const SearchBook = () => {
         isActive={categoryId && categoryId}
       />
       <SearchBookWrapper>
-        <SearchBookInner>{bookList}</SearchBookInner>
+        <SearchBookInner>
+          {books.map((el) => (
+            <BookItem image={el.imageUrl} title={el.title} author={el.author} />
+          ))}
+        </SearchBookInner>
       </SearchBookWrapper>
       <Pagination
         totalItem={bookCount}
         itemPerPage={PER_PAGE}
-        showPageCount={
-          useIsMobile() ? SHOW_PAGE_COUNT_MOBILE : SHOW_PAGE_COUNT_DESKTOP
-        }
+        showPageCount={isMobile}
         currentPage={Math.max(currentPage, 1)}
       />
     </>

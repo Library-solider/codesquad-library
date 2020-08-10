@@ -1,31 +1,31 @@
 import React, { useState } from "react";
 
 import styled from "styled-components";
+import { Loading } from "../../styles/Loading";
 
 import BookCarousel from "./BookCarousel";
 import { useFetch } from "../../hooks/useFetch";
 
-const INIT_DATA_STRUCTURE = {
-  data: [
-    {
-      categoryId: "",
-      categoryTitle: "",
-      bookCount: "",
-      books: [{ id: "", imageUrl: "", title: "", author: "" }],
-    },
-  ],
-};
-
 const IntroBooks = () => {
-  const [introBookList, setIntroBookList] = useState(INIT_DATA_STRUCTURE);
+  const { response, error } = useFetch(process.env.REACT_APP_DB_HOST_MAIN);
 
-  const introBookLists = introBookList.data.map((el) => {
-    return <BookCarousel key={el.categoryId} {...el} />;
-  });
+  if (!response)
+    return (
+      <Loading>
+        <img
+          src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
+          alt=""
+        />
+      </Loading>
+    );
 
-  useFetch(process.env.REACT_APP_DB_HOST_MAIN, setIntroBookList);
-
-  return <IntroBooksWrapper>{introBookLists}</IntroBooksWrapper>;
+  return (
+    <IntroBooksWrapper>
+      {response.data.map((el) => {
+        return <BookCarousel key={el.categoryId} {...el} />;
+      })}
+    </IntroBooksWrapper>
+  );
 };
 
 const IntroBooksWrapper = styled.div`
