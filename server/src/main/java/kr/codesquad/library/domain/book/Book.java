@@ -1,13 +1,15 @@
 package kr.codesquad.library.domain.book;
 
 import kr.codesquad.library.domain.category.Category;
+import kr.codesquad.library.domain.rental.Rental;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -36,8 +38,8 @@ public class Book {
 
     private String isbn;
 
-    @Column(name = "out_of_stock")
-    private boolean outOfStock;
+    @Column(name = "available")
+    private boolean available;
 
     @Column(name = "recommend_count")
     private int recommendCount;
@@ -46,9 +48,12 @@ public class Book {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @OneToMany(mappedBy = "book")
+    private List<Rental> rentals = new ArrayList<>();
+
     @Builder
     private Book(Long id, String title, String description, String author, String publisher,
-                 LocalDate publicationDate, String imageUrl, String isbn, boolean outOfStock, int recommendCount) {
+                 LocalDate publicationDate, String imageUrl, String isbn, boolean available, int recommendCount) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -57,7 +62,7 @@ public class Book {
         this.publicationDate = publicationDate;
         this.imageUrl = imageUrl;
         this.isbn = isbn;
-        this.outOfStock = outOfStock;
+        this.available = available;
         this.recommendCount = recommendCount;
     }
 

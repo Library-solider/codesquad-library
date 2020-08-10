@@ -2,10 +2,14 @@ package kr.codesquad.library.service;
 
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.book.BookRepository;
+import kr.codesquad.library.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.domain.book.response.BookResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.category.CategoryRepository;
+import kr.codesquad.library.domain.rental.Rental;
+import kr.codesquad.library.domain.rental.firstclass.Rentals;
+import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
 import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,12 +26,12 @@ import static kr.codesquad.library.domain.book.BookVO.PAGE_SIZE;
 
 @RequiredArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class BookSearchService {
 
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
 
-    @Transactional(readOnly = true)
     public List<BooksByCategoryResponse> findMainBooks() {
         List<BooksByCategoryResponse> mainBooks = new ArrayList<>();
         for (int i = 0; i < categoryRepository.count(); i++) {
@@ -36,7 +40,6 @@ public class BookSearchService {
         return mainBooks;
     }
 
-    @Transactional(readOnly = true)
     public BooksByCategoryResponse findTop6BooksAndCategoryById(Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
@@ -48,14 +51,12 @@ public class BookSearchService {
                 .build();
     }
 
-    @Transactional(readOnly = true)
     public List<BookResponse> findTop6BooksByCategory(Long categoryId) {
         List<Book> findBookByCategory = bookRepository.
                 findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(categoryId);
         return findBookByCategory.stream().map(BookResponse::of).collect(Collectors.toList());
     }
 
-    @Transactional
     public BooksByCategoryResponse findByCategory(Long categoryId, int page) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
@@ -67,7 +68,6 @@ public class BookSearchService {
                 .build();
     }
 
-    @Transactional
     public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
         Sort sort = Sort.by(Sort.Direction.DESC, "publicationDate");
         PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE, sort);
@@ -76,4 +76,13 @@ public class BookSearchService {
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
     }
+
+    public BookDetailResponse findByBookId(Long bookId) {
+        Book findBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        Rentals rentals = Rentals.of(findBook.getRentals());
+        Rental rental = rentals.find(findBook);
+
+        return BookDetailResponse.of(findBook, rental);
+    }
+
 }

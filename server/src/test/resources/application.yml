@@ -7,7 +7,6 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
     open-in-view: false
-    show-sql: true
     hibernate:
       ddl-auto: validate
     properties:
