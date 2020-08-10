@@ -9,9 +9,7 @@ export const useFetch = (url, dependence) => {
       try {
         const response = await fetch(url);
         const initialData = await response.json();
-        setTimeout(() => {
-          setResponse(initialData);
-        }, 300);
+        setResponse(initialData);
       } catch (error) {
         setError(error);
       }
