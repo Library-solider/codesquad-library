@@ -4,6 +4,7 @@ export const SearchBookWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  margin-top: ${({ theme: { margins } }) => margins.xxxl};
 `;
 
 export const SearchBookInner = styled.div`
@@ -16,10 +17,10 @@ export const SearchBookInner = styled.div`
   }
 
   .book_item {
-    width: 25%;
+    width: 20%;
   }
 
-  @media ${({ theme: { device } }) => device.tablet} {
+  @media ${({ theme: { device } }) => device.tabletL} {
     .book_item {
       width: 33.3333%;
     }
