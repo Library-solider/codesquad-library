@@ -4,6 +4,7 @@ import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.book.BookRepository;
 import kr.codesquad.library.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.domain.book.response.BookResponse;
+import kr.codesquad.library.domain.book.response.BookSearchResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.category.CategoryRepository;
@@ -83,7 +84,15 @@ public class BookSearchService {
         return BookDetailResponse.of(findBook, rental);
     }
 
-    public List<BookResponse> searchBooks(String title, int page) {
+    public BookSearchResponse searchBooks(String title, int page) {
+        List<BookResponse> bookResponseList = searchBooksList(title, page);
+        return BookSearchResponse.builder()
+                .bookCount(bookResponseList.size())
+                .books(bookResponseList)
+                .build();
+    }
+
+    public List<BookResponse> searchBooksList(String title, int page) {
         Page<Book> bookPage = bookRepository.findByTitleContaining(title, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
 

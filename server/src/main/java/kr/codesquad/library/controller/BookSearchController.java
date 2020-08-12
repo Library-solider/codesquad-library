@@ -3,7 +3,7 @@ package kr.codesquad.library.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kr.codesquad.library.domain.book.response.BookDetailResponse;
-import kr.codesquad.library.domain.book.response.BookResponse;
+import kr.codesquad.library.domain.book.response.BookSearchResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.global.api.ApiResult;
 import kr.codesquad.library.service.BookSearchService;
@@ -53,9 +53,9 @@ public class BookSearchController {
 
     @ApiOperation(value = "도서 검색페이지")
     @GetMapping("/search")
-    public ResponseEntity<ApiResult<List<BookResponse>>> searchBooks
-            (@RequestParam(value = "q") String title,
-             @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) int page) {
+    public ResponseEntity<ApiResult<BookSearchResponse>> searchBooks(
+            @RequestParam(value = "q") String title,
+            @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) int page) {
 
         return ResponseEntity.ok(OK(bookSearchService.searchBooks(title, page)));
     }
