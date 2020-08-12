@@ -17,6 +17,7 @@ public enum ErrorCode {
     // BookSearch
     CATEGORY_NOT_FOUND(404, "B001", "해당 카테고리는 없습니다."),
     BOOK_NOT_FOUND(404, "B002", "해당 도서는 없습니다."),
+    NOT_PRESENT_PARAMETER(400, "B03", "q param이 필요합니다."),
 
 
     ;
