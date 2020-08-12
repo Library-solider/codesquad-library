@@ -69,9 +69,7 @@ public class BookSearchService {
     }
 
     public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "publicationDate");
-        PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE, sort);
-        Page<Book> bookPage = bookRepository.findByCategoryId(categoryId, pageRequest);
+        Page<Book> bookPage = bookRepository.findByCategoryId(categoryId, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
@@ -85,4 +83,15 @@ public class BookSearchService {
         return BookDetailResponse.of(findBook, rental);
     }
 
+    public List<BookResponse> searchBooks(String title, int page) {
+        Page<Book> bookPage = bookRepository.findByTitleContaining(title, getPageRequest(page));
+        List<Book> bookList = bookPage.getContent();
+
+        return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
+    }
+
+    private PageRequest getPageRequest(int page) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "publicationDate");
+        return PageRequest.of(page - 1, PAGE_SIZE, sort);
+    }
 }
