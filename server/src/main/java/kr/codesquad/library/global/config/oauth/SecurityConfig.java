@@ -17,9 +17,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/v1/main", "/v1/category/**", "/v1/search/**", "/v1/oauth/**").permitAll()
+                .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/v1/oauth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/books/**").hasRole(LibraryRole.USER.name())
+                .antMatchers(HttpMethod.POST, "/v1/books/**")
+                                            .hasAnyRole(LibraryRole.USER.name(), LibraryRole.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .logout()
