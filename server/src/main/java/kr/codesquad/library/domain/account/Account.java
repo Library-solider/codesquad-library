@@ -17,11 +17,11 @@ public class Account {
     @Column(name = "account_id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "github_token", nullable = false)
-    private String githubToken;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(name = "library_role", nullable = false, columnDefinition = "varchar(64) default 'GUEST'")
     @Enumerated(STRING)
