@@ -72,8 +72,7 @@ class BookRepositoryTest {
     @CsvSource({"0, 20, 1, publicationDate"})
     @ParameterizedTest
     public void 첫번째_카테고리페이지가져오기(int page, int size, Long categoryId, String property) {
-        Sort sort = Sort.by(Sort.Direction.DESC, property);
-        PageRequest pageRequest = PageRequest.of(page, size, sort);
+        PageRequest pageRequest = getPageRequest(page, size, property);
 
         Page<Book> page1 = books.findByCategoryId(categoryId, pageRequest);
 
@@ -81,5 +80,38 @@ class BookRepositoryTest {
         assertThat(page1.getTotalPages()).isEqualTo(2);
         assertThat(page1.getNumber()).isEqualTo(page);
         assertThat(page1.getSize()).isEqualTo(size);
+    }
+
+    @CsvSource({"0, 20, publicationDate, java"})
+    @ParameterizedTest
+    public void 도서검색_리스트가져오기(int page, int size, String property, String title) throws Exception {
+        //given
+        PageRequest pageRequest = getPageRequest(page, size, property);
+
+        //when
+        Page<Book> page1 = books.findByTitleContaining(title, pageRequest);
+        List<Book> bookList = page1.getContent();
+
+        //then
+        assertThat(bookList).isNotEmpty();
+    }
+
+    @CsvSource({"0, 20, publicationDate, 롯데"})
+    @ParameterizedTest
+    public void 검색_실패(int page, int size, String property, String title) throws Exception {
+        //given
+        PageRequest pageRequest = getPageRequest(page, size, property);
+
+        //when
+        Page<Book> page1 = books.findByTitleContaining(title, pageRequest);
+        List<Book> bookList = page1.getContent();
+
+        //then
+        assertThat(bookList).isEmpty();
+    }
+
+    private PageRequest getPageRequest(int page, int size, String property) {
+        Sort sort = Sort.by(Sort.Direction.DESC, property);
+        return PageRequest.of(page, size, sort);
     }
 }

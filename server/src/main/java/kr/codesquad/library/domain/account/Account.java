@@ -1,5 +1,6 @@
 package kr.codesquad.library.domain.account;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -17,13 +18,34 @@ public class Account {
     @Column(name = "account_id")
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private String name;
 
-    @Column(name = "github_token", nullable = false)
-    private String githubToken;
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Column(name = "library_role", nullable = false, columnDefinition = "varchar(64) default 'GUEST'")
     @Enumerated(STRING)
     private LibraryRole libraryRole;
+
+    @Builder
+    public Account(String name, String email, LibraryRole libraryRole) {
+        this.name = name;
+        this.email = email;
+        this.libraryRole = libraryRole;
+    }
+
+    public Account changeRole(LibraryRole libraryRole) {
+        this.libraryRole = libraryRole;
+        return this;
+    }
+
+    public Account update(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getRoleKey() {
+        return this.libraryRole.getKey();
+    }
 }

@@ -3,6 +3,7 @@ package kr.codesquad.library.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import kr.codesquad.library.domain.book.response.BookDetailResponse;
+import kr.codesquad.library.domain.book.response.BookSearchResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.global.api.ApiResult;
 import kr.codesquad.library.service.BookSearchService;
@@ -23,6 +24,8 @@ import static kr.codesquad.library.global.api.ApiResult.OK;
 @RequestMapping("/v1")
 public class BookSearchController {
 
+    private static final int PAGE_MINIMUM = 1;
+
     private final BookSearchService bookSearchService;
 
     @ApiOperation(value = "메인페이지")
@@ -36,7 +39,7 @@ public class BookSearchController {
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<ApiResult<BooksByCategoryResponse>> getCategoryBooks(
             @PathVariable Long categoryId,
-            @RequestParam(value = "page", defaultValue = "1") @Min(1) int page) {
+            @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) int page) {
 
         return ResponseEntity.ok(OK(bookSearchService.findByCategory(categoryId, page)));
     }
@@ -48,4 +51,12 @@ public class BookSearchController {
         return ResponseEntity.ok(OK(bookSearchService.findByBookId(bookId)));
     }
 
+    @ApiOperation(value = "도서 검색페이지")
+    @GetMapping("/search")
+    public ResponseEntity<ApiResult<BookSearchResponse>> searchBooks(
+            @RequestParam(value = "q") String title,
+            @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) int page) {
+
+        return ResponseEntity.ok(OK(bookSearchService.searchBooks(title, page)));
+    }
 }
