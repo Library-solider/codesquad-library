@@ -38,7 +38,6 @@ public class Book {
 
     private String isbn;
 
-    @Column(name = "available")
     private boolean available;
 
     @Column(name = "recommend_count")

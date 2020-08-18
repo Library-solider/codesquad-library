@@ -18,13 +18,13 @@ public class Account {
     @Column(name = "account_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
-    @Column(name = "library_role", nullable = false, columnDefinition = "varchar(64) default 'GUEST'")
+    @Column(name = "library_role", nullable = false)
     @Enumerated(STRING)
     private LibraryRole libraryRole;
 
@@ -35,12 +35,11 @@ public class Account {
         this.libraryRole = libraryRole;
     }
 
-    public Account changeRole(LibraryRole libraryRole) {
+    public void changeRole(LibraryRole libraryRole) {
         this.libraryRole = libraryRole;
-        return this;
     }
 
-    public Account update(String name) {
+    public Account updateName(String name) {
         this.name = name;
         return this;
     }

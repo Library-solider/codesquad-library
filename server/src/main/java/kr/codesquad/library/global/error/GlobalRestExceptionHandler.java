@@ -49,7 +49,7 @@ public class GlobalRestExceptionHandler {
     protected ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
             MissingServletRequestParameterException e) {
         log.error("handleMissingServletRequestParameterException", e);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.NOT_PRESENT_PARAMETER);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.PARAMETER_NOT_PRESENT);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
