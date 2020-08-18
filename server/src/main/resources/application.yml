@@ -18,6 +18,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: e475671da6e0d9156c91
+            client-secret: 3cc11749c4247bb0e46a05dbca3fe0f6f605e34f
+            scope: user
+
 
 interpark:
   url: http://book.interpark.com/api/search.api
@@ -34,6 +43,15 @@ logging:
 ---
 spring:
   profiles: prod
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${OAUTH_CLIENTID}
+            client-secret: ${OAUTH_SECRET}
+            scope: user
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ENC(8pvdAxQRgIuKhtBrCfJVzn8DSb1UelH14Lrej4lzH45axRUnbph6unUK8O96oSANhxEwd0vgXDhGKZHpLKG9gMYbeDV4r/VgfFjHlL6r69vu4j19H+SX6mUp9rokcTF7+H50DxsFJhU=)

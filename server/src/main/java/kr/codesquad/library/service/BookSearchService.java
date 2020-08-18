@@ -4,6 +4,7 @@ import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.book.BookRepository;
 import kr.codesquad.library.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.domain.book.response.BookResponse;
+import kr.codesquad.library.domain.book.response.BookSearchResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.category.CategoryRepository;
@@ -69,9 +70,7 @@ public class BookSearchService {
     }
 
     public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
-        Sort sort = Sort.by(Sort.Direction.DESC, "publicationDate");
-        PageRequest pageRequest = PageRequest.of(page - 1, PAGE_SIZE, sort);
-        Page<Book> bookPage = bookRepository.findByCategoryId(categoryId, pageRequest);
+        Page<Book> bookPage = bookRepository.findByCategoryId(categoryId, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
@@ -85,4 +84,23 @@ public class BookSearchService {
         return BookDetailResponse.of(findBook, rental);
     }
 
+    public BookSearchResponse searchBooks(String title, int page) {
+        List<BookResponse> bookResponseList = searchBooksList(title, page);
+        return BookSearchResponse.builder()
+                .bookCount(bookResponseList.size())
+                .books(bookResponseList)
+                .build();
+    }
+
+    public List<BookResponse> searchBooksList(String title, int page) {
+        Page<Book> bookPage = bookRepository.findByTitleContaining(title, getPageRequest(page));
+        List<Book> bookList = bookPage.getContent();
+
+        return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
+    }
+
+    private PageRequest getPageRequest(int page) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "publicationDate");
+        return PageRequest.of(page - 1, PAGE_SIZE, sort);
+    }
 }

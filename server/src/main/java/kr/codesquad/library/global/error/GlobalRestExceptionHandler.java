@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -41,6 +42,14 @@ public class GlobalRestExceptionHandler {
             HttpMessageNotReadableException e) {
         log.info("handleHttpMessageNotReadableException", e);
         final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE);
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    protected ResponseEntity<ErrorResponse> handleMissingServletRequestParameterException(
+            MissingServletRequestParameterException e) {
+        log.error("handleMissingServletRequestParameterException", e);
+        final ErrorResponse response = ErrorResponse.of(ErrorCode.NOT_PRESENT_PARAMETER);
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
