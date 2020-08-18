@@ -7,9 +7,9 @@ APP_NAME=library
 JAR_NAME=$(ls $REPOSITORY/build/libs/ | grep '.jar' | tail -n 1)
 JAR_PATH=$REPOSITORY/build/libs/$JAR_NAME
 
-CURRENT_PID=$(pgrep -f $APP_NAME)
+CURRENT_PID=$(pgrep -f JAR_PATH)
 
-if [ -z $CURRENT_PID ]
+if [[ -z "$CURRENT_PID" ]]
 then
   echo "> 종료할것 없음."
 else
