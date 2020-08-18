@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-REPOSITORY=/home/ubuntu/server
+REPOSITORY=/home/ubuntu/codesquad-library
 cd $REPOSITORY
 
 APP_NAME=library
