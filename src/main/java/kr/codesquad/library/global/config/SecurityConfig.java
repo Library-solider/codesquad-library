@@ -32,13 +32,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/books/**")
                 .hasAnyRole(LibraryRole.USER.name(), LibraryRole.ADMIN.name())
-                .anyRequest().authenticated()
-                .and()
-                .logout()
-                .logoutSuccessUrl("/");
+                .anyRequest().authenticated();
 
         http.oauth2Login()
-                .defaultSuccessUrl("/", true)
+                .defaultSuccessUrl("http://localhost:3000", true)
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
 
