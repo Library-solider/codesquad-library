@@ -61,7 +61,7 @@ spring:
     database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
     open-in-view: false
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
