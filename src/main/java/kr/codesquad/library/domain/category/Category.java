@@ -1,6 +1,7 @@
 package kr.codesquad.library.domain.category;
 
 import kr.codesquad.library.domain.book.Book;
+import kr.codesquad.library.domain.bookcase.Bookcase;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,10 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     List<Book> books = new ArrayList<>();
+
+    @ManyToOne
+    @JoinColumn(name = "bookcase_id")
+    private Bookcase bookcase;
 
     @Builder
     private Category(Long id, String title) {
