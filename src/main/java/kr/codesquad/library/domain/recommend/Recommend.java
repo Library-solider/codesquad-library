@@ -14,7 +14,8 @@ public class Recommend {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id;
+    @Column(name = "recommend_id")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "account_id")
