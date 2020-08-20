@@ -21,26 +21,31 @@ public class Account {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email")
     private String email;
+
+    @Column(name = "avatar_url")
+    private String avatarUrl;
 
     @Column(name = "library_role", nullable = false)
     @Enumerated(STRING)
     private LibraryRole libraryRole;
 
     @Builder
-    public Account(String name, String email, LibraryRole libraryRole) {
+    public Account(String name, String email, LibraryRole libraryRole, String avatarUrl) {
         this.name = name;
         this.email = email;
         this.libraryRole = libraryRole;
+        this.avatarUrl = avatarUrl;
     }
 
     public void changeRole(LibraryRole libraryRole) {
         this.libraryRole = libraryRole;
     }
 
-    public Account updateName(String name) {
+    public Account update(String name, String avatarUrl) {
         this.name = name;
+        this.avatarUrl = avatarUrl;
         return this;
     }
 

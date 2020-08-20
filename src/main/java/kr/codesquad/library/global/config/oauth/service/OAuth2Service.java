@@ -34,7 +34,7 @@ public class OAuth2Service {
 
     private Account saveOrUpdate(OAuthAttributes attributes) {
         Account account = accountRepository.findByEmail(attributes.getEmail())
-                .map(entry -> entry.updateName(attributes.getName()))
+                .map(entry -> entry.update(attributes.getName(), attributes.getAvatarUrl()))
                 .orElseGet(attributes::toEntity);
 
         return accountRepository.save(account);
