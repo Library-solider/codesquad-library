@@ -27,7 +27,6 @@ spring:
             client-secret: 3cc11749c4247bb0e46a05dbca3fe0f6f605e34f
             scope: user
 
-
 interpark:
   url: http://book.interpark.com/api/search.api
   key: 3EC5D629CEC08F5BCA2D9A06828BEA9DFD97B235FE96531999FB084FFA68CBEA
@@ -39,6 +38,10 @@ logging:
     web: debug
     kr.codesquad.library: debug
     org.hibernate.SQL: debug
+
+jwt:
+  secretKey: dDfGk4Exbi
+  tokenExpiration: 864000
 
 ---
 spring:
@@ -77,3 +80,7 @@ logging:
     web: debug
     kr.codesquad.library: debug
     org.hibernate.SQL: debug
+
+jwt:
+  secretKey: ${JWT_SECRET}
+  tokenExpiration: 864000

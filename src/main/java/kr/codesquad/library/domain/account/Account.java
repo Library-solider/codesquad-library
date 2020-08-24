@@ -32,7 +32,7 @@ public class Account {
     private LibraryRole libraryRole;
 
     @Builder
-    public Account(String name, String email, LibraryRole libraryRole, String avatarUrl) {
+    private Account(String name, String email, LibraryRole libraryRole, String avatarUrl) {
         this.name = name;
         this.email = email;
         this.libraryRole = libraryRole;
