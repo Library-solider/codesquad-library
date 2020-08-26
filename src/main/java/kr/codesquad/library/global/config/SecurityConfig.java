@@ -1,8 +1,8 @@
 package kr.codesquad.library.global.config;
 
 import kr.codesquad.library.domain.account.LibraryRole;
-import kr.codesquad.library.global.config.oauth.service.CustomOAuth2UserService;
-import kr.codesquad.library.global.config.oauth.service.OAuth2SuccessHandler;
+import kr.codesquad.library.global.config.oauth.security.CustomOAuth2UserService;
+import kr.codesquad.library.global.config.oauth.security.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -44,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable();
 
         http.authorizeRequests()
-                .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/v1/oauth/**").permitAll()
+                .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/oauth2/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole(LibraryRole.USER.name(), LibraryRole.ADMIN.name())
                 .anyRequest().authenticated();
@@ -52,9 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.oauth2Login()
                 .userInfoEndpoint()
                     .userService(customOAuth2UserService)
-            .and()
-                .successHandler(oAuth2SuccessHandler);
+                .and()
+                    .successHandler(oAuth2SuccessHandler);
 
-        //todo: 필터를 추가하여 JWT확인하는 코드가 필요하다.
     }
 }

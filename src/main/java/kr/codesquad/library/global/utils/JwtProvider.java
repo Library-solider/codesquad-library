@@ -3,7 +3,7 @@ package kr.codesquad.library.global.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import kr.codesquad.library.global.config.oauth.dto.AccountPrincipal;
+import kr.codesquad.library.global.config.oauth.dto.SecurityUser;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,17 +26,18 @@ public class JwtProvider {
     private int tokenExpiration;
 
     public String generateToken(Authentication authentication) {
-        AccountPrincipal accountPrincipal = (AccountPrincipal) authentication.getPrincipal();
+        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + tokenExpiration);
 
         Map<String, Object> payloads = new HashMap<>();
-        payloads.put("name", accountPrincipal.getName());
-        payloads.put("avatarUrl", accountPrincipal.getAvatarUrl());
+        payloads.put("githubId", securityUser.getOauthId());
+        payloads.put("name", securityUser.getName());
+        payloads.put("avatarUrl", securityUser.getAvatarUrl());
 
         return Jwts.builder()
-                .setSubject(Long.toString(accountPrincipal.getId()))
+                .setSubject(Long.toString(securityUser.getId()))
                 .setClaims(payloads)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
@@ -44,7 +45,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    public Long getUserIdFromToken(String token) {
+    public Long getAccountIdFromToken(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
                 .parseClaimsJws(token)

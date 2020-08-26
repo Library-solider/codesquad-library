@@ -1,4 +1,4 @@
-package kr.codesquad.library.global.config.oauth.service;
+package kr.codesquad.library.global.config.oauth.security;
 
 import kr.codesquad.library.global.utils.CookieUtils;
 import kr.codesquad.library.global.utils.JwtProvider;

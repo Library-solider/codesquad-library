@@ -18,6 +18,9 @@ public class Account {
     @Column(name = "account_id")
     private Long id;
 
+    @Column(name = "oauth_id", nullable = false, unique = true)
+    private Long oauthId;
+
     @Column(name = "name", nullable = false)
     private String name;
 
@@ -32,7 +35,8 @@ public class Account {
     private LibraryRole libraryRole;
 
     @Builder
-    private Account(String name, String email, LibraryRole libraryRole, String avatarUrl) {
+    private Account(Long oauthId, String name, String email, LibraryRole libraryRole, String avatarUrl) {
+        this.oauthId = oauthId;
         this.name = name;
         this.email = email;
         this.libraryRole = libraryRole;
