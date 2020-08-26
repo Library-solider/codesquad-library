@@ -54,6 +54,6 @@ public class Account {
     }
 
     public String getRoleKey() {
-        return this.libraryRole.getKey();
+        return libraryRole.getKey();
     }
 }

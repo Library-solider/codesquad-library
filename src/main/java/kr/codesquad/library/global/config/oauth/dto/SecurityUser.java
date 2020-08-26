@@ -21,21 +21,20 @@ public class SecurityUser implements OAuth2User {
     private final String email;
     private final String avatarUrl;
     private final Collection<? extends GrantedAuthority> authorities;
-    private final Map<String, Object> attributes;
+    private Map<String, Object> attributes;
 
     @Builder
     private SecurityUser(Long id, Long oauthId, String name, String email, String avatarUrl,
-                         Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes) {
+                         Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.oauthId = oauthId;
         this.name = name;
         this.email = email;
         this.avatarUrl = avatarUrl;
         this.authorities = authorities;
-        this.attributes = attributes;
     }
 
-    public static SecurityUser create(Account account, Map<String, Object> attributes) {
+    public static SecurityUser renew(Account account) {
         List<GrantedAuthority> authorities = Collections.singletonList(
                 new SimpleGrantedAuthority(account.getRoleKey()));
 
@@ -46,8 +45,17 @@ public class SecurityUser implements OAuth2User {
                 .email(account.getEmail())
                 .avatarUrl(account.getAvatarUrl())
                 .authorities(authorities)
-                .attributes(attributes)
                 .build();
+    }
+
+    public static SecurityUser create(Account account, Map<String, Object> attributes) {
+        SecurityUser securityUser = SecurityUser.renew(account);
+        securityUser.adjustAttributes(attributes);
+        return securityUser;
+    }
+
+    private void adjustAttributes(Map<String, Object> attributes) {
+        this.attributes = attributes;
     }
 
     @Override

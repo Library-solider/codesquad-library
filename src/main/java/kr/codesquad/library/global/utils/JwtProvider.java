@@ -31,14 +31,11 @@ public class JwtProvider {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + tokenExpiration);
 
-        Map<String, Object> payloads = new HashMap<>();
-        payloads.put("githubId", securityUser.getOauthId());
-        payloads.put("name", securityUser.getName());
-        payloads.put("avatarUrl", securityUser.getAvatarUrl());
-
         return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
                 .setSubject(Long.toString(securityUser.getId()))
-                .setClaims(payloads)
+                .claim("name", securityUser.getName())
+                .claim("avatarUrl", securityUser.getAvatarUrl())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)

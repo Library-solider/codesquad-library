@@ -1,9 +1,10 @@
 package kr.codesquad.library.global.config;
 
-import kr.codesquad.library.domain.account.LibraryRole;
 import kr.codesquad.library.global.config.oauth.security.CustomOAuth2UserService;
+import kr.codesquad.library.global.config.oauth.security.JwtAuthenticationFilter;
 import kr.codesquad.library.global.config.oauth.security.OAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -21,6 +23,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOAuth2UserService customOAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+
+    @Bean
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter();
+    }
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -46,7 +53,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/oauth2/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole(LibraryRole.USER.name(), LibraryRole.ADMIN.name())
+                .antMatchers("/v1/users/**").hasAnyRole("USER")
+                .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated();
 
         http.oauth2Login()
@@ -55,5 +63,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                     .successHandler(oAuth2SuccessHandler);
 
+        http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

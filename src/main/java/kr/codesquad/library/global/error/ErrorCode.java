@@ -19,6 +19,11 @@ public enum ErrorCode {
     BOOK_NOT_FOUND(404, "B002", "해당 도서는 없습니다."),
     PARAMETER_NOT_PRESENT(400, "B003", "q param이 필요합니다."),
 
+    // Account
+    ACCOUNT_NOT_FOUND(404, "A001", "해당 계정은 없습니다."),
+    JWT_NOT_FOUND(401, "A002", "유효한 JWT가 없습니다."),
+    UNAUTHORIZED_JWT(401, "A003", "유효한 JWT가 아닙니다."),
+
 
     ;
 
