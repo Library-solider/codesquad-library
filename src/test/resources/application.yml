@@ -30,3 +30,7 @@ logging:
         type:
           descriptor:
             sql: trace
+
+jwt:
+  secretKey: dDfGk4Exbi
+  tokenExpiration: 864000000

@@ -51,6 +51,14 @@ class BookSearchControllerTest {
     }
 
     @Test
+    @WithAdmin
+    public void 도서조회하기_OAuth2_ADMIN() throws Exception {
+        mockMvc.perform(get("/v1/books/1"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
     @WithAnonymousUser
     public void 도서빌리기_not_OAuth2() throws Exception {
         mockMvc.perform(post("/v1/books/1"))
