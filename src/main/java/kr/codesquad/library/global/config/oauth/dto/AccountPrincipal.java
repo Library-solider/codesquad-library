@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-public class SecurityUser implements OAuth2User {
+public class AccountPrincipal implements OAuth2User {
 
     private final Long id;
     private final Long oauthId;
@@ -21,41 +21,33 @@ public class SecurityUser implements OAuth2User {
     private final String email;
     private final String avatarUrl;
     private final Collection<? extends GrantedAuthority> authorities;
-    private Map<String, Object> attributes;
+    private final Map<String, Object> attributes;
 
     @Builder
-    private SecurityUser(Long id, Long oauthId, String name, String email, String avatarUrl,
-                         Collection<? extends GrantedAuthority> authorities) {
+    private AccountPrincipal(Long id, Long oauthId, String name, String email, String avatarUrl,
+                             Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes) {
         this.id = id;
         this.oauthId = oauthId;
         this.name = name;
         this.email = email;
         this.avatarUrl = avatarUrl;
         this.authorities = authorities;
+        this.attributes = attributes;
     }
 
-    public static SecurityUser renew(Account account) {
+    public static AccountPrincipal create(Account account, Map<String, Object> attributes) {
         List<GrantedAuthority> authorities = Collections.singletonList(
                 new SimpleGrantedAuthority(account.getRoleKey()));
 
-        return SecurityUser.builder()
+        return AccountPrincipal.builder()
                 .id(account.getId())
                 .oauthId(account.getOauthId())
                 .name(account.getName())
                 .email(account.getEmail())
                 .avatarUrl(account.getAvatarUrl())
                 .authorities(authorities)
+                .attributes(attributes)
                 .build();
-    }
-
-    public static SecurityUser create(Account account, Map<String, Object> attributes) {
-        SecurityUser securityUser = SecurityUser.renew(account);
-        securityUser.adjustAttributes(attributes);
-        return securityUser;
-    }
-
-    private void adjustAttributes(Map<String, Object> attributes) {
-        this.attributes = attributes;
     }
 
     @Override

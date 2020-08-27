@@ -4,7 +4,7 @@ import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.AccountRepository;
 import kr.codesquad.library.domain.account.LibraryRole;
 import kr.codesquad.library.global.config.oauth.dto.GithubOAuth2UserInfo;
-import kr.codesquad.library.global.config.oauth.dto.SecurityUser;
+import kr.codesquad.library.global.config.oauth.dto.AccountPrincipal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -31,7 +31,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         GithubOAuth2UserInfo userInfo = GithubOAuth2UserInfo.of(oAuth2User.getAttributes());
         Account account = saveOrUpdate(userInfo);
 
-        return SecurityUser.create(account, userInfo.getAttributes());
+        return AccountPrincipal.create(account, userInfo.getAttributes());
     }
 
     private Account saveOrUpdate(GithubOAuth2UserInfo userInfo) {

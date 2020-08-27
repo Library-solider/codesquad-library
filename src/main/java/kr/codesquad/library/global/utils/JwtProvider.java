@@ -3,7 +3,7 @@ package kr.codesquad.library.global.utils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import kr.codesquad.library.global.config.oauth.dto.SecurityUser;
+import kr.codesquad.library.global.config.oauth.dto.AccountPrincipal;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,8 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Getter
 @Slf4j
@@ -26,16 +24,16 @@ public class JwtProvider {
     private int tokenExpiration;
 
     public String generateToken(Authentication authentication) {
-        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
+        AccountPrincipal accountPrincipal = (AccountPrincipal) authentication.getPrincipal();
 
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + tokenExpiration);
 
         return Jwts.builder()
                 .setHeaderParam("typ", "JWT")
-                .setSubject(Long.toString(securityUser.getId()))
-                .claim("name", securityUser.getName())
-                .claim("avatarUrl", securityUser.getAvatarUrl())
+                .setSubject(Long.toString(accountPrincipal.getId()))
+                .claim("name", accountPrincipal.getName())
+                .claim("avatarUrl", accountPrincipal.getAvatarUrl())
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(SignatureAlgorithm.HS256, jwtSecret)
