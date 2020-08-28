@@ -10,11 +10,11 @@ public class BooksByCategoryResponse {
 
     private final Long categoryId;
     private final String categoryTitle;
-    private final int bookCount;
+    private final Integer bookCount;
     private final List<BookResponse> books;
 
     @Builder
-    public BooksByCategoryResponse(Long categoryId, String categoryTitle, int bookCount, List<BookResponse> books) {
+    private BooksByCategoryResponse(Long categoryId, String categoryTitle, Integer bookCount, List<BookResponse> books) {
         this.categoryId = categoryId;
         this.categoryTitle = categoryTitle;
         this.bookCount = bookCount;
