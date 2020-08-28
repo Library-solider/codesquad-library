@@ -12,5 +12,5 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     List<Book> findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(Long categoryId);
 
-    Page<Book> findByTitleContaining(String title, Pageable pageable);
+    Page<Book> findByTitleIgnoreCaseContaining(String title, Pageable pageable);
 }

@@ -22,7 +22,7 @@ public class BookDetailResponse {
     private final String bookBorrower;
 
     @Builder
-    public BookDetailResponse(boolean available, String title, String author,
+    private BookDetailResponse(boolean available, String title, String author,
                               String imageUrl, String description, String publisher,
                               LocalDate publicationDate, String isbn, int recommendCount, String bookBorrower) {
         this.available = available;

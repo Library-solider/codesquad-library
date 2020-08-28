@@ -34,3 +34,7 @@ logging:
 jwt:
   secretKey: dDfGk4Exbi
   tokenExpiration: 864000000
+
+app:
+  redirectUrl: http://localhost:3000
+

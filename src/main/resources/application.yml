@@ -43,6 +43,9 @@ jwt:
   secretKey: dDfGk4Exbi
   tokenExpiration: 864000
 
+app:
+  redirectUrl: http://localhost:3000
+
 ---
 spring:
   profiles: prod
@@ -84,3 +87,7 @@ logging:
 jwt:
   secretKey: ${JWT_SECRET}
   tokenExpiration: 864000
+
+app:
+  redirectUrl: http://librarycodesquad.com
+

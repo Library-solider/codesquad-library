@@ -93,7 +93,7 @@ public class BookSearchService {
     }
 
     public List<BookResponse> searchBooksList(String title, int page) {
-        Page<Book> bookPage = bookRepository.findByTitleContaining(title, getPageRequest(page));
+        Page<Book> bookPage = bookRepository.findByTitleIgnoreCaseContaining(title, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());

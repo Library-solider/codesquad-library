@@ -12,15 +12,15 @@ import java.time.LocalDate;
 public class BookResponse {
 
     private final Long id;
-    private final String imageUrl;
     private final String title;
     private final String author;
     private final String publisher;
-    private final int recommendCount;
+    private final String imageUrl;
     private final LocalDate publicationDate;
+    private final int recommendCount;
 
     @Builder
-    public BookResponse(Long id, String imageUrl, String author, String title, String publisher,
+    private BookResponse(Long id, String imageUrl, String author, String title, String publisher,
                         int recommendCount, LocalDate publicationDate) {
         this.id = id;
         this.imageUrl = imageUrl;
