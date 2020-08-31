@@ -22,4 +22,8 @@ public class ApiResult<T> {
     public static <T> ApiResult<T> OK(T data) {
         return new ApiResult<>(true, "OK", data);
     }
+
+    public static ApiResult<Object> OK() {
+        return new ApiResult<>(true, "OK", null);
+    }
 }

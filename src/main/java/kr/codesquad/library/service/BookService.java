@@ -1,5 +1,7 @@
 package kr.codesquad.library.service;
 
+import kr.codesquad.library.domain.account.Account;
+import kr.codesquad.library.domain.account.AccountRepository;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.book.BookRepository;
 import kr.codesquad.library.domain.book.response.BookDetailResponse;
@@ -9,9 +11,9 @@ import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.category.CategoryRepository;
 import kr.codesquad.library.domain.rental.Rental;
+import kr.codesquad.library.domain.rental.RentalRepository;
 import kr.codesquad.library.domain.rental.firstclass.Rentals;
-import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
-import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
+import kr.codesquad.library.global.error.exception.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,10 +31,12 @@ import static kr.codesquad.library.domain.book.BookVO.PAGE_SIZE;
 @RequiredArgsConstructor
 @Service
 @Transactional(readOnly = true)
-public class BookSearchService {
+public class BookService {
 
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
+    private final AccountRepository accountRepository;
+    private final RentalRepository rentalRepository;
 
     public List<BooksByCategoryResponse> findMainBooks() {
         List<BooksByCategoryResponse> mainBooks = new ArrayList<>();
@@ -80,7 +84,7 @@ public class BookSearchService {
     public BookDetailResponse findByBookId(Long bookId) {
         Book findBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Rentals rentals = Rentals.of(findBook.getRentals());
-        Rental rental = rentals.find(findBook);
+        Rental rental = rentals.findByBook(findBook);
 
         return BookDetailResponse.of(findBook, rental);
     }
@@ -102,6 +106,35 @@ public class BookSearchService {
         bookList.addAll(findBookByAuthor);
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public void rentalBookByUser(Long bookId, Long accountId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+
+        if (!book.isAvailable()) {
+            throw new OutOfBookException();
+        }
+        if (rentalRepository.findByAccountAndIsReturnedFalse(account).size() > 3) {
+            throw new MaxRentalViolationException();
+        }
+        book.rentalOrReturnBook();
+        Rental rental = Rental.create(book, account);
+        rentalRepository.save(rental);
+    }
+
+    @Transactional
+    public void returnBookByUser(Long bookId, Long accountId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        Account account =  accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        Rental rental = rentalRepository.findByBookAndAccount(book, account).orElseThrow(RentalNotFoundException::new);
+
+        if (rental.isReturned()) {
+            throw new AlreadyReturnBookException();
+        }
+
+        rental.returnBook();
     }
 
     private PageRequest getPageRequest(int page) {

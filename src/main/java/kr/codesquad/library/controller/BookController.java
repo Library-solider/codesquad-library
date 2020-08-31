@@ -6,7 +6,9 @@ import kr.codesquad.library.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.domain.book.response.BookSearchResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
 import kr.codesquad.library.global.api.ApiResult;
-import kr.codesquad.library.service.BookSearchService;
+import kr.codesquad.library.global.config.oauth.dto.AccountPrincipal;
+import kr.codesquad.library.global.config.resolver.LoginAccount;
+import kr.codesquad.library.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,17 +23,17 @@ import static kr.codesquad.library.global.api.ApiResult.OK;
 @Validated
 @RestController
 @RequestMapping("/v1")
-public class BookSearchController {
+public class BookController {
 
     private final int PAGE_MINIMUM = 1;
 
-    private final BookSearchService bookSearchService;
+    private final BookService bookService;
 
     @ApiOperation(value = "메인페이지")
     @GetMapping("/main")
     public ApiResult<List<BooksByCategoryResponse>> getMainBooks() {
 
-        return OK(bookSearchService.findMainBooks());
+        return OK(bookService.findMainBooks());
     }
 
     @ApiOperation(value = "카테고리별 페이지가져오기")
@@ -40,14 +42,14 @@ public class BookSearchController {
             @PathVariable Long categoryId,
             @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) int page) {
 
-        return OK(bookSearchService.findByCategory(categoryId, page));
+        return OK(bookService.findByCategory(categoryId, page));
     }
 
     @ApiOperation(value = "도서 상세페이지")
     @GetMapping("/books/{bookId}")
     public ApiResult<BookDetailResponse> getBookDetail(@PathVariable Long bookId) {
 
-        return OK(bookSearchService.findByBookId(bookId));
+        return OK(bookService.findByBookId(bookId));
     }
 
     @ApiOperation(value = "도서 검색페이지")
@@ -56,6 +58,20 @@ public class BookSearchController {
             @RequestParam(value = "q") String title,
             @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) int page) {
 
-        return OK(bookSearchService.searchBooks(title, page));
+        return OK(bookService.searchBooks(title, page));
+    }
+
+    @ApiOperation(value = "도서 렌탈")
+    @PostMapping("/books/{bookId}")
+    public ApiResult rentalBook(@PathVariable Long bookId, @LoginAccount AccountPrincipal loginAccount) {
+        bookService.rentalBookByUser(bookId, loginAccount.getId());
+        return OK();
+    }
+
+    @ApiOperation(value = "도서 반납")
+    @PutMapping("/books/{bookId}")
+    public ApiResult returnBook(@PathVariable Long bookId, @LoginAccount AccountPrincipal loginAccount) {
+        bookService.returnBookByUser(bookId, loginAccount.getId());
+        return OK();
     }
 }
