@@ -60,10 +60,15 @@ public class Rental {
         LocalDate now = LocalDate.now();
         return Rental.builder()
                 .beginDate(now)
-                .returnDate(now.plusDays(7))
+                .returnDate(now.plusDays(14))
                 .book(book)
                 .account(account)
                 .isReturned(false)
                 .build();
+    }
+
+    public void returnBook() {
+        this.isReturned = true;
+        book.rentalOrReturnBook();
     }
 }

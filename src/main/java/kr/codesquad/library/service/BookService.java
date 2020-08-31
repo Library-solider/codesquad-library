@@ -13,10 +13,7 @@ import kr.codesquad.library.domain.category.CategoryRepository;
 import kr.codesquad.library.domain.rental.Rental;
 import kr.codesquad.library.domain.rental.RentalRepository;
 import kr.codesquad.library.domain.rental.firstclass.Rentals;
-import kr.codesquad.library.global.config.oauth.dto.AccountPrincipal;
-import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
-import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
-import kr.codesquad.library.global.error.exception.domain.OutOfBookException;
+import kr.codesquad.library.global.error.exception.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,7 +21,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.nio.channels.AcceptPendingException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -113,15 +109,32 @@ public class BookService {
     }
 
     @Transactional
-    public void rentalBookByUser(Long bookId, AccountPrincipal loginAccount) {
+    public void rentalBookByUser(Long bookId, Long accountId) {
         Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
-        Account account = accountRepository.findById(loginAccount.getId()).orElseThrow(AcceptPendingException::new);
+        Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
 
         if (!book.isAvailable()) {
             throw new OutOfBookException();
         }
+        if (rentalRepository.findByAccountAndIsReturnedFalse(account).size() > 3) {
+            throw new MaxRentalViolationException();
+        }
         book.rentalOrReturnBook();
-        rentalRepository.save(Rental.create(book, account));
+        Rental rental = Rental.create(book, account);
+        rentalRepository.save(rental);
+    }
+
+    @Transactional
+    public void returnBookByUser(Long bookId, Long accountId) {
+        Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        Account account =  accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        Rental rental = rentalRepository.findByBookAndAccount(book, account).orElseThrow(RentalNotFoundException::new);
+
+        if (rental.isReturned()) {
+            throw new AlreadyReturnBookException();
+        }
+
+        rental.returnBook();
     }
 
     private PageRequest getPageRequest(int page) {

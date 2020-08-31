@@ -64,7 +64,14 @@ public class BookController {
     @ApiOperation(value = "도서 렌탈")
     @PostMapping("/books/{bookId}")
     public ApiResult rentalBook(@PathVariable Long bookId, @LoginAccount AccountPrincipal loginAccount) {
-        bookService.rentalBookByUser(bookId, loginAccount);
+        bookService.rentalBookByUser(bookId, loginAccount.getId());
+        return OK();
+    }
+
+    @ApiOperation(value = "도서 반납")
+    @PutMapping("/books/{bookId}")
+    public ApiResult returnBook(@PathVariable Long bookId, @LoginAccount AccountPrincipal loginAccount) {
+        bookService.returnBookByUser(bookId, loginAccount.getId());
         return OK();
     }
 }
