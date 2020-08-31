@@ -82,43 +82,31 @@ class BookRepositoryTest {
         assertThat(page1.getSize()).isEqualTo(size);
     }
 
-    @CsvSource({"0, 20, publicationDate, 자바"})
-    @ParameterizedTest
-    public void 도서검색_리스트가져오기(int page, int size, String property, String title) throws Exception {
-        //given
-        PageRequest pageRequest = getPageRequest(page, size, property);
-
-        //when
-        Page<Book> page1 = books.findByTitleIgnoreCaseContaining(title, pageRequest);
-        List<Book> bookList = page1.getContent();
-
-        //then
-        assertThat(bookList).isNotEmpty();
-    }
-
     @CsvSource({"0, 20, publicationDate, 롯데"})
     @ParameterizedTest
     public void 검색_실패(int page, int size, String property, String title) throws Exception {
-        //given
-        PageRequest pageRequest = getPageRequest(page, size, property);
-
         //when
-        Page<Book> page1 = books.findByTitleIgnoreCaseContaining(title, pageRequest);
-        List<Book> bookList = page1.getContent();
-
+        List<Book> bookList = books.findByTitleIgnoreCaseContaining(title);
         //then
         assertThat(bookList).isEmpty();
     }
 
     @CsvSource({"0, 60, publicationDate, 자바, 48"})
     @ParameterizedTest
-    public void 도서검색_띄어쓰기_무시하고_제대로된_검색(int page, int size, String property, String title, int bookCount) throws Exception {
-        //given
-        PageRequest pageRequest = getPageRequest(page, size, property);
-
+    public void 도서제목_띄어쓰기_무시하고_제대로된_검색(int page, int size, String property, String title, int bookCount) throws Exception {
         //when
-        Page<Book> page1 = books.findByTitleIgnoreCaseContaining(title, pageRequest);
-        List<Book> bookList = page1.getContent();
+        List<Book> bookList = books.findByTitleIgnoreCaseContaining(title);
+
+        //then
+        assertThat(bookList).isNotEmpty();
+        assertThat(bookList.size()).isEqualTo(bookCount);
+    }
+
+    @CsvSource({"0, 60, publicationDate, 켄트 벡, 3"})
+    @ParameterizedTest
+    public void 도서저자_띄어쓰기_무시하고_제대로된_검색(int page, int size, String property, String author, int bookCount) throws Exception {
+        //when
+        List<Book> bookList = books.findByAuthorIgnoreCaseContaining(author);
 
         //then
         assertThat(bookList).isNotEmpty();

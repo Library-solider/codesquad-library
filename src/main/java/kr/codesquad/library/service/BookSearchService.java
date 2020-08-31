@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -84,17 +85,21 @@ public class BookSearchService {
         return BookDetailResponse.of(findBook, rental);
     }
 
-    public BookSearchResponse searchBooks(String title, int page) {
-        List<BookResponse> bookResponseList = searchBooksList(title, page);
+    public BookSearchResponse searchBooks(String searchWord, int page) {
+        List<BookResponse> bookResponseList = searchBooksList(searchWord);
+        bookResponseList.sort(Comparator.comparing(BookResponse::getPublicationDate).reversed());
         return BookSearchResponse.builder()
                 .bookCount(bookResponseList.size())
-                .books(bookResponseList)
+                .books(getBookListPage(bookResponseList, page))
                 .build();
     }
 
-    public List<BookResponse> searchBooksList(String title, int page) {
-        Page<Book> bookPage = bookRepository.findByTitleIgnoreCaseContaining(title, getPageRequest(page));
-        List<Book> bookList = bookPage.getContent();
+    public List<BookResponse> searchBooksList(String searchWord) {
+        List<Book> findBookByTitle =  bookRepository.findByTitleIgnoreCaseContaining(searchWord);
+        List<Book> bookList = new ArrayList<>(findBookByTitle);
+
+        List<Book> findBookByAuthor = bookRepository.findByAuthorIgnoreCaseContaining(searchWord);
+        bookList.addAll(findBookByAuthor);
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
     }
@@ -102,5 +107,10 @@ public class BookSearchService {
     private PageRequest getPageRequest(int page) {
         Sort sort = Sort.by(Sort.Direction.DESC, "publicationDate");
         return PageRequest.of(page - 1, PAGE_SIZE, sort);
+    }
+
+    private List<BookResponse> getBookListPage(List<BookResponse> bookList, int page) {
+        int skipPage = (page - 1) * 20;
+        return bookList.stream().skip(skipPage).limit(20).collect(Collectors.toList());
     }
 }
