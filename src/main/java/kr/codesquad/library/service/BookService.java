@@ -16,6 +16,7 @@ import kr.codesquad.library.domain.rental.firstclass.Rentals;
 import kr.codesquad.library.global.config.oauth.dto.AccountPrincipal;
 import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
 import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
+import kr.codesquad.library.global.error.exception.domain.OutOfBookException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -115,6 +116,10 @@ public class BookService {
     public void rentalBookByUser(Long bookId, AccountPrincipal loginAccount) {
         Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Account account = accountRepository.findById(loginAccount.getId()).orElseThrow(AcceptPendingException::new);
+
+        if (!book.isAvailable()) {
+            throw new OutOfBookException();
+        }
         book.rentalOrReturnBook();
         rentalRepository.save(Rental.create(book, account));
     }

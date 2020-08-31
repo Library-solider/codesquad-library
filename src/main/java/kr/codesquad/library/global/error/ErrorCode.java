@@ -14,10 +14,11 @@ public enum ErrorCode {
     INTERNAL_SERVER_ERROR(500, "C004", "서버 에러"),
     HANDLE_ACCESS_DENIED(403, "C006", "접근이 거부되었습니다."),
 
-    // BookSearch
+    // Book
     CATEGORY_NOT_FOUND(404, "B001", "해당 카테고리는 없습니다."),
     BOOK_NOT_FOUND(404, "B002", "해당 도서는 없습니다."),
     PARAMETER_NOT_PRESENT(400, "B003", "q param이 필요합니다."),
+    OUT_OF_BOOK(400, "B004", "해당 도서는 대여중입니다."),
 
     // Account
     ACCOUNT_NOT_FOUND(404, "A001", "해당 계정은 없습니다."),
