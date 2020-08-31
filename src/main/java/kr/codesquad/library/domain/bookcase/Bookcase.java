@@ -17,5 +17,5 @@ public class Bookcase {
 
     private String name;
 
-    private String Location;
+    private String location;
 }

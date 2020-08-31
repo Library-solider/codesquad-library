@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-class BookSearchControllerTest {
+class BookControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

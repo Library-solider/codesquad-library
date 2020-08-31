@@ -16,16 +16,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
-class BookSearchServiceTest {
+class BookServiceTest {
 
     @Autowired
-    private BookSearchService bookSearchService;
+    private BookService bookService;
 
     @Test
     public void 각_카테고리_6개의_도서를_가져온다() {
 
         //when
-        List<BookResponse> books = bookSearchService.findTop6BooksByCategory(1L);
+        List<BookResponse> books = bookService.findTop6BooksByCategory(1L);
 
         //then
         assertThat(books.size()).isEqualTo(6);
@@ -36,7 +36,7 @@ class BookSearchServiceTest {
     public void 각_카테고리별_도서를_페이지씩_가져온다(Long categoryId, int page) {
 
         //when
-        List<BookResponse> books = bookSearchService.findByCategoryIdBooks(categoryId, page);
+        List<BookResponse> books = bookService.findByCategoryIdBooks(categoryId, page);
 
         //then
         assertThat(books.size()).isEqualTo(20);
@@ -47,7 +47,7 @@ class BookSearchServiceTest {
     public void 빌려가지_않은_도서상세정보_가져오기(Long id) {
 
         //when
-        BookDetailResponse bookDetailResponse = bookSearchService.findByBookId(id);
+        BookDetailResponse bookDetailResponse = bookService.findByBookId(id);
 
         //then
         assertAll(
@@ -59,10 +59,10 @@ class BookSearchServiceTest {
 
     @CsvSource({"켄트 벡, 1, 4"})
     @ParameterizedTest
-    public void 검색한_도서정보_가져오기(String searchWord, int page, int result) {
+    public void 검색한_도서정보_가져오기(String searchWord, int result) {
 
         //when
-        List<BookResponse> bookSearchResponse = bookSearchService.searchBooksList(searchWord);
+        List<BookResponse> bookSearchResponse = bookService.searchBooksList(searchWord);
 
         //then
         assertAll(

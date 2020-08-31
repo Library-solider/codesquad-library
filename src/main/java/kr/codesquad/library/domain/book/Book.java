@@ -11,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.CascadeType.*;
 import static javax.persistence.FetchType.LAZY;
 
 @NoArgsConstructor
@@ -47,7 +48,7 @@ public class Book {
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(mappedBy = "book", cascade = ALL)
     private List<Rental> rentals = new ArrayList<>();
 
     @Builder
@@ -63,6 +64,10 @@ public class Book {
         this.isbn = isbn;
         this.available = available;
         this.recommendCount = recommendCount;
+    }
+
+    public void rentalOrReturnBook() {
+        this.available = !available;
     }
 
     public void setCategoryToTest(Category category) {
