@@ -116,7 +116,7 @@ public class BookService {
         if (!book.isAvailable()) {
             throw new OutOfBookException();
         }
-        if (rentalRepository.findByAccountAndIsReturnedFalse(account).size() > 3) {
+        if (rentalRepository.findByAccountAndIsReturnedFalse(account).size() >= 3) {
             throw new MaxRentalViolationException();
         }
         book.rentalOrReturnBook();

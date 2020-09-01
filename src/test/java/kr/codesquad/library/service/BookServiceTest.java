@@ -11,7 +11,6 @@ import kr.codesquad.library.domain.rental.RentalRepository;
 import kr.codesquad.library.global.error.exception.domain.AccountNotFoundException;
 import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
 import kr.codesquad.library.global.error.exception.domain.RentalNotFoundException;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -124,7 +123,6 @@ class BookServiceTest {
                 () -> assertThat(rentalRepository.findAll()).isNotEmpty(),
                 () -> assertThat(rental.isReturned()).isTrue()
         );
-
     }
 
     private Long saveRental(Long bookId, Long accountId) {
