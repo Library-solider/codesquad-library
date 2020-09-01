@@ -11,5 +11,5 @@ public interface RentalRepository extends JpaRepository<Rental, Long> {
 
     List<Rental> findByAccountAndIsReturnedFalse(Account account);
 
-    Optional<Rental> findByBookAndAccount(Book book, Account account);
+    Optional<Rental> findByBookAndAccountAndIsReturnedFalse(Book book, Account account);
 }

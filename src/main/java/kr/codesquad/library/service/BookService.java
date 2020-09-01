@@ -128,7 +128,7 @@ public class BookService {
     public void returnBookByUser(Long bookId, Long accountId) {
         Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Account account =  accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
-        Rental rental = rentalRepository.findByBookAndAccount(book, account).orElseThrow(RentalNotFoundException::new);
+        Rental rental = rentalRepository.findByBookAndAccountAndIsReturnedFalse(book, account).orElseThrow(RentalNotFoundException::new);
 
         if (rental.isReturned()) {
             throw new AlreadyReturnBookException();
