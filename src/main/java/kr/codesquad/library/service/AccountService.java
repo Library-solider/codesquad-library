@@ -3,6 +3,7 @@ package kr.codesquad.library.service;
 import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.AccountRepository;
 import kr.codesquad.library.domain.account.response.AccountMyPageResponse;
+import kr.codesquad.library.domain.account.response.AccountProfileResponse;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.rental.Rental;
 import kr.codesquad.library.domain.rental.RentalRepository;
@@ -35,5 +36,10 @@ public class AccountService {
         }
 
         return AccountMyPageResponse.of(account, rentalBookResponses);
+    }
+
+    public AccountProfileResponse getProfile(Long accountId) {
+        Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        return AccountProfileResponse.of(account);
     }
 }
