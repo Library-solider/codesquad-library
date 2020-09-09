@@ -3,8 +3,8 @@ package kr.codesquad.library.global.error.exception.domain;
 import kr.codesquad.library.global.error.ErrorCode;
 import kr.codesquad.library.global.error.exception.BusinessException;
 
-public class UnauthorizedJwtException extends BusinessException {
-    public UnauthorizedJwtException() {
-        super(ErrorCode.UNAUTHORIZED_JWT);
+public class ProviderNotExistException extends BusinessException {
+    public ProviderNotExistException() {
+        super(ErrorCode.PROVIDER_NOT_FOUND);
     }
 }

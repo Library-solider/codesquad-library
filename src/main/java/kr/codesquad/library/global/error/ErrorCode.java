@@ -25,8 +25,8 @@ public enum ErrorCode {
 
     // Account
     ACCOUNT_NOT_FOUND(404, "A001", "해당 계정은 없습니다."),
-    JWT_NOT_FOUND(401, "A002", "유효한 JWT가 없습니다."),
-    UNAUTHORIZED_JWT(401, "A003", "유효한 JWT가 아닙니다."),
+    ACCOUNT_LOGOUT(400, "A002", "로그인이 필요합니다."),
+    PROVIDER_NOT_FOUND(404, "A003", "존재하지 않는 OAuth 제공자 입니다.")
 
 
     ;
