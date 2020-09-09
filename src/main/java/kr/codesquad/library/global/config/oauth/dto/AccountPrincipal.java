@@ -1,16 +1,12 @@
 package kr.codesquad.library.global.config.oauth.dto;
 
-import kr.codesquad.library.domain.account.Account;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Getter
 public class AccountPrincipal implements OAuth2User {
@@ -20,12 +16,12 @@ public class AccountPrincipal implements OAuth2User {
     private final String name;
     private final String email;
     private final String avatarUrl;
-    private final Collection<? extends GrantedAuthority> authorities;
+    private final Set<GrantedAuthority> authorities;
     private final Map<String, Object> attributes;
 
     @Builder
     private AccountPrincipal(Long id, Long oauthId, String name, String email, String avatarUrl,
-                             Collection<? extends GrantedAuthority> authorities, Map<String, Object> attributes) {
+                             Set<GrantedAuthority> authorities, Map<String, Object> attributes) {
         this.id = id;
         this.oauthId = oauthId;
         this.name = name;
@@ -35,28 +31,13 @@ public class AccountPrincipal implements OAuth2User {
         this.attributes = attributes;
     }
 
-    public static AccountPrincipal create(Account account, Map<String, Object> attributes) {
-        List<GrantedAuthority> authorities = Collections.singletonList(
-                new SimpleGrantedAuthority(account.getRoleKey()));
-
-        return AccountPrincipal.builder()
-                .id(account.getId())
-                .oauthId(account.getOauthId())
-                .name(account.getName())
-                .email(account.getEmail())
-                .avatarUrl(account.getAvatarUrl())
-                .authorities(authorities)
-                .attributes(attributes)
-                .build();
-    }
-
     @Override
     public String getName() {
         return name;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
+    public Set<GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
 
