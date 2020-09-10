@@ -1,5 +1,7 @@
 package kr.codesquad.library.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import kr.codesquad.library.domain.account.response.AccountMyPageResponse;
 import kr.codesquad.library.domain.account.response.AccountProfileResponse;
 import kr.codesquad.library.global.api.ApiResult;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static kr.codesquad.library.global.api.ApiResult.OK;
 
 @Slf4j
+@Api
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1/users")
@@ -26,11 +29,13 @@ public class AccountController {
 
     private final AccountService accountService;
 
+    @ApiOperation(value = "마이페이지")
     @GetMapping("/mypage")
     public ApiResult<AccountMyPageResponse> getMyPage(@LoginAccount AccountPrincipal loginAccount) {
         return OK(accountService.getMyPage(loginAccount.getId()));
     }
 
+    @ApiOperation(value = "프로필")
     @GetMapping("/profile")
     public ApiResult<AccountProfileResponse> getProfile(@LoginAccount AccountPrincipal loginAccount) {
         return OK(accountService.getProfile(loginAccount.getId()));

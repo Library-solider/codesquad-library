@@ -8,11 +8,11 @@ import java.util.List;
 @Getter
 public class BookSearchResponse {
 
-    private final Integer bookCount;
+    private final Long bookCount;
     private final List<BookResponse> books;
 
     @Builder
-    private BookSearchResponse(Integer bookCount, List<BookResponse> books) {
+    private BookSearchResponse(Long bookCount, List<BookResponse> books) {
         this.bookCount = bookCount;
         this.books = books;
     }

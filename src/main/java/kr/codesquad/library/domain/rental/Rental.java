@@ -11,8 +11,8 @@ import java.time.LocalDate;
 
 import static javax.persistence.FetchType.LAZY;
 
-@Getter
 @NoArgsConstructor
+@Getter
 @Entity
 public class Rental {
 
@@ -35,7 +35,7 @@ public class Rental {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @Column(name = "is_returned")
+    @Column(name = "is_returned", nullable = false)
     private boolean isReturned;
 
     @Builder
@@ -56,6 +56,7 @@ public class Rental {
         return book.getTitle();
     }
 
+    // 반납일수는 14일(2주)
     public static Rental create(Book book, Account account) {
         LocalDate now = LocalDate.now();
         return Rental.builder()
@@ -69,6 +70,6 @@ public class Rental {
 
     public void returnBook() {
         this.isReturned = true;
-        book.rentalOrReturnBook();
+        book.returnBook();
     }
 }
