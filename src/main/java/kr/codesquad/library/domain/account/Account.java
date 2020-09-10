@@ -13,8 +13,8 @@ import java.util.List;
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.*;
 
-@Getter
 @NoArgsConstructor
+@Getter
 @Entity
 public class Account {
 
@@ -66,3 +66,4 @@ public class Account {
         return libraryRole.getKey();
     }
 }
+

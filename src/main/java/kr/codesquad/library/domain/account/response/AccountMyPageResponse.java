@@ -13,22 +13,22 @@ public class AccountMyPageResponse {
     private final String name;
     private final String email;
     private final String avatarUrl;
-    private final List<RentalBookResponse> rentalBookResponse;
+    private final List<RentalBookResponse> rentalBookResponses;
 
     @Builder
-    private AccountMyPageResponse(String name, String email, String avatarUrl, List<RentalBookResponse> rentalBookResponse) {
+    private AccountMyPageResponse(String name, String email, String avatarUrl, List<RentalBookResponse> rentalBookResponses) {
         this.name = name;
         this.email = email;
         this.avatarUrl = avatarUrl;
-        this.rentalBookResponse = rentalBookResponse;
+        this.rentalBookResponses = rentalBookResponses;
     }
 
-    public static AccountMyPageResponse of(Account account, List<RentalBookResponse> rentalBookResponse) {
+    public static AccountMyPageResponse of(Account account, List<RentalBookResponse> rentalBookResponses) {
         return AccountMyPageResponse.builder()
                 .name(account.getName())
                 .email(account.getEmail())
                 .avatarUrl(account.getAvatarUrl())
-                .rentalBookResponse(rentalBookResponse)
+                .rentalBookResponses(rentalBookResponses)
                 .build();
     }
 }

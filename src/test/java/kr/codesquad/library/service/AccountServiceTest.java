@@ -38,19 +38,19 @@ class AccountServiceTest {
     public void 마이페이지_확인하기(Long accountId, Long book1, Long book2, Long book3, int size, int first) {
         //given
         Book book = bookRepository.findById(book1).orElseThrow(BookNotFoundException::new);
-        bookService.rentalBookByUser(book1, accountId);
-        bookService.rentalBookByUser(book2, accountId);
-        bookService.rentalBookByUser(book3, accountId);
+        bookService.rentalBook(book1, accountId);
+        bookService.rentalBook(book2, accountId);
+        bookService.rentalBook(book3, accountId);
 
         //when
         AccountMyPageResponse myPage = accountService.getMyPage(accountId);
-        String bookTitle = myPage.getRentalBookResponse().get(first).getTitle();
+        String bookTitle = myPage.getRentalBookResponses().get(first).getTitle();
 
         //then
         assertAll(
                 () -> assertThat(myPage).isNotNull(),
-                () -> assertThat(myPage.getRentalBookResponse()).isNotEmpty(),
-                () -> assertThat(myPage.getRentalBookResponse().size()).isEqualTo(size),
+                () -> assertThat(myPage.getRentalBookResponses()).isNotEmpty(),
+                () -> assertThat(myPage.getRentalBookResponses().size()).isEqualTo(size),
                 () -> assertThat(bookTitle).isEqualTo(book.getTitle())
         );
     }

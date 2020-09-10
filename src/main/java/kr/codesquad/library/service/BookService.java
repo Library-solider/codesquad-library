@@ -33,6 +33,7 @@ import static kr.codesquad.library.domain.book.BookVO.PAGE_SIZE;
 @Transactional(readOnly = true)
 public class BookService {
 
+    private final int MAX_RENTAL_SIZE = 3;
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
     private final AccountRepository accountRepository;
@@ -63,7 +64,7 @@ public class BookService {
         return findBookByCategory.stream().map(BookResponse::of).collect(Collectors.toList());
     }
 
-    public BooksByCategoryResponse findByCategory(Long categoryId, int page) {
+    public BooksByCategoryResponse findByCategoryId(Long categoryId, int page) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
         return BooksByCategoryResponse.builder()
@@ -90,42 +91,36 @@ public class BookService {
     }
 
     public BookSearchResponse searchBooks(String searchWord, int page) {
-        List<BookResponse> bookResponseList = searchBooksList(searchWord);
-        bookResponseList.sort(Comparator.comparing(BookResponse::getPublicationDate).reversed());
+        Page<Book> bookPage = bookRepository
+                .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(searchWord, searchWord, getPageRequest(page));
+        List<Book> bookList = bookPage.getContent();
+        List<BookResponse> bookResponseList = bookList.stream().map(BookResponse::of).collect(Collectors.toList());
+
         return BookSearchResponse.builder()
-                .bookCount(bookResponseList.size())
-                .books(getBookListPage(bookResponseList, page))
+                .bookCount(bookPage.getTotalElements())
+                .books(bookResponseList)
                 .build();
     }
 
-    public List<BookResponse> searchBooksList(String searchWord) {
-        List<Book> findBookByTitle =  bookRepository.findByTitleIgnoreCaseContaining(searchWord);
-        List<Book> bookList = new ArrayList<>(findBookByTitle);
-
-        List<Book> findBookByAuthor = bookRepository.findByAuthorIgnoreCaseContaining(searchWord);
-        bookList.addAll(findBookByAuthor);
-
-        return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
-    }
-
     @Transactional
-    public void rentalBookByUser(Long bookId, Long accountId) {
+    public void rentalBook(Long bookId, Long accountId) {
         Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
 
         if (!book.isAvailable()) {
             throw new OutOfBookException();
         }
-        if (rentalRepository.findByAccountAndIsReturnedFalse(account).size() >= 3) {
+        if (rentalRepository.findByAccountAndIsReturnedFalse(account).size() >= MAX_RENTAL_SIZE) {
             throw new MaxRentalViolationException();
         }
-        book.rentalOrReturnBook();
+
+        book.rentalBook();
         Rental rental = Rental.create(book, account);
         rentalRepository.save(rental);
     }
 
     @Transactional
-    public void returnBookByUser(Long bookId, Long accountId) {
+    public void returnBook(Long bookId, Long accountId) {
         Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Account account =  accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
         Rental rental = rentalRepository.findByBookAndAccountAndIsReturnedFalse(book, account).orElseThrow(RentalNotFoundException::new);
@@ -140,10 +135,5 @@ public class BookService {
     private PageRequest getPageRequest(int page) {
         Sort sort = Sort.by(Sort.Direction.DESC, "publicationDate");
         return PageRequest.of(page - 1, PAGE_SIZE, sort);
-    }
-
-    private List<BookResponse> getBookListPage(List<BookResponse> bookList, int page) {
-        int skipPage = (page - 1) * 20;
-        return bookList.stream().skip(skipPage).limit(20).collect(Collectors.toList());
     }
 }

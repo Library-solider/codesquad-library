@@ -21,18 +21,18 @@ public class Rentals {
     }
 
     public Rental findByBook(Book book) {
-        return rentals.isEmpty() ? null : rentals.get(drawByBook(book));
+        return rentals.isEmpty() ? null : rentals.get(drawRentalListByBook(book));
     }
 
     public Rental findByAccount(Account account) {
-        return rentals.isEmpty() ? null : rentals.get(drawByAccount(account));
+        return rentals.isEmpty() ? null : rentals.get(drawRentalListByAccount(account));
     }
 
-    private int drawByBook(Book book) {
+    private int drawRentalListByBook(Book book) {
         return book.getRentals().size() - 1;
     }
 
-    private int drawByAccount(Account account) {
+    private int drawRentalListByAccount(Account account) {
         return account.getRentals().size() - 1;
     }
 }

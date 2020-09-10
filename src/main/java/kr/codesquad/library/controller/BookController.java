@@ -40,9 +40,9 @@ public class BookController {
     @GetMapping("/category/{categoryId}")
     public ApiResult<BooksByCategoryResponse> getCategoryBooks(
             @PathVariable Long categoryId,
-            @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) int page) {
+            @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) Integer page) {
 
-        return OK(bookService.findByCategory(categoryId, page));
+        return OK(bookService.findByCategoryId(categoryId, page));
     }
 
     @ApiOperation(value = "도서 상세페이지")
@@ -56,7 +56,7 @@ public class BookController {
     @GetMapping("/search")
     public ApiResult<BookSearchResponse> searchBooks(
             @RequestParam(value = "q") String title,
-            @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) int page) {
+            @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) Integer page) {
 
         return OK(bookService.searchBooks(title, page));
     }
@@ -64,14 +64,14 @@ public class BookController {
     @ApiOperation(value = "도서 렌탈")
     @PostMapping("/books/{bookId}")
     public ApiResult rentalBook(@PathVariable Long bookId, @LoginAccount AccountPrincipal loginAccount) {
-        bookService.rentalBookByUser(bookId, loginAccount.getId());
+        bookService.rentalBook(bookId, loginAccount.getId());
         return OK();
     }
 
     @ApiOperation(value = "도서 반납")
     @PutMapping("/books/{bookId}")
     public ApiResult returnBook(@PathVariable Long bookId, @LoginAccount AccountPrincipal loginAccount) {
-        bookService.returnBookByUser(bookId, loginAccount.getId());
+        bookService.returnBook(bookId, loginAccount.getId());
         return OK();
     }
 }
