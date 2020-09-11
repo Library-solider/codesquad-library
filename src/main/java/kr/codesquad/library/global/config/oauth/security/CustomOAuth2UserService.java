@@ -66,6 +66,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .email(userInfo.getEmail())
                 .avatarUrl(userInfo.getAvatarUrl())
                 .libraryRole(LibraryRole.GUEST)
+                .roleRequest(false)
                 .build();
     }
 }

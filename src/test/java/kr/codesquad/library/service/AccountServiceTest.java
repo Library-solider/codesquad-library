@@ -2,6 +2,7 @@ package kr.codesquad.library.service;
 
 import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.AccountRepository;
+import kr.codesquad.library.domain.account.LibraryRole;
 import kr.codesquad.library.domain.account.response.AccountMyPageResponse;
 import kr.codesquad.library.domain.account.response.AccountProfileResponse;
 import kr.codesquad.library.domain.book.Book;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+// AccountId = {(1 == GUEST), (2 == USER), (3 == ADMIN)}
 @SpringBootTest
 class AccountServiceTest {
 
@@ -49,6 +51,7 @@ class AccountServiceTest {
         //then
         assertAll(
                 () -> assertThat(myPage).isNotNull(),
+                () -> assertThat(myPage.getRole()).isEqualTo(LibraryRole.USER),
                 () -> assertThat(myPage.getRentalBookResponses()).isNotEmpty(),
                 () -> assertThat(myPage.getRentalBookResponses().size()).isEqualTo(size),
                 () -> assertThat(bookTitle).isEqualTo(book.getTitle())
@@ -69,6 +72,47 @@ class AccountServiceTest {
         assertAll(
                 () -> assertThat(profile.getName()).isEqualTo(account.getName()),
                 () -> assertThat(profile.getAvatarUrl()).isEqualTo(account.getAvatarUrl())
+        );
+    }
+
+    @CsvSource({"1"})
+    @ParameterizedTest
+    @Transactional
+    public void 권한요청하기_WITH_GUEST(Long accountId) {
+        //given
+        Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+
+        //when
+        accountService.requestAuthority(account.getId());
+        AccountMyPageResponse myPage = AccountMyPageResponse.of(account, null);
+
+        //then
+        assertAll(
+                () -> assertThat(account.isRoleRequest()).isTrue(),
+                () -> assertThat(myPage.isRequested()).isTrue()
+        );
+    }
+
+    @CsvSource({"2, 3"})
+    @ParameterizedTest
+    @Transactional
+    public void 권한요청하기_WITH_USER_ADMIN(Long userId, Long adminId) {
+        //given
+        Account user = accountRepository.findById(userId).orElseThrow(AccountNotFoundException::new);
+        Account admin = accountRepository.findById(adminId).orElseThrow(AccountNotFoundException::new);
+
+        //when
+        accountService.requestAuthority(user.getId());
+        AccountMyPageResponse userPage = AccountMyPageResponse.of(user, null);
+        accountService.requestAuthority(admin.getId());
+        AccountMyPageResponse adminPage = AccountMyPageResponse.of(admin, null);
+
+        //then
+        assertAll(
+                () -> assertThat(user.isRoleRequest()).isFalse(),
+                () -> assertThat(admin.isRoleRequest()).isFalse(),
+                () -> assertThat(userPage.isRequested()).isFalse(),
+                () -> assertThat(adminPage.isRequested()).isFalse()
         );
     }
 }

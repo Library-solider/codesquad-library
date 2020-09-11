@@ -22,7 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,7 +125,7 @@ public class BookService {
         Rental rental = rentalRepository.findByBookAndAccountAndIsReturnedFalse(book, account).orElseThrow(RentalNotFoundException::new);
 
         if (rental.isReturned()) {
-            throw new AlreadyReturnBookException();
+            throw new RedundantRequestBookException();
         }
 
         rental.returnBook();
