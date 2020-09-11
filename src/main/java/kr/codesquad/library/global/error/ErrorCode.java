@@ -21,13 +21,13 @@ public enum ErrorCode {
     OUT_OF_BOOK(400, "B004", "해당 도서는 대여중입니다."),
     MAX_RENTAL_BOOK(400, "B005", "대여도서 수가 최대치입니다."),
     RENTAL_NOT_FOUND(404, "B006", "해당 대여는 없습니다."),
-    ALREADY_RETURN_BOOK(400, "B007", "이미 반납한 도서입니다."),
+    REDUNDANT_RETURN_BOOK(400, "B007", "이미 반납한 도서입니다."),
 
     // Account
     ACCOUNT_NOT_FOUND(404, "A001", "해당 계정은 없습니다."),
     ACCOUNT_LOGOUT(400, "A002", "로그인이 필요합니다."),
-    PROVIDER_NOT_FOUND(404, "A003", "존재하지 않는 OAuth 제공자 입니다.")
-
+    PROVIDER_NOT_FOUND(404, "A003", "존재하지 않는 OAuth 제공자 입니다."),
+    BAD_REQUEST_AUTHORIZATION(400, "A005", "잘못된 권한 신청입니다."),
 
     ;
 

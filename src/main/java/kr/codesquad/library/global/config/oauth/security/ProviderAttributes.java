@@ -1,6 +1,6 @@
 package kr.codesquad.library.global.config.oauth.security;
 
-import kr.codesquad.library.global.error.exception.domain.ProviderNotExistException;
+import kr.codesquad.library.global.error.exception.oauth.ProviderNotExistException;
 import lombok.Getter;
 
 import java.util.stream.Stream;
