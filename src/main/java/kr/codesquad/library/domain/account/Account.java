@@ -39,21 +39,17 @@ public class Account {
     @Enumerated(STRING)
     private LibraryRole libraryRole;
 
-    @Column(name = "role_request", nullable = false)
-    private boolean roleRequest;
-
     @OneToMany(mappedBy = "account", cascade = ALL)
     private List<Rental> rentals = new ArrayList<>();
 
     @Builder
     private Account(Long oauthId, String name, String email, String avatarUrl, LibraryRole libraryRole,
-                    boolean roleRequest, List<Rental> rentals) {
+                    List<Rental> rentals) {
         this.oauthId = oauthId;
         this.name = name;
         this.email = email;
         this.avatarUrl = avatarUrl;
         this.libraryRole = libraryRole;
-        this.roleRequest = roleRequest;
         this.rentals = rentals;
     }
 
@@ -65,10 +61,6 @@ public class Account {
 
     public String getRoleKey() {
         return libraryRole.getKey();
-    }
-
-    public boolean requestUserRole() {
-        return this.roleRequest = true;
     }
 }
 
