@@ -15,17 +15,15 @@ public class AccountMyPageResponse {
     private final String email;
     private final String avatarUrl;
     private final LibraryRole role;
-    private final boolean requested;
     private final List<RentalBookResponse> rentalBookResponses;
 
     @Builder
     private AccountMyPageResponse(String name, String email, String avatarUrl, LibraryRole role,
-                                  boolean requested, List<RentalBookResponse> rentalBookResponses) {
+                                  List<RentalBookResponse> rentalBookResponses) {
         this.name = name;
         this.email = email;
         this.avatarUrl = avatarUrl;
         this.role = role;
-        this.requested = requested;
         this.rentalBookResponses = rentalBookResponses;
     }
 
@@ -35,7 +33,6 @@ public class AccountMyPageResponse {
                 .email(account.getEmail())
                 .avatarUrl(account.getAvatarUrl())
                 .role(account.getLibraryRole())
-                .requested(account.isRoleRequest())
                 .rentalBookResponses(rentalBookResponses)
                 .build();
     }
