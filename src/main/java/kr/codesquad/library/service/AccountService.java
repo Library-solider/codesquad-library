@@ -4,13 +4,11 @@ import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.AccountRepository;
 import kr.codesquad.library.domain.account.response.AccountMyPageResponse;
 import kr.codesquad.library.domain.account.response.AccountProfileResponse;
-import kr.codesquad.library.domain.account.response.RoleRequestResponse;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.rental.Rental;
 import kr.codesquad.library.domain.rental.RentalRepository;
 import kr.codesquad.library.domain.rental.response.RentalBookResponse;
 import kr.codesquad.library.global.error.exception.domain.AccountNotFoundException;
-import kr.codesquad.library.global.error.exception.domain.BadRequestAuthorizationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static kr.codesquad.library.domain.account.LibraryRole.*;
 
 @RequiredArgsConstructor
 @Service
@@ -45,16 +41,5 @@ public class AccountService {
     public AccountProfileResponse getProfile(Long accountId) {
         Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
         return AccountProfileResponse.of(account);
-    }
-
-    @Transactional
-    public RoleRequestResponse requestAuthority(Long accountId) {
-        Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
-
-        if (account.getLibraryRole() != GUEST || account.isRoleRequest()) {
-            throw new BadRequestAuthorizationException();
-        }
-
-        return RoleRequestResponse.of(account, account.requestUserRole());
     }
 }
