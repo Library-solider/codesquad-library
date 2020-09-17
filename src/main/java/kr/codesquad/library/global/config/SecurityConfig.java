@@ -1,5 +1,7 @@
 package kr.codesquad.library.global.config;
 
+import kr.codesquad.library.global.config.oauth.security.CustomAccessDeniedHandler;
+import kr.codesquad.library.global.config.oauth.security.CustomAuthenticationEntryPoint;
 import kr.codesquad.library.global.config.oauth.security.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOAuth2UserService customOAuth2UserService;
+    private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+    private final CustomAccessDeniedHandler accessDeniedHandler;
 
     @Value("${app.redirectUrl}")
     private String redirectUrl;
@@ -39,11 +43,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .headers().frameOptions().disable();
+        http.exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler);
 
         http.authorizeRequests()
                 .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/oauth2/redirect").permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER", "ADMIN");
+                .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER", "ADMIN")
+                .anyRequest().authenticated();
 
         http.oauth2Login()
                 .defaultSuccessUrl(redirectUrl, true)

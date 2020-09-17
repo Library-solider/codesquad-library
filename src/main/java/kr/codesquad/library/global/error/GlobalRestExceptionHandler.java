@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,18 +15,6 @@ import javax.validation.ConstraintViolationException;
 @Slf4j
 @RestControllerAdvice
 public class GlobalRestExceptionHandler {
-
-    /**
-     * javax.validation.Valid or @Validated 으로 binding error 발생시 발생합니다. HttpMessageConverter 에서 등록한
-     * HttpMessageConverter binding 못할경우 발생 주로 @RequestBody, @RequestPart 어노테이션에서 발생
-     */
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    protected ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(
-            MethodArgumentNotValidException e) {
-        log.error("handleMethodArgumentNotValidException", e);
-        final ErrorResponse response = ErrorResponse.of(ErrorCode.INVALID_INPUT_VALUE, e.getBindingResult());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    }
 
     @ExceptionHandler(ConstraintViolationException.class)
     protected ResponseEntity<ErrorResponse> handleConstraintViolationException(
