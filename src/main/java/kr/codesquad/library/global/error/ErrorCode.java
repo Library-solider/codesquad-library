@@ -27,7 +27,7 @@ public enum ErrorCode {
     ACCOUNT_NOT_FOUND(404, "A001", "해당 계정은 없습니다."),
     ACCOUNT_LOGOUT(400, "A002", "로그인이 필요합니다."),
     PROVIDER_NOT_FOUND(404, "A003", "존재하지 않는 OAuth 제공자 입니다."),
-    BAD_REQUEST_AUTHORIZATION(400, "A005", "잘못된 권한 신청입니다."),
+    AUTHORIZATION_FORBIDDEN(403, "A004", "해당 요청에 권한이 없습니다."),
 
     ;
 
