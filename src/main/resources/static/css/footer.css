@@ -1,0 +1,23 @@
+/* Footer Layout */
+.footer {
+    height: 90px;
+    background-color: #171D23;
+    box-shadow: 1px -5px 19px -10px rgba(38,51,64,1);
+    display: flex;
+    justify-content: center;
+}
+.footer .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Copyright */
+.copyright-author {
+    margin-top: 15px;
+    font-size: 7px;
+    opacity: 0.5;
+}
