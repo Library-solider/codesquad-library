@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CODESQUAD LIBRARY - ADMIN</title>
+</head>
+<body>
+<div class="main">
+    <div class="container">
+        <div class="main-contents">
+            <h2 class="main-contents__navigation-title">승인 대기 회원 목록</h2>
+            <table class="account-table">
+                <thead>
+                <tr>
+                    <th class="account-table__column-name">ID</th>
+                    <th class="account-table__column-name">OAuth ID</th>
+                    <th class="account-table__column-name">NAME</th>
+                    <th class="account-table__column-name">EMAIL</th>
+                    <th class="account-table__column-name">ROLE</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="accountSummary : ${accountSummaries}">
+                        <td th:text="${accountSummary.id}" class="account-table__data"></td>
+                        <td th:text="${accountSummary.oauthId}" class="account-table__data"></td>
+                        <td th:text="${accountSummary.name}" class="account-table__data"></td>
+                        <td th:text="${accountSummary.email}" class="account-table__data"></td>
+                        <td th:text="${accountSummary.role}" class="account-table__data"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
