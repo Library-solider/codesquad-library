@@ -82,6 +82,10 @@
     opacity: 1;
 }
 
+.navigation .navigation__item a {
+    color: #fff;
+}
+
 /* User Information */
 .user-info {
     display: flex;
@@ -125,6 +129,10 @@
 
 .sub-navigation .sub-navigation__item--clicked {
     opacity: 1;
+}
+
+.sub-navigation .sub-navigation__item a {
+    color: #fff;
 }
 
 .sub-navigation .sub-navigation__icon {
