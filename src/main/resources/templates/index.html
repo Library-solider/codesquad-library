@@ -6,13 +6,15 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CODESQUAD LIBRARY - ADMIN</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <script th:src="@{https://kit.fontawesome.com/1099c14a72.js}" crossorigin="anonymous"></script>
 </head>
 <body>
     <header class="header">
         <div class="container">
             <div class="header__box">
                 <div class="site-title">
-                    <img src="/images/logo.png" alt="CODE SQUAD" class="site-title__logo">
+                    <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo" src="">
                     <div class="site-title__column">
                         <h1 class="site-title__main-text">
                             CODESQUAD LIBRARY
@@ -27,7 +29,7 @@
                     <li class="navigation__item">대여 관리</li>
                 </ul>
                 <div class="user-info">
-                    <img src="images/logo.png" alt="USER IMAGE" class="user-info__image">
+                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image" src="">
                     <span class="user-info__name">USER_NAME</span>
                 </div>
             </div>
@@ -49,13 +51,13 @@
                 </form>
                 <table class="data-table">
                     <thead>
-                    <tr>
-                        <th class="data-table__column-name">ID</th>
-                        <th class="data-table__column-name">OAuth ID</th>
-                        <th class="data-table__column-name">NAME</th>
-                        <th class="data-table__column-name">EMAIL</th>
-                        <th class="data-table__column-name">ROLE</th>
-                    </tr>
+                        <tr>
+                            <th class="data-table__column-name">ID</th>
+                            <th class="data-table__column-name">OAuth ID</th>
+                            <th class="data-table__column-name">이름</th>
+                            <th class="data-table__column-name">이메일</th>
+                            <th class="data-table__column-name">등급</th>
+                        </tr>
                     </thead>
                     <tbody>
                         <tr th:each="accountSummary : ${accountSummaries}">
