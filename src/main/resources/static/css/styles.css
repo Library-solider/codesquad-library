@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap');
+
+@import "reset.css";
+@import "header.css";
+@import "main.css";
+@import "footer.css";
+
+body {
+    font-family: 'Roboto', sans-serif;
+    color: #24292E;
+}
+
+.container {
+    width: 1100px;
+}
