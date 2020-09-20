@@ -23,10 +23,10 @@
                     </div>
                 </div>
                 <ul class="navigation">
-                    <li class="navigation__item navigation__item--clicked">회원 관리</li>
-                    <li class="navigation__item">도서 관리</li>
-                    <li class="navigation__item">카테고리 관리</li>
-                    <li class="navigation__item">대여 관리</li>
+                    <li class="navigation__item navigation__item--clicked"><a href="#">회원 관리</a></li>
+                    <li class="navigation__item"><a href="#">도서 관리</a></li>
+                    <li class="navigation__item"><a href="#">카테고리 관리</a></li>
+                    <li class="navigation__item"><a href="#">대여 관리</a></li>
                 </ul>
                 <div class="user-info">
                     <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image" src="">
@@ -34,15 +34,15 @@
                 </div>
             </div>
             <ul class="sub-navigation">
-                <li class="sub-navigation__item sub-navigation__item--clicked"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">회원 목록</span></li>
-                <li class="sub-navigation__item"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">회원 수정</span></li>
+                <li class="sub-navigation__item sub-navigation__item--clicked"><a href="#"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">회원 목록</span></a></li>
+                <li class="sub-navigation__item"><a href="#"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">회원 수정</span></a></li>
             </ul>
         </div>
     </header>
     <div class="main">
         <div class="container">
             <div class="main-contents">
-                <h2 class="main-contents__navigation-title">승인 대기 회원 목록</h2>
+                <h2 class="main-contents__navigation-title">승인 대기 목록</h2>
                 <form class="search-form">
                     <div class="search-form__box">
                         <input type="search" class="search-form__bar" placeholder="검색어를 입력하세요."/>
@@ -69,6 +69,13 @@
                         </tr>
                     </tbody>
                 </table>
+                <ol class="paging-numbers">
+                    <li class="paging-numbers__number"><a href="#">1</a></li>
+                    <li class="paging-numbers__number"><a href="#">2</a></li>
+                    <li class="paging-numbers__number"><a href="#">3</a></li>
+                    <li class="paging-numbers__number"><a href="#">4</a></li>
+                    <li class="paging-numbers__number"><a href="#">5</a></li>
+                </ol>
             </div>
         </div>
     </div>
