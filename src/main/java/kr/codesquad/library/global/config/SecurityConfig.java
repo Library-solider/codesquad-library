@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(accessDeniedHandler);
 
         http.authorizeRequests()
-                .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/oauth2/redirect").permitAll()
+                .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/oauth2/redirect", "/v1/admin/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER", "ADMIN")
                 .anyRequest().authenticated();
