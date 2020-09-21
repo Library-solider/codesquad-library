@@ -75,7 +75,7 @@ class BookRepositoryTest {
     public void 첫번째_카테고리페이지가져오기(int page, int size, Long categoryId, String property) {
         PageRequest pageRequest = getPageRequest(page, size, property);
 
-        Page<Book> page1 = books.findByCategoryId(categoryId, pageRequest);
+        Page<Book> page1 = books.findAllByCategoryId(categoryId, pageRequest);
 
         assertThat(page1.getTotalElements()).isEqualTo(39);
         assertThat(page1.getTotalPages()).isEqualTo(2);
@@ -87,7 +87,7 @@ class BookRepositoryTest {
     @ParameterizedTest
     public void 검색_실패(int page, int size, String property, String title) throws Exception {
         //when
-        Page<Book> bookPage = books.findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
+        Page<Book> bookPage = books.findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
         List<Book> bookList = bookPage.getContent();
         //then
         assertThat(bookList).isEmpty();
@@ -97,7 +97,7 @@ class BookRepositoryTest {
     @ParameterizedTest
     public void 도서제목_저자_검색(int page, int size, String property, String title, int bookCount) throws Exception {
         //when
-        Page<Book> bookPage = books.findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
+        Page<Book> bookPage = books.findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
         List<Book> bookList = bookPage.getContent();
 
         //then

@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface RentalRepository extends JpaRepository<Rental, Long> {
 
-    List<Rental> findByAccountAndIsReturnedFalse(Account account);
+    List<Rental> findAllByAccountAndIsReturnedFalse(Account account);
 
     Optional<Rental> findByBookAndAccountAndIsReturnedFalse(Book book, Account account);
 }

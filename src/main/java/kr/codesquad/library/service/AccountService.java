@@ -27,7 +27,7 @@ public class AccountService {
 
     public AccountMyPageResponse getMyPage(Long accountId) {
         Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
-        List<Rental> rentalList = rentalRepository.findByAccountAndIsReturnedFalse(account);
+        List<Rental> rentalList = rentalRepository.findAllByAccountAndIsReturnedFalse(account);
         List<Book> bookList = rentalList.stream().map(Rental::getBook).collect(Collectors.toList());
         List<RentalBookResponse> rentalBookResponses = new ArrayList<>();
 
