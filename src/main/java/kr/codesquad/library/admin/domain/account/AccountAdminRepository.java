@@ -1,4 +1,4 @@
-package kr.codesquad.library.admin.model.account;
+package kr.codesquad.library.admin.domain.account;
 
 import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.LibraryRole;
