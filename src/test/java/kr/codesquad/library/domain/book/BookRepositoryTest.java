@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 
 @DataJpaTest
@@ -86,31 +87,24 @@ class BookRepositoryTest {
     @ParameterizedTest
     public void 검색_실패(int page, int size, String property, String title) throws Exception {
         //when
-        List<Book> bookList = books.findByTitleIgnoreCaseContaining(title);
+        Page<Book> bookPage = books.findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
+        List<Book> bookList = bookPage.getContent();
         //then
         assertThat(bookList).isEmpty();
     }
 
-    @CsvSource({"0, 60, publicationDate, 자바, 48"})
+    @CsvSource({"0, 20, publicationDate, 켄트 벡, 3"})
     @ParameterizedTest
-    public void 도서제목_띄어쓰기_무시하고_제대로된_검색(int page, int size, String property, String title, int bookCount) throws Exception {
+    public void 도서제목_저자_검색(int page, int size, String property, String title, int bookCount) throws Exception {
         //when
-        List<Book> bookList = books.findByTitleIgnoreCaseContaining(title);
+        Page<Book> bookPage = books.findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
+        List<Book> bookList = bookPage.getContent();
 
         //then
-        assertThat(bookList).isNotEmpty();
-        assertThat(bookList.size()).isEqualTo(bookCount);
-    }
-
-    @CsvSource({"0, 60, publicationDate, 켄트 벡, 3"})
-    @ParameterizedTest
-    public void 도서저자_띄어쓰기_무시하고_제대로된_검색(int page, int size, String property, String author, int bookCount) throws Exception {
-        //when
-        List<Book> bookList = books.findByAuthorIgnoreCaseContaining(author);
-
-        //then
-        assertThat(bookList).isNotEmpty();
-        assertThat(bookList.size()).isEqualTo(bookCount);
+        assertAll(
+                () -> assertThat(bookList).isNotEmpty(),
+                () -> assertThat(bookList.size()).isEqualTo(bookCount)
+        );
     }
 
     private PageRequest getPageRequest(int page, int size, String property) {

@@ -6,6 +6,7 @@ import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.book.BookRepository;
 import kr.codesquad.library.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.domain.book.response.BookResponse;
+import kr.codesquad.library.domain.book.response.BookSearchResponse;
 import kr.codesquad.library.domain.rental.Rental;
 import kr.codesquad.library.domain.rental.RentalRepository;
 import kr.codesquad.library.global.error.exception.domain.AccountNotFoundException;
@@ -75,17 +76,17 @@ class BookServiceTest {
         );
     }
 
-    @CsvSource({"켄트 벡, 4"})
+    @CsvSource({"켄트 벡, 3, 1"})
     @ParameterizedTest
-    public void 검색한_도서정보_가져오기(String searchWord, int result) {
+    public void 검색한_도서정보_가져오기(String searchWord, int result, int page) {
 
         //when
-        List<BookResponse> bookSearchResponse = bookService.searchBooksList(searchWord);
+        BookSearchResponse bookSearchResponse = bookService.searchBooks(searchWord, page);
 
         //then
         assertAll(
-                () -> assertThat(bookSearchResponse).isNotEmpty(),
-                () -> assertThat(bookSearchResponse.size()).isEqualTo(result)
+                () -> assertThat(bookSearchResponse.getBooks()).isNotEmpty(),
+                () -> assertThat(bookSearchResponse.getBookCount()).isEqualTo(result)
         );
     }
 
@@ -95,7 +96,7 @@ class BookServiceTest {
     public void 도서_대여하기(Long bookId, Long accountId, int index) {
 
         //when
-        bookService.rentalBookByUser(bookId, accountId);
+        bookService.rentalBook(bookId, accountId);
         List<Rental> rentalList = rentalRepository.findAll();
         Rental rental = rentalList.get(index);
         //then
@@ -114,7 +115,7 @@ class BookServiceTest {
         Long rentalId = saveRental(bookId, accountId);
 
         //when
-        bookService.returnBookByUser(bookId, accountId);
+        bookService.returnBook(bookId, accountId);
         Rental rental = rentalRepository.findById(rentalId).orElseThrow(RentalNotFoundException::new);
         rental.returnBook();
 

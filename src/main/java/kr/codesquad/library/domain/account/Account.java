@@ -13,8 +13,8 @@ import java.util.List;
 import static javax.persistence.CascadeType.*;
 import static javax.persistence.EnumType.*;
 
-@Getter
 @NoArgsConstructor
+@Getter
 @Entity
 public class Account {
 
@@ -39,21 +39,22 @@ public class Account {
     @Enumerated(STRING)
     private LibraryRole libraryRole;
 
+    @Column(name = "role_request", nullable = false)
+    private boolean roleRequest;
+
     @OneToMany(mappedBy = "account", cascade = ALL)
     private List<Rental> rentals = new ArrayList<>();
 
     @Builder
-    private Account(Long oauthId, String name, String email, LibraryRole libraryRole, String avatarUrl, List<Rental> rentals) {
+    private Account(Long oauthId, String name, String email, String avatarUrl, LibraryRole libraryRole,
+                    boolean roleRequest, List<Rental> rentals) {
         this.oauthId = oauthId;
         this.name = name;
         this.email = email;
-        this.libraryRole = libraryRole;
         this.avatarUrl = avatarUrl;
-        this.rentals = rentals;
-    }
-
-    public void changeRole(LibraryRole libraryRole) {
         this.libraryRole = libraryRole;
+        this.roleRequest = roleRequest;
+        this.rentals = rentals;
     }
 
     public Account update(String name, String avatarUrl) {
@@ -65,4 +66,9 @@ public class Account {
     public String getRoleKey() {
         return libraryRole.getKey();
     }
+
+    public boolean requestUserRole() {
+        return this.roleRequest = true;
+    }
 }
+

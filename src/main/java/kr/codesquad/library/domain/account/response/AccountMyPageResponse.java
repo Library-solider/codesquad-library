@@ -1,6 +1,7 @@
 package kr.codesquad.library.domain.account.response;
 
 import kr.codesquad.library.domain.account.Account;
+import kr.codesquad.library.domain.account.LibraryRole;
 import kr.codesquad.library.domain.rental.response.RentalBookResponse;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,22 +14,29 @@ public class AccountMyPageResponse {
     private final String name;
     private final String email;
     private final String avatarUrl;
-    private final List<RentalBookResponse> rentalBookResponse;
+    private final LibraryRole role;
+    private final boolean requested;
+    private final List<RentalBookResponse> rentalBookResponses;
 
     @Builder
-    private AccountMyPageResponse(String name, String email, String avatarUrl, List<RentalBookResponse> rentalBookResponse) {
+    private AccountMyPageResponse(String name, String email, String avatarUrl, LibraryRole role,
+                                  boolean requested, List<RentalBookResponse> rentalBookResponses) {
         this.name = name;
         this.email = email;
         this.avatarUrl = avatarUrl;
-        this.rentalBookResponse = rentalBookResponse;
+        this.role = role;
+        this.requested = requested;
+        this.rentalBookResponses = rentalBookResponses;
     }
 
-    public static AccountMyPageResponse of(Account account, List<RentalBookResponse> rentalBookResponse) {
+    public static AccountMyPageResponse of(Account account, List<RentalBookResponse> rentalBookResponses) {
         return AccountMyPageResponse.builder()
                 .name(account.getName())
                 .email(account.getEmail())
                 .avatarUrl(account.getAvatarUrl())
-                .rentalBookResponse(rentalBookResponse)
+                .role(account.getLibraryRole())
+                .requested(account.isRoleRequest())
+                .rentalBookResponses(rentalBookResponses)
                 .build();
     }
 }

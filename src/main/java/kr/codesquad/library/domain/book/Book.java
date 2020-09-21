@@ -66,8 +66,12 @@ public class Book {
         this.recommendCount = recommendCount;
     }
 
-    public void rentalOrReturnBook() {
-        this.available = !available;
+    public void rentalBook() {
+        this.available = false;
+    }
+
+    public void returnBook() {
+        this.available = true;
     }
 
     public void setCategoryToTest(Category category) {
