@@ -19,8 +19,8 @@ public class AccountAdminController {
     private final AccountAdminService accountAdminService;
 
     @GetMapping("")
-    public String loginForm() {
-        return "login-form";
+    public String authorize() {
+        return "authorization";
     }
 
     @GetMapping("/main")
