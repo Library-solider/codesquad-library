@@ -63,7 +63,7 @@ class BookControllerTest {
     public void 도서빌리기_not_OAuth2() throws Exception {
         mockMvc.perform(post("/v1/books/1"))
                 .andDo(print())
-                .andExpect(status().isFound());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
