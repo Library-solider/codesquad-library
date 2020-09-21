@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 public interface AccountAdminRepository extends JpaRepository<Account, Long> {
 
     List<Account> findAllByLibraryRole(LibraryRole libraryRole);
