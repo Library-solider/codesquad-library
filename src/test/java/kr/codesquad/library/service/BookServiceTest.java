@@ -66,7 +66,7 @@ class BookServiceTest {
     public void 빌려가지_않은_도서상세정보_가져오기(Long id) {
 
         //when
-        BookDetailResponse bookDetailResponse = bookService.findByBookId(id);
+        BookDetailResponse bookDetailResponse = bookService.getBooksByBookId(id);
 
         //then
         assertAll(
