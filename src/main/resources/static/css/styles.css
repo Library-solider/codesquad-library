@@ -5,6 +5,9 @@
 @import "main.css";
 @import "footer.css";
 
+/* Pages */
+@import "authorization.css";
+
 body {
     font-family: 'Roboto', sans-serif;
     color: #24292E;
