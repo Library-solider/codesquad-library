@@ -70,12 +70,12 @@ public class BookService {
                 .categoryId(categoryId)
                 .categoryTitle(category.getTitle())
                 .bookCount(category.getBooks().size())
-                .books(findByCategoryIdBooks(categoryId, page))
+                .books(findBooksByCategoryId(categoryId, page))
                 .build();
     }
 
-    public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
-        Page<Book> bookPage = bookRepository.findByCategoryId(categoryId, getPageRequest(page));
+    public List<BookResponse> findBooksByCategoryId(Long categoryId, int page) {
+        Page<Book> bookPage = bookRepository.findAllByCategoryId(categoryId, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
@@ -91,7 +91,7 @@ public class BookService {
 
     public BookSearchResponse searchBooks(String searchWord, int page) {
         Page<Book> bookPage = bookRepository
-                .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(searchWord, searchWord, getPageRequest(page));
+                .findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(searchWord, searchWord, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
         List<BookResponse> bookResponseList = bookList.stream().map(BookResponse::of).collect(Collectors.toList());
 
@@ -109,7 +109,7 @@ public class BookService {
         if (!book.isAvailable()) {
             throw new OutOfBookException();
         }
-        if (rentalRepository.findByAccountAndIsReturnedFalse(account).size() >= MAX_RENTAL_SIZE) {
+        if (rentalRepository.findAllByAccountAndIsReturnedFalse(account).size() >= MAX_RENTAL_SIZE) {
             throw new MaxRentalViolationException();
         }
 
