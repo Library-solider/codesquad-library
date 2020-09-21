@@ -45,9 +45,8 @@ class AccountAdminServiceTest {
 
         //then
         assertEquals(accountSummaries.size(), countOfGuestAccount);
-        assertTrue(accountSummaries.stream()
-                                   .map(AccountSummaryResponse::getId)
-                                   .collect(Collectors.toList())
-                                   .equals(guestAccountIds));
+        assertEquals(accountSummaries.stream()
+                                     .map(AccountSummaryResponse::getId)
+                                     .collect(Collectors.toList()), guestAccountIds);
     }
 }
