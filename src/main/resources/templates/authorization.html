@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CODESQUAD LIBRARY ADMIN</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+<div class="authorization">
+    <div class="container">
+        <img th:src="@{/images/logo-with-title.png}" alt="CODESQUAD" class="authorization-logo">
+        <form action="http://localhost:8080/oauth2/authorization/github" method="get" class="authorization-form">
+            <button type="submit" class="authorization-form__button">LOGIN</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

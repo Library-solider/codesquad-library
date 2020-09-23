@@ -1,0 +1,38 @@
+/* Authorization Layout */
+.authorization {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 700px;
+}
+
+.authorization .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Authorization Logo */
+.authorization-logo {
+    width: auto; max-width: 300px;
+    height: auto; max-height: 300px;
+}
+
+/* Authorization Form */
+.authorization-form .authorization-form__button {
+    margin-top: 30px;
+    width: 120px;
+    height: 40px;
+    font-size: 16px;
+    border: none;
+    background-color: #0455BF;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 2px 5px 15px -3px rgba(67,143,242,1);
+}
+
+.authorization-form .authorization-form__button:hover {
+    box-shadow: 0 1px 12px 3px rgba(67,143,242,1);
+    transition: 0.3s;
+}
