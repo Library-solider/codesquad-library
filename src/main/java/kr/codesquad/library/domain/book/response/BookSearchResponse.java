@@ -1,5 +1,6 @@
 package kr.codesquad.library.domain.book.response;
 
+import kr.codesquad.library.domain.book.Book;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -15,5 +16,12 @@ public class BookSearchResponse {
     private BookSearchResponse(Long bookCount, List<BookResponse> books) {
         this.bookCount = bookCount;
         this.books = books;
+    }
+
+    public static BookSearchResponse from(Long bookCount, List<BookResponse> bookResponses) {
+        return BookSearchResponse.builder()
+                .bookCount(bookCount)
+                .books(bookResponses)
+                .build();
     }
 }

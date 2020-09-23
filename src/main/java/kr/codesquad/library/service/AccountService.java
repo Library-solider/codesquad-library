@@ -35,7 +35,7 @@ public class AccountService {
             rentalBookResponses.add(RentalBookResponse.of(bookList.get(i), rentalList.get(i)));
         }
 
-        return AccountMyPageResponse.of(account, rentalBookResponses);
+        return AccountMyPageResponse.from(account, rentalBookResponses);
     }
 
     public AccountProfileResponse getProfile(Long accountId) {

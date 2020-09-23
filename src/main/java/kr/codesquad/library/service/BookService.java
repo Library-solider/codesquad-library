@@ -50,12 +50,7 @@ public class BookService {
     public BooksByCategoryResponse findTop6BooksAndCategoryById(Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
-        return BooksByCategoryResponse.builder()
-                .categoryId(categoryId)
-                .categoryTitle(category.getTitle())
-                .bookCount(category.getBooks().size())
-                .books(findTop6BooksByCategory(categoryId))
-                .build();
+        return BooksByCategoryResponse.from(category, findTop6BooksByCategory(categoryId));
     }
 
     public List<BookResponse> findTop6BooksByCategory(Long categoryId) {
@@ -67,12 +62,7 @@ public class BookService {
     public BooksByCategoryResponse getBooksByCategoryId(Long categoryId, int page) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
-        return BooksByCategoryResponse.builder()
-                .categoryId(categoryId)
-                .categoryTitle(category.getTitle())
-                .bookCount(category.getBooks().size())
-                .books(findBooksByCategoryId(categoryId, page))
-                .build();
+        return BooksByCategoryResponse.from(category, findBooksByCategoryId(categoryId, page));
     }
 
     public List<BookResponse> findBooksByCategoryId(Long categoryId, int page) {
@@ -88,7 +78,7 @@ public class BookService {
         Rentals rentals = Rentals.of(findBook.getRentals());
         Rental rental = rentals.findByBook(findBook);
 
-        return BookDetailResponse.of(findBook, rental, bookcase);
+        return BookDetailResponse.from(findBook, rental, bookcase);
     }
 
     public BookSearchResponse searchBooks(String searchWord, int page) {
@@ -97,10 +87,7 @@ public class BookService {
         List<Book> bookList = bookPage.getContent();
         List<BookResponse> bookResponseList = bookList.stream().map(BookResponse::of).collect(Collectors.toList());
 
-        return BookSearchResponse.builder()
-                .bookCount(bookPage.getTotalElements())
-                .books(bookResponseList)
-                .build();
+        return BookSearchResponse.from(bookPage.getTotalElements(), bookResponseList);
     }
 
     @Transactional
@@ -124,7 +111,8 @@ public class BookService {
     public void returnBook(Long bookId, Long accountId) {
         Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Account account =  accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
-        Rental rental = rentalRepository.findByBookAndAccountAndIsReturnedFalse(book, account).orElseThrow(RentalNotFoundException::new);
+        Rental rental = rentalRepository.findByBookAndAccountAndIsReturnedFalse(book, account)
+                .orElseThrow(RentalNotFoundException::new);
 
         if (rental.isReturned()) {
             throw new RedundantRequestBookException();

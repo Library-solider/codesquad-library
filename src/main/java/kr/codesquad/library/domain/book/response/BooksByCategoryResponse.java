@@ -1,5 +1,6 @@
 package kr.codesquad.library.domain.book.response;
 
+import kr.codesquad.library.domain.category.Category;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -19,5 +20,14 @@ public class BooksByCategoryResponse {
         this.categoryTitle = categoryTitle;
         this.bookCount = bookCount;
         this.books = books;
+    }
+
+    public static BooksByCategoryResponse from(Category category, List<BookResponse> bookResponses) {
+        return BooksByCategoryResponse.builder()
+                .categoryId(category.getId())
+                .categoryTitle(category.getTitle())
+                .bookCount(category.getBooks().size())
+                .books(bookResponses)
+                .build();
     }
 }

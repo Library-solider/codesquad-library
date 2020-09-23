@@ -40,7 +40,7 @@ public class BookDetailResponse {
         this.bookBorrower = bookBorrower;
     }
 
-    public static BookDetailResponse of(Book book, Rental rental, Bookcase bookcase) {
+    public static BookDetailResponse from(Book book, Rental rental, Bookcase bookcase) {
         BookDetailResponseBuilder builder = BookDetailResponse.builder();
                 builder.available(book.isAvailable())
                 .title(book.getTitle())
