@@ -1,5 +1,6 @@
 package kr.codesquad.library.domain.book;
 
+import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.rental.Rental;
 import lombok.Builder;
@@ -50,6 +51,10 @@ public class Book {
 
     @OneToMany(mappedBy = "book", cascade = ALL)
     private List<Rental> rentals = new ArrayList<>();
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "bookcase_id")
+    private Bookcase bookcase;
 
     @Builder
     private Book(Long id, String title, String description, String author, String publisher,

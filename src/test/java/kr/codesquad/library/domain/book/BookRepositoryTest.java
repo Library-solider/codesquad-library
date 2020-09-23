@@ -2,6 +2,7 @@ package kr.codesquad.library.domain.book;
 
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.category.CategoryRepository;
+import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -27,17 +28,17 @@ import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTest
 class BookRepositoryTest {
 
     @Autowired
-    private BookRepository books;
+    private BookRepository bookRepository;
 
     @Autowired
-    private CategoryRepository categories;
+    private CategoryRepository categoryRepository;
 
     private Category setup() {
         Category category = Category.builder()
                 .id(1L)
                 .title("모바일")
                 .build();
-        categories.save(category);
+        categoryRepository.save(category);
 
         return category;
     }
@@ -64,9 +65,9 @@ class BookRepositoryTest {
                 .build();
         book.setCategoryToTest(mobile);
 
-        books.save(book);
+        bookRepository.save(book);
 
-        List<Book> MobileBooks = books.findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(1L);
+        List<Book> MobileBooks = bookRepository.findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(1L);
         assertThat(MobileBooks.get(0).getTitle()).isEqualTo(book.getTitle());
     }
 
@@ -75,7 +76,7 @@ class BookRepositoryTest {
     public void 첫번째_카테고리페이지가져오기(int page, int size, Long categoryId, String property) {
         PageRequest pageRequest = getPageRequest(page, size, property);
 
-        Page<Book> page1 = books.findAllByCategoryId(categoryId, pageRequest);
+        Page<Book> page1 = bookRepository.findAllByCategoryId(categoryId, pageRequest);
 
         assertThat(page1.getTotalElements()).isEqualTo(39);
         assertThat(page1.getTotalPages()).isEqualTo(2);
@@ -87,7 +88,7 @@ class BookRepositoryTest {
     @ParameterizedTest
     public void 검색_실패(int page, int size, String property, String title) throws Exception {
         //when
-        Page<Book> bookPage = books.findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
+        Page<Book> bookPage = bookRepository.findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
         List<Book> bookList = bookPage.getContent();
         //then
         assertThat(bookList).isEmpty();
@@ -97,13 +98,27 @@ class BookRepositoryTest {
     @ParameterizedTest
     public void 도서제목_저자_검색(int page, int size, String property, String title, int bookCount) throws Exception {
         //when
-        Page<Book> bookPage = books.findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
+        Page<Book> bookPage = bookRepository.findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(title, title, getPageRequest(page, size, property));
         List<Book> bookList = bookPage.getContent();
 
         //then
         assertAll(
                 () -> assertThat(bookList).isNotEmpty(),
                 () -> assertThat(bookList.size()).isEqualTo(bookCount)
+        );
+    }
+
+    @CsvSource({"1, 5, 11"})
+    @ParameterizedTest
+    public void 도서1번_상세페이지_가져오기(Long bookId, Long categoryId, Long bookCaseId) {
+        //when
+        Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+
+        //then
+        assertAll(
+                () -> assertThat(book.getId()).isEqualTo(bookId),
+                () -> assertThat(book.getCategory().getId()).isEqualTo(categoryId),
+                () -> assertThat(book.getBookcase().getId()).isEqualTo(bookCaseId)
         );
     }
 

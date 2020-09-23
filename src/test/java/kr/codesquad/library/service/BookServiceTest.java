@@ -61,17 +61,18 @@ class BookServiceTest {
         assertThat(books.size()).isEqualTo(20);
     }
 
-    @CsvSource({"3"})
+    @CsvSource({"1, 휴게실 - 1"})
     @ParameterizedTest
-    public void 빌려가지_않은_도서상세정보_가져오기(Long id) {
+    public void 빌려가지_않은_도서상세정보_가져오기(Long bookId, String location) {
 
         //when
-        BookDetailResponse bookDetailResponse = bookService.getBooksByBookId(id);
+        BookDetailResponse bookDetailResponse = bookService.getBooksByBookId(bookId);
 
         //then
         assertAll(
                 () -> assertThat(bookDetailResponse).isNotNull(),
                 () -> assertThat(bookDetailResponse.isAvailable()).isTrue(),
+                () -> assertThat(bookDetailResponse.getLocation()).isEqualTo(location),
                 () -> assertThat(bookDetailResponse.getBookBorrower()).isNull()
         );
     }

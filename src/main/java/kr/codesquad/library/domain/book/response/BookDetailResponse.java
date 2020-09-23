@@ -1,6 +1,7 @@
 package kr.codesquad.library.domain.book.response;
 
 import kr.codesquad.library.domain.book.Book;
+import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.rental.Rental;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,13 +19,14 @@ public class BookDetailResponse {
     private final String publisher;
     private final LocalDate publicationDate;
     private final String isbn;
+    private final String location;
     private final int recommendCount;
     private final String bookBorrower;
 
     @Builder
     private BookDetailResponse(boolean available, String title, String author,
-                              String imageUrl, String description, String publisher,
-                              LocalDate publicationDate, String isbn, int recommendCount, String bookBorrower) {
+                              String imageUrl, String description, String publisher, LocalDate publicationDate,
+                              String isbn, String location, int recommendCount, String bookBorrower) {
         this.available = available;
         this.title = title;
         this.author = author;
@@ -33,11 +35,12 @@ public class BookDetailResponse {
         this.publisher = publisher;
         this.publicationDate = publicationDate;
         this.isbn = isbn;
+        this.location = location;
         this.recommendCount = recommendCount;
         this.bookBorrower = bookBorrower;
     }
 
-    public static BookDetailResponse of(Book book, Rental rental) {
+    public static BookDetailResponse from(Book book, Rental rental, Bookcase bookcase) {
         BookDetailResponseBuilder builder = BookDetailResponse.builder();
                 builder.available(book.isAvailable())
                 .title(book.getTitle())
@@ -47,6 +50,7 @@ public class BookDetailResponse {
                 .publisher(book.getPublisher())
                 .publicationDate(book.getPublicationDate())
                 .isbn(book.getIsbn())
+                .location(bookcase.getLocation())
                 .recommendCount(book.getRecommendCount())
                 .build();
         if (book.isAvailable()) {

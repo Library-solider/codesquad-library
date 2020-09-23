@@ -27,7 +27,7 @@ public class AccountMyPageResponse {
         this.rentalBookResponses = rentalBookResponses;
     }
 
-    public static AccountMyPageResponse of(Account account, List<RentalBookResponse> rentalBookResponses) {
+    public static AccountMyPageResponse from(Account account, List<RentalBookResponse> rentalBookResponses) {
         return AccountMyPageResponse.builder()
                 .name(account.getName())
                 .email(account.getEmail())
