@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    Page<Book> findByCategoryId(Long categoryId, Pageable pageable);
+    Page<Book> findAllByCategoryId(Long categoryId, Pageable pageable);
 
     List<Book> findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(Long categoryId);
 
-    Page<Book> findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(String title, String author, Pageable pageable);
+    Page<Book> findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(String title, String author, Pageable pageable);
 }

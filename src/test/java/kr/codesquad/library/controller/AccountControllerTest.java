@@ -29,15 +29,14 @@ class AccountControllerTest {
     @WithAnonymousUser
     public void 마이페이지_NOT_OAUTH2() throws Exception {
         mockMvc.perform(get("/v1/users/mypage"))
-                .andDo(print())
-                .andExpect(status().isFound());
+                .andExpect(status().isBadRequest());
     }
 
     @Test
     @WithGuest
     public void 마이페이지_OAUTH_GUEST() throws Exception {
         mockMvc.perform(get("/v1/users/mypage"))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isOk());
     }
 
     @Test
@@ -51,6 +50,21 @@ class AccountControllerTest {
     @WithAdmin
     public void 마이페이지_OAUTH_ADMIN() throws Exception {
         mockMvc.perform(get("/v1/users/mypage"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void 프로필_NOT_OAUTH2() throws Exception {
+        mockMvc.perform(get("/v1/users/profile"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @WithGuest
+    public void 프로필_OAUTH_GUEST() throws Exception {
+        mockMvc.perform(get("/v1/users/profile"))
+                .andDo(print())
                 .andExpect(status().isOk());
     }
 }

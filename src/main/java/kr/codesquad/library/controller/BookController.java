@@ -33,7 +33,7 @@ public class BookController {
     @GetMapping("/main")
     public ApiResult<List<BooksByCategoryResponse>> getMainBooks() {
 
-        return OK(bookService.findMainBooks());
+        return OK(bookService.getMainBooks());
     }
 
     @ApiOperation(value = "카테고리별 페이지가져오기")
@@ -42,14 +42,14 @@ public class BookController {
             @PathVariable Long categoryId,
             @RequestParam(value = "page", defaultValue = "1") @Min(PAGE_MINIMUM) Integer page) {
 
-        return OK(bookService.findByCategoryId(categoryId, page));
+        return OK(bookService.getBooksByCategoryId(categoryId, page));
     }
 
     @ApiOperation(value = "도서 상세페이지")
     @GetMapping("/books/{bookId}")
     public ApiResult<BookDetailResponse> getBookDetail(@PathVariable Long bookId) {
 
-        return OK(bookService.findByBookId(bookId));
+        return OK(bookService.getBooksByBookId(bookId));
     }
 
     @ApiOperation(value = "도서 검색페이지")

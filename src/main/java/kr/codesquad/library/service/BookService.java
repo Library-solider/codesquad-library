@@ -38,7 +38,7 @@ public class BookService {
     private final AccountRepository accountRepository;
     private final RentalRepository rentalRepository;
 
-    public List<BooksByCategoryResponse> findMainBooks() {
+    public List<BooksByCategoryResponse> getMainBooks() {
         List<BooksByCategoryResponse> mainBooks = new ArrayList<>();
         for (int i = 0; i < categoryRepository.count(); i++) {
             mainBooks.add(findTop6BooksAndCategoryById((long) i + 1));
@@ -63,25 +63,25 @@ public class BookService {
         return findBookByCategory.stream().map(BookResponse::of).collect(Collectors.toList());
     }
 
-    public BooksByCategoryResponse findByCategoryId(Long categoryId, int page) {
+    public BooksByCategoryResponse getBooksByCategoryId(Long categoryId, int page) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
         return BooksByCategoryResponse.builder()
                 .categoryId(categoryId)
                 .categoryTitle(category.getTitle())
                 .bookCount(category.getBooks().size())
-                .books(findByCategoryIdBooks(categoryId, page))
+                .books(findBooksByCategoryId(categoryId, page))
                 .build();
     }
 
-    public List<BookResponse> findByCategoryIdBooks(Long categoryId, int page) {
-        Page<Book> bookPage = bookRepository.findByCategoryId(categoryId, getPageRequest(page));
+    public List<BookResponse> findBooksByCategoryId(Long categoryId, int page) {
+        Page<Book> bookPage = bookRepository.findAllByCategoryId(categoryId, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
 
         return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
     }
 
-    public BookDetailResponse findByBookId(Long bookId) {
+    public BookDetailResponse getBooksByBookId(Long bookId) {
         Book findBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Rentals rentals = Rentals.of(findBook.getRentals());
         Rental rental = rentals.findByBook(findBook);
@@ -91,7 +91,7 @@ public class BookService {
 
     public BookSearchResponse searchBooks(String searchWord, int page) {
         Page<Book> bookPage = bookRepository
-                .findByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(searchWord, searchWord, getPageRequest(page));
+                .findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(searchWord, searchWord, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
         List<BookResponse> bookResponseList = bookList.stream().map(BookResponse::of).collect(Collectors.toList());
 
@@ -109,7 +109,7 @@ public class BookService {
         if (!book.isAvailable()) {
             throw new OutOfBookException();
         }
-        if (rentalRepository.findByAccountAndIsReturnedFalse(account).size() >= MAX_RENTAL_SIZE) {
+        if (rentalRepository.findAllByAccountAndIsReturnedFalse(account).size() >= MAX_RENTAL_SIZE) {
             throw new MaxRentalViolationException();
         }
 

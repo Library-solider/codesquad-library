@@ -55,7 +55,7 @@ class BookServiceTest {
     public void 각_카테고리별_도서를_페이지씩_가져온다(Long categoryId, int page) {
 
         //when
-        List<BookResponse> books = bookService.findByCategoryIdBooks(categoryId, page);
+        List<BookResponse> books = bookService.findBooksByCategoryId(categoryId, page);
 
         //then
         assertThat(books.size()).isEqualTo(20);
@@ -66,7 +66,7 @@ class BookServiceTest {
     public void 빌려가지_않은_도서상세정보_가져오기(Long id) {
 
         //when
-        BookDetailResponse bookDetailResponse = bookService.findByBookId(id);
+        BookDetailResponse bookDetailResponse = bookService.getBooksByBookId(id);
 
         //then
         assertAll(
