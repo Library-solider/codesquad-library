@@ -25,10 +25,6 @@ public class Category {
     @OneToMany(mappedBy = "category")
     List<Book> books = new ArrayList<>();
 
-    @ManyToOne
-    @JoinColumn(name = "bookcase_id")
-    private Bookcase bookcase;
-
     @Builder
     private Category(Long id, String title) {
         this.id = id;

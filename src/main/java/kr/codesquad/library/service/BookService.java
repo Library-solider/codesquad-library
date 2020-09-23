@@ -8,6 +8,7 @@ import kr.codesquad.library.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.domain.book.response.BookResponse;
 import kr.codesquad.library.domain.book.response.BookSearchResponse;
 import kr.codesquad.library.domain.book.response.BooksByCategoryResponse;
+import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.category.CategoryRepository;
 import kr.codesquad.library.domain.rental.Rental;
@@ -83,10 +84,11 @@ public class BookService {
 
     public BookDetailResponse getBooksByBookId(Long bookId) {
         Book findBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        Bookcase bookcase = findBook.getBookcase();
         Rentals rentals = Rentals.of(findBook.getRentals());
         Rental rental = rentals.findByBook(findBook);
 
-        return BookDetailResponse.of(findBook, rental);
+        return BookDetailResponse.of(findBook, rental, bookcase);
     }
 
     public BookSearchResponse searchBooks(String searchWord, int page) {

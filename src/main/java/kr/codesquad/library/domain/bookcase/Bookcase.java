@@ -15,7 +15,5 @@ public class Bookcase {
     @Column(name = "bookcase_id")
     public Long id;
 
-    private String name;
-
     private String location;
 }
