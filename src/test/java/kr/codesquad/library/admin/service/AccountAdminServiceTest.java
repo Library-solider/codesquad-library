@@ -61,7 +61,7 @@ class AccountAdminServiceTest {
         List<Long> guestAccountIds = Arrays.asList(firstGuestAccountId, secondGuestAccountId, thirdGuestAccountId);
 
         //when
-        accountAdminService.authorizeAccount(guestAccountIds);
+        accountAdminService.changeAllAccountRoleById(guestAccountIds, LibraryRole.USER);
         List<Account> roleChangedAccounts = accountAdminRepository.findAllById(guestAccountIds);
         List<Account> guestRoleAccountsAfterChangeRole = accountAdminRepository.findAllByLibraryRole(LibraryRole.GUEST);
         List<Account> userRoleAccountsAfterChangeRole = accountAdminRepository.findAllByLibraryRole(LibraryRole.USER);

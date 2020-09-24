@@ -37,6 +37,6 @@ public class AccountAdminController {
     @ResponseStatus(HttpStatus.OK)
     public void authorizeAccount(@RequestBody List<Long> accountIds) {
         log.debug("accountIds ::: {}", accountIds);
-        accountAdminService.authorizeAccount(accountIds);
+        accountAdminService.changeAllAccountRoleById(accountIds, LibraryRole.USER);
     }
 }

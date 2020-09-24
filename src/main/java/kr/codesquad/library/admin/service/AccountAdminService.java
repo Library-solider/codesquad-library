@@ -26,8 +26,8 @@ public class AccountAdminService {
     }
 
     @Transactional
-    public void authorizeAccount(List<Long> accountIds) {
+    public void changeAllAccountRoleById(List<Long> accountIds, LibraryRole libraryRole) {
         List<Account> accounts = accountAdminRepository.findAllById(accountIds);
-        accounts.forEach(account -> account.changeRole(LibraryRole.USER));
+        accounts.forEach(account -> account.changeRole(libraryRole));
     }
 }
