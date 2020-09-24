@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -48,5 +49,28 @@ class AccountAdminServiceTest {
         assertEquals(accountSummaries.stream()
                                      .map(AccountSummaryResponse::getId)
                                      .collect(Collectors.toList()), guestAccountIds);
+    }
+
+    @CsvSource({"1, 2, 3, 0, 5"})
+    @ParameterizedTest
+    public void 회원에게_USER권한을_부여한다(Long firstGuestAccountId, Long secondGuestAccountId, Long thirdGuestAccountId,
+                                        int guestRoleAccountsSizeAfterChangeRole,
+                                        int userRoleAccountsSizeAfterChangeRole) {
+        //given
+        List<Long> guestAccountIds = Arrays.asList(firstGuestAccountId, secondGuestAccountId, thirdGuestAccountId);
+
+        //when
+        accountAdminService.authorizeAccount(guestAccountIds);
+        List<Account> roleChangedAccounts = accountAdminRepository.findAllById(guestAccountIds);
+        List<Account> guestRoleAccountsAfterChangeRole = accountAdminRepository.findAllByLibraryRole(LibraryRole.GUEST);
+        List<Account> userRoleAccountsAfterChangeRole = accountAdminRepository.findAllByLibraryRole(LibraryRole.USER);
+
+        //then
+        assertAll(
+                () -> assertTrue(roleChangedAccounts.stream().allMatch(account -> account.getLibraryRole().equals(LibraryRole.USER))),
+                () -> assertThat(guestRoleAccountsAfterChangeRole.size()).isEqualTo(guestRoleAccountsSizeAfterChangeRole),
+                () -> assertThat(userRoleAccountsAfterChangeRole.size()).isEqualTo(userRoleAccountsSizeAfterChangeRole)
+        );
+
     }
 }
