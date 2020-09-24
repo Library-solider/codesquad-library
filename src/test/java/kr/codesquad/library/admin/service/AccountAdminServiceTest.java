@@ -35,11 +35,12 @@ class AccountAdminServiceTest {
     @Autowired
     private AccountAdminRepository accountAdminRepository;
 
-    @Test
-    public void ROLE이_GUEST인_Account를_가져온다() {
+    @CsvSource({"1, 2, 3, 3"})
+    @ParameterizedTest
+    public void ROLE이_GUEST인_Account를_가져온다(Long firstGuestAccountId, Long secondGuestAccountId, Long thirdGuestAccountId,
+                                              int countOfGuestAccount) {
         //given
-        int countOfGuestAccount = 3;
-        List<Long> guestAccountIds = Arrays.asList(1L, 2L, 3L);
+        List<Long> guestAccountIds = Arrays.asList(firstGuestAccountId, secondGuestAccountId, thirdGuestAccountId);
 
         //when
         List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccountsByRole(LibraryRole.GUEST);
