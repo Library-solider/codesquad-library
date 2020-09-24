@@ -5,6 +5,8 @@ import kr.codesquad.library.admin.service.AccountAdminService;
 import kr.codesquad.library.domain.account.LibraryRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +34,7 @@ public class AccountAdminController {
     }
 
     @PostMapping("/accounts/role")
+    @ResponseStatus(HttpStatus.OK)
     public void authorizeAccount(@RequestBody List<Long> accountIds) {
         log.debug("accountIds ::: {}", accountIds);
         accountAdminService.authorizeAccount(accountIds);
