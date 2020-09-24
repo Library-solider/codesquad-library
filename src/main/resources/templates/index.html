@@ -7,7 +7,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CODESQUAD LIBRARY - ADMIN</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css}" />
     <script th:src="@{https://kit.fontawesome.com/1099c14a72.js}" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js}"></script>
 </head>
 <body>
     <header class="header">
@@ -49,6 +51,7 @@
                         <i class="fas fa-search search-form__icon"></i>
                     </div>
                 </form>
+<!--                <form>-->
                 <table class="data-table">
                     <thead>
                         <tr>
@@ -57,25 +60,22 @@
                             <th class="data-table__column-name">이름</th>
                             <th class="data-table__column-name">이메일</th>
                             <th class="data-table__column-name">등급</th>
+                            <th class="data-table__column-name">선택</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="accountSummary : ${accountSummaries}">
-                            <td th:text="${accountSummary.id}" class="data-table__row"></td>
+                            <td th:text="${accountSummary.id}" class="data-table__row jsAccountId"></td>
                             <td th:text="${accountSummary.oauthId}" class="data-table__row"></td>
                             <td th:text="${accountSummary.name}" class="data-table__row"></td>
                             <td th:text="${accountSummary.email}" class="data-table__row"></td>
                             <td th:text="${accountSummary.role}" class="data-table__row"></td>
+                            <td class="data-table__row"><input type="checkbox" class="data-table__checkbox jsAccountCheckBox" name="accountId"/></td>
                         </tr>
                     </tbody>
                 </table>
-                <ol class="paging-numbers">
-                    <li class="paging-numbers__number"><a href="#">1</a></li>
-                    <li class="paging-numbers__number"><a href="#">2</a></li>
-                    <li class="paging-numbers__number"><a href="#">3</a></li>
-                    <li class="paging-numbers__number"><a href="#">4</a></li>
-                    <li class="paging-numbers__number"><a href="#">5</a></li>
-                </ol>
+                <button type="button" class="authorization-button jsAuthorizationButton">권한 승인</button>
+<!--                </form>-->
             </div>
         </div>
     </div>
@@ -85,5 +85,6 @@
             <p class="copyright-author">Ragdoll @CODESQUAD</p>
         </div>
     </footer>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </body>
 </html>
