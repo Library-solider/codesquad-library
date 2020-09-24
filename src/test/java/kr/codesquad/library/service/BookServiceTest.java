@@ -130,7 +130,7 @@ class BookServiceTest {
     private Long saveRental(Long bookId, Long accountId) {
         Book book = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
-        Rental rental = Rental.create(book, account);
+        Rental rental = Rental.createRental(book, account);
 
         return rentalRepository.save(rental).getId();
     }

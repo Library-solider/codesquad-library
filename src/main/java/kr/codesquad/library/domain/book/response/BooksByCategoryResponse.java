@@ -22,7 +22,7 @@ public class BooksByCategoryResponse {
         this.books = books;
     }
 
-    public static BooksByCategoryResponse from(Category category, List<BookResponse> bookResponses) {
+    public static BooksByCategoryResponse of(Category category, List<BookResponse> bookResponses) {
         return BooksByCategoryResponse.builder()
                 .categoryId(category.getId())
                 .categoryTitle(category.getTitle())

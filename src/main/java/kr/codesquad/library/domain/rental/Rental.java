@@ -57,7 +57,7 @@ public class Rental {
     }
 
     // 반납일수는 14일(2주)
-    public static Rental create(Book book, Account account) {
+    public static Rental createRental(Book book, Account account) {
         LocalDate now = LocalDate.now();
         return Rental.builder()
                 .beginDate(now)

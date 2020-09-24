@@ -31,7 +31,7 @@ public class BookResponse {
         this.publicationDate = publicationDate;
     }
 
-    public static BookResponse of(Book book) {
+    public static BookResponse from(Book book) {
         return BookResponse.builder()
                 .id(book.getId())
                 .imageUrl(book.getImageUrl())

@@ -16,7 +16,7 @@ public class Rentals {
         this.rentals = rentals;
     }
 
-    public static Rentals of(List<Rental> rentals) {
+    public static Rentals from(List<Rental> rentals) {
         return new Rentals(rentals);
     }
 
