@@ -43,8 +43,9 @@ public class Account {
     private List<Rental> rentals = new ArrayList<>();
 
     @Builder
-    private Account(Long oauthId, String name, String email, String avatarUrl, LibraryRole libraryRole,
-                    List<Rental> rentals) {
+    private Account(Long id, Long oauthId, String name, String email, String avatarUrl,
+                    LibraryRole libraryRole, List<Rental> rentals) {
+        this.id = id;
         this.oauthId = oauthId;
         this.name = name;
         this.email = email;
