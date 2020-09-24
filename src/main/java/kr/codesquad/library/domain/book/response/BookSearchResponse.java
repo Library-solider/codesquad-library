@@ -18,7 +18,7 @@ public class BookSearchResponse {
         this.books = books;
     }
 
-    public static BookSearchResponse from(Long bookCount, List<BookResponse> bookResponses) {
+    public static BookSearchResponse of(Long bookCount, List<BookResponse> bookResponses) {
         return BookSearchResponse.builder()
                 .bookCount(bookCount)
                 .books(bookResponses)

@@ -16,7 +16,7 @@ public class AccountProfileResponse {
         this.avatarUrl = avatarUrl;
     }
 
-    public static AccountProfileResponse of(Account account) {
+    public static AccountProfileResponse from(Account account) {
         return AccountProfileResponse.builder()
                 .name(account.getName())
                 .avatarUrl(account.getAvatarUrl())

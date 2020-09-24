@@ -50,44 +50,44 @@ public class BookService {
     public BooksByCategoryResponse findTop6BooksAndCategoryById(Long categoryId) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
-        return BooksByCategoryResponse.from(category, findTop6BooksByCategory(categoryId));
+        return BooksByCategoryResponse.of(category, findTop6BooksByCategory(categoryId));
     }
 
     public List<BookResponse> findTop6BooksByCategory(Long categoryId) {
         List<Book> findBookByCategory = bookRepository.
                 findTop6ByCategoryIdAndImageUrlIsNotNullOrderByRecommendCountDesc(categoryId);
-        return findBookByCategory.stream().map(BookResponse::of).collect(Collectors.toList());
+        return findBookByCategory.stream().map(BookResponse::from).collect(Collectors.toList());
     }
 
     public BooksByCategoryResponse getBooksByCategoryId(Long categoryId, int page) {
         Category category = categoryRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
 
-        return BooksByCategoryResponse.from(category, findBooksByCategoryId(categoryId, page));
+        return BooksByCategoryResponse.of(category, findBooksByCategoryId(categoryId, page));
     }
 
     public List<BookResponse> findBooksByCategoryId(Long categoryId, int page) {
         Page<Book> bookPage = bookRepository.findAllByCategoryId(categoryId, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
 
-        return bookList.stream().map(BookResponse::of).collect(Collectors.toList());
+        return bookList.stream().map(BookResponse::from).collect(Collectors.toList());
     }
 
     public BookDetailResponse getBooksByBookId(Long bookId) {
         Book findBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Bookcase bookcase = findBook.getBookcase();
-        Rentals rentals = Rentals.of(findBook.getRentals());
+        Rentals rentals = Rentals.from(findBook.getRentals());
         Rental rental = rentals.findByBook(findBook);
 
-        return BookDetailResponse.from(findBook, rental, bookcase);
+        return BookDetailResponse.of(findBook, rental, bookcase);
     }
 
     public BookSearchResponse searchBooks(String searchWord, int page) {
         Page<Book> bookPage = bookRepository
                 .findAllByTitleIgnoreCaseContainingOrAuthorIgnoreCaseContaining(searchWord, searchWord, getPageRequest(page));
         List<Book> bookList = bookPage.getContent();
-        List<BookResponse> bookResponseList = bookList.stream().map(BookResponse::of).collect(Collectors.toList());
+        List<BookResponse> bookResponseList = bookList.stream().map(BookResponse::from).collect(Collectors.toList());
 
-        return BookSearchResponse.from(bookPage.getTotalElements(), bookResponseList);
+        return BookSearchResponse.of(bookPage.getTotalElements(), bookResponseList);
     }
 
     @Transactional
@@ -103,7 +103,7 @@ public class BookService {
         }
 
         book.rentalBook();
-        Rental rental = Rental.create(book, account);
+        Rental rental = Rental.createRental(book, account);
         rentalRepository.save(rental);
     }
 

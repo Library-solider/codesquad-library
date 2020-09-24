@@ -35,11 +35,11 @@ public class AccountService {
             rentalBookResponses.add(RentalBookResponse.of(bookList.get(i), rentalList.get(i)));
         }
 
-        return AccountMyPageResponse.from(account, rentalBookResponses);
+        return AccountMyPageResponse.of(account, rentalBookResponses);
     }
 
     public AccountProfileResponse getProfile(Long accountId) {
         Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
-        return AccountProfileResponse.of(account);
+        return AccountProfileResponse.from(account);
     }
 }
