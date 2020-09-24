@@ -1,8 +1,3 @@
-const accountIds = [];
-const ajaxRequest = new XMLHttpRequest();
-const accountCheckBoxes = document.querySelectorAll('.jsAccountCheckBox');
-const authorizationButton = document.querySelector('.jsAuthorizationButton');
-
 function confirm() {
     swal({
         title: "권한 승인",
@@ -19,34 +14,48 @@ function confirm() {
     });
 }
 
-function authorize() {
-    accountIds.length = 0;
-
+function findCheckedAccountIds(accountCheckBoxes) {
+    const checkedAccountIds = [];
     accountCheckBoxes.forEach(checkBox => {
         if (checkBox.checked) {
             const checkBoxWrapNode = checkBox.parentElement;
             const accountIdNode = checkBoxWrapNode.parentElement.querySelector('.jsAccountId');
-            accountIds.push(accountIdNode.textContent);
+            checkedAccountIds.push(accountIdNode.textContent);
         }
     });
+    return checkedAccountIds;
+}
 
+function removeAuthorizedAccountFromDataTable(accountCheckBoxes) {
+    accountCheckBoxes.forEach(checkBox => {
+        if (checkBox.checked) {
+            const checkBoxWrapNode = checkBox.parentElement;
+            const checkedData = checkBoxWrapNode.parentElement;
+            checkedData.remove();
+        }
+    });
+}
+
+function postAjaxRequest(checkedAccountIds, accountCheckBoxes) {
+    const ajaxRequest = new XMLHttpRequest();
     ajaxRequest.open('POST', 'http://localhost:8080/admin/accounts/role');
     ajaxRequest.setRequestHeader('Content-Type', 'application/json');
-    ajaxRequest.send(JSON.stringify(accountIds));
+    ajaxRequest.send(JSON.stringify(checkedAccountIds));
     ajaxRequest.onreadystatechange = function() {
         if (ajaxRequest.readyState === ajaxRequest.DONE) {
-            accountCheckBoxes.forEach(checkBox => {
-                if (checkBox.checked) {
-                    const checkBoxWrapNode = checkBox.parentElement;
-                    const checkedData = checkBoxWrapNode.parentElement;
-                    checkedData.remove();
-                }
-            });
+            removeAuthorizedAccountFromDataTable(accountCheckBoxes);
         }
     }
 }
 
+function authorize() {
+    const accountCheckBoxes = document.querySelectorAll('.jsAccountCheckBox');
+    const checkedAccountIds = findCheckedAccountIds(accountCheckBoxes);
+    postAjaxRequest(checkedAccountIds, accountCheckBoxes);
+}
+
 function main() {
+    const authorizationButton = document.querySelector('.jsAuthorizationButton');
     authorizationButton.addEventListener('click', confirm);
 }
 
