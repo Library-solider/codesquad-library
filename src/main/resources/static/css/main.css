@@ -106,8 +106,29 @@
 }
 
 .data-table .data-table__row {
-    height: 35px;
-    line-height: 35px;
+    height: 40px;
+    line-height: 40px;
+}
+
+.data-table .data-table__checkbox {
+    width: 17px;
+    height: 17px;
+    margin-top: -1px;
+    vertical-align: middle;
+}
+
+/* Authorization Button */
+.authorization-button {
+    font-size: 14px;
+    margin-top: 50px;
+    width: 110px;
+    height: 40px;
+    border: none;
+    background-color: #0F1C33;
+    font-weight: 600;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 10px 10px 20px 1px rgba(237,237,237,1);
 }
 
 /* Paging Numbers */

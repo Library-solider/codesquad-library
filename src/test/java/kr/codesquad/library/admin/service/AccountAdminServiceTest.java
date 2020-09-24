@@ -16,6 +16,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 /*
@@ -34,11 +35,12 @@ class AccountAdminServiceTest {
     @Autowired
     private AccountAdminRepository accountAdminRepository;
 
-    @Test
-    public void ROLE이_GUEST인_Account를_가져온다() {
+    @CsvSource({"1, 2, 3, 3"})
+    @ParameterizedTest
+    public void ROLE이_GUEST인_Account를_가져온다(Long firstGuestAccountId, Long secondGuestAccountId, Long thirdGuestAccountId,
+                                              int countOfGuestAccount) {
         //given
-        int countOfGuestAccount = 3;
-        List<Long> guestAccountIds = Arrays.asList(1L, 2L, 3L);
+        List<Long> guestAccountIds = Arrays.asList(firstGuestAccountId, secondGuestAccountId, thirdGuestAccountId);
 
         //when
         List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccountsByRole(LibraryRole.GUEST);
@@ -48,5 +50,28 @@ class AccountAdminServiceTest {
         assertEquals(accountSummaries.stream()
                                      .map(AccountSummaryResponse::getId)
                                      .collect(Collectors.toList()), guestAccountIds);
+    }
+
+    @CsvSource({"1, 2, 3, 0, 5"})
+    @ParameterizedTest
+    public void 회원에게_USER권한을_부여한다(Long firstGuestAccountId, Long secondGuestAccountId, Long thirdGuestAccountId,
+                                        int guestRoleAccountsSizeAfterChangeRole,
+                                        int userRoleAccountsSizeAfterChangeRole) {
+        //given
+        List<Long> guestAccountIds = Arrays.asList(firstGuestAccountId, secondGuestAccountId, thirdGuestAccountId);
+
+        //when
+        accountAdminService.changeAllAccountRoleById(guestAccountIds, LibraryRole.USER);
+        List<Account> roleChangedAccounts = accountAdminRepository.findAllById(guestAccountIds);
+        List<Account> guestRoleAccountsAfterChangeRole = accountAdminRepository.findAllByLibraryRole(LibraryRole.GUEST);
+        List<Account> userRoleAccountsAfterChangeRole = accountAdminRepository.findAllByLibraryRole(LibraryRole.USER);
+
+        //then
+        assertAll(
+                () -> assertTrue(roleChangedAccounts.stream().allMatch(account -> account.getLibraryRole().equals(LibraryRole.USER))),
+                () -> assertThat(guestRoleAccountsAfterChangeRole.size()).isEqualTo(guestRoleAccountsSizeAfterChangeRole),
+                () -> assertThat(userRoleAccountsAfterChangeRole.size()).isEqualTo(userRoleAccountsSizeAfterChangeRole)
+        );
+
     }
 }

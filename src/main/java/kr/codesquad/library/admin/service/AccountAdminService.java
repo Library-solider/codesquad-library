@@ -24,4 +24,10 @@ public class AccountAdminService {
                        .map(AccountSummaryResponse::of)
                        .collect(Collectors.toList());
     }
+
+    @Transactional
+    public void changeAllAccountRoleById(List<Long> accountIds, LibraryRole libraryRole) {
+        List<Account> accounts = accountAdminRepository.findAllById(accountIds);
+        accounts.forEach(account -> account.changeRole(libraryRole));
+    }
 }
