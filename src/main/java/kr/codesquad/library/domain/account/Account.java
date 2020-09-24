@@ -59,6 +59,11 @@ public class Account {
         return this;
     }
 
+    public Account changeRole(LibraryRole libraryRole) {
+        this.libraryRole = libraryRole;
+        return this;
+    }
+
     public String getRoleKey() {
         return libraryRole.getKey();
     }
