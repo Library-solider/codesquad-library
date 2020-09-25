@@ -6,7 +6,7 @@
 @import "footer.css";
 
 /* Pages */
-@import "authorization.css";
+@import "access-admin.css";
 
 body {
     font-family: 'Roboto', sans-serif;

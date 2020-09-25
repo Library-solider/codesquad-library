@@ -6,7 +6,6 @@ import kr.codesquad.library.domain.account.LibraryRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,15 +21,15 @@ public class AccountAdminController {
     private final AccountAdminService accountAdminService;
 
     @GetMapping("")
-    public String authorize() {
-        return "authorization";
+    public String access() {
+        return "access-admin";
     }
 
-    @GetMapping("/main")
-    public String main(Model model) {
+    @GetMapping("/accounts/guest")
+    public String guestAccounts(Model model) {
         List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccountsByRole(LibraryRole.GUEST);
         model.addAttribute("accountSummaries", accountSummaries);
-        return "index";
+        return "account/guest-accounts";
     }
 
     @PostMapping("/accounts/role")
