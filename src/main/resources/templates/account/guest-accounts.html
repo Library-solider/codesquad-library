@@ -25,9 +25,9 @@
                     </div>
                 </div>
                 <ul class="navigation">
-                    <li class="navigation__item navigation__item--clicked"><a href="#">회원 관리</a></li>
+                    <li class="navigation__item"><a href="#">공지사항 관리</a></li>
                     <li class="navigation__item"><a href="#">도서 관리</a></li>
-                    <li class="navigation__item"><a href="#">카테고리 관리</a></li>
+                    <li class="navigation__item navigation__item--clicked"><a href="#">회원 관리</a></li>
                     <li class="navigation__item"><a href="#">대여 관리</a></li>
                 </ul>
                 <div class="user-info">
@@ -36,8 +36,8 @@
                 </div>
             </div>
             <ul class="sub-navigation">
-                <li class="sub-navigation__item sub-navigation__item--clicked"><a href="#"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">회원 목록</span></a></li>
-                <li class="sub-navigation__item"><a href="#"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">회원 수정</span></a></li>
+                <li class="sub-navigation__item"><a href="#"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">회원 목록</span></a></li>
+                <li class="sub-navigation__item sub-navigation__item--clicked"><a href="#"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">승인 대기 목록</span></a></li>
             </ul>
         </div>
     </header>
@@ -85,6 +85,6 @@
             <p class="copyright-author">Ragdoll @CODESQUAD</p>
         </div>
     </footer>
-    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script type="text/javascript" th:src="@{/js/ajaxRequest.js}"></script>
 </body>
 </html>
