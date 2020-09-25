@@ -42,9 +42,12 @@ function postAjaxRequest(checkedAccountIds, accountCheckBoxes) {
     ajaxRequest.setRequestHeader('Content-Type', 'application/json');
     ajaxRequest.send(JSON.stringify(checkedAccountIds));
     ajaxRequest.onreadystatechange = function() {
-        if (ajaxRequest.readyState === ajaxRequest.DONE) {
+        if (ajaxRequest.readyState !== ajaxRequest.DONE) { return; }
+        if (ajaxRequest.status === 200) {
             removeAuthorizedAccountFromDataTable(accountCheckBoxes);
+            return;
         }
+        swal('요청 실패', '요청을 다시 시도 해주세요.', 'error');
     }
 }
 
