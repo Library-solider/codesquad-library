@@ -17,7 +17,7 @@ public enum ErrorCode {
     // Book
     CATEGORY_NOT_FOUND(404, "B001", "해당 카테고리는 없습니다."),
     BOOK_NOT_FOUND(404, "B002", "해당 도서는 없습니다."),
-    PARAMETER_NOT_PRESENT(400, "B003", "q param이 필요합니다."),
+    PARAMETER_NOT_PRESENT(404, "B003", "q param이 필요합니다."),
     OUT_OF_BOOK(400, "B004", "해당 도서는 대여중입니다."),
     MAX_RENTAL_BOOK(400, "B005", "대여도서 수가 최대치입니다."),
     RENTAL_NOT_FOUND(404, "B006", "해당 대여는 없습니다."),
