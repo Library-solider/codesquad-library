@@ -1,0 +1,92 @@
+/* Account */
+.account {
+    margin-top: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px -10px rgba(0,0,0,0.75);
+    width: 500px;
+    height: 550px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Account Brief */
+.account-brief {
+    padding: 0 20px;
+    margin-top: 50px;
+    margin-left: 40px;
+    display: flex;
+    align-self: flex-start;
+}
+
+.account-brief .account-brief__avatar {
+    border-radius: 50%;
+    width: auto; max-width: 100px;
+    height: auto; max-height: 100px;
+}
+
+.account-brief .account-brief__column {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.account-brief__name {
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+.account-brief__role {
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+/* Account Details */
+.account-details {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.account-details .account-details__title {
+    padding: 25px;
+    text-align: left;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.account-details .account-details__title i {
+    font-size: 17px;
+    padding-right: 12px;
+    vertical-align: middle;
+    margin-top: -3px;
+    /* color: #1CA7EC; */
+    opacity: 0.7;
+}
+
+.account-details .account-details__contents {
+    width: 200px;
+    padding-left: 25px;
+    padding-right: 25px;
+    text-align: right;
+    font-size: 14px;
+    opacity: 0.5;
+}
+
+/* Return Button */
+.return-button {
+    display: inline-block;
+    margin-top: 60px;
+    padding: 14px 25px;
+    font-size: 16px;
+    border: none;
+    background-color: #0455BF;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 2px 5px 15px -3px rgba(67,143,242,0.5);
+    outline: none;
+}
+
+.return-button a {
+    color: #fff;
+}
