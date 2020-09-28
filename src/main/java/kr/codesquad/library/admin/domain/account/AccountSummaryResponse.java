@@ -23,7 +23,7 @@ public class AccountSummaryResponse {
         this.role = role;
     }
 
-    public static AccountSummaryResponse of(Account account) {
+    public static AccountSummaryResponse from(Account account) {
         return AccountSummaryResponse.builder()
                                      .id(account.getId())
                                      .oauthId(account.getOauthId())

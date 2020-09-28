@@ -15,24 +15,26 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/users")
 public class AccountAdminController {
 
     private final AccountAdminService accountAdminService;
 
     @GetMapping("")
-    public String access() {
-        return "access-admin";
+    public String findAll(Model model) {
+        List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccounts();
+        model.addAttribute("accountSummaries", accountSummaries);
+        return "account/all-accounts";
     }
 
-    @GetMapping("/accounts/guest")
+    @GetMapping("/guest")
     public String guestAccounts(Model model) {
         List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccountsByRole(LibraryRole.GUEST);
         model.addAttribute("accountSummaries", accountSummaries);
         return "account/guest-accounts";
     }
 
-    @PostMapping("/accounts/role")
+    @PostMapping("/role")
     @ResponseStatus(HttpStatus.OK)
     public void authorizeAccount(@RequestBody List<Long> accountIds) {
         log.debug("accountIds ::: {}", accountIds);

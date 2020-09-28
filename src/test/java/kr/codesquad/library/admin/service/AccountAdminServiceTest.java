@@ -9,7 +9,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -25,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 *  [USER] = 4, 5, 6
 *  [ADMIN] = 7, 8
 * */
+
 @SpringBootTest
 @Transactional
 class AccountAdminServiceTest {
@@ -72,6 +77,15 @@ class AccountAdminServiceTest {
                 () -> assertThat(guestRoleAccountsAfterChangeRole.size()).isEqualTo(guestRoleAccountsSizeAfterChangeRole),
                 () -> assertThat(userRoleAccountsAfterChangeRole.size()).isEqualTo(userRoleAccountsSizeAfterChangeRole)
         );
+    }
 
+    @CsvSource({"1, 8"})
+    @ParameterizedTest
+    public void 모든_회원_목록을_조회한다(int defaultPageNumber, int countOfAllAccounts) {
+        //when
+        List<AccountSummaryResponse> accounts = accountAdminService.findAllAccounts();
+
+        //then
+        assertThat(accounts.size()).isEqualTo(countOfAllAccounts);
     }
 }
