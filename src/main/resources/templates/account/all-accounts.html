@@ -12,73 +12,74 @@
     <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js}"></script>
 </head>
 <body>
-<header class="header">
-    <div class="container">
-        <div class="header__box">
-            <div class="site-title">
-                <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo" src="">
-                <div class="site-title__column">
-                    <h1 class="site-title__main-text">
-                        CODESQUAD LIBRARY
-                    </h1>
-                    <h2 class="site-title__sub-text">ADMIN</h2>
+    <header class="header">
+        <div class="container">
+            <div class="header__box">
+                <div class="site-title">
+                    <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo" src="">
+                    <div class="site-title__column">
+                        <h1 class="site-title__main-text">
+                            CODESQUAD LIBRARY
+                        </h1>
+                        <h2 class="site-title__sub-text">ADMIN</h2>
+                    </div>
+                </div>
+                <ul class="navigation">
+                    <li class="navigation__item"><a href="#">공지사항 관리</a></li>
+                    <li class="navigation__item"><a href="#">도서 관리</a></li>
+                    <li class="navigation__item navigation__item--clicked"><a href="#">회원 관리</a></li>
+                    <li class="navigation__item"><a href="#">대여 관리</a></li>
+                </ul>
+                <div class="user-info">
+                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image" src="">
+                    <span class="user-info__name">USER_NAME</span>
                 </div>
             </div>
-            <ul class="navigation">
-                <li class="navigation__item"><a href="#">공지사항 관리</a></li>
-                <li class="navigation__item"><a href="#">도서 관리</a></li>
-                <li class="navigation__item navigation__item--clicked"><a href="#">회원 관리</a></li>
-                <li class="navigation__item"><a href="#">대여 관리</a></li>
+            <ul class="sub-navigation">
+                <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/users}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">회원 목록</span></a></li>
+                <li class="sub-navigation__item"><a href="#"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">승인 대기 목록</span></a></li>
             </ul>
-            <div class="user-info">
-                <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image" src="">
-                <span class="user-info__name">USER_NAME</span>
+        </div>
+    </header>
+    <div class="main">
+        <div class="container">
+            <div class="main-contents">
+                <h2 class="main-contents__navigation-title">회원 목록</h2>
+                <form class="search-form">
+                    <div class="search-form__box">
+                        <input type="search" class="search-form__bar" placeholder="검색어를 입력하세요."/>
+                        <i class="fas fa-search search-form__icon"></i>
+                    </div>
+                </form>
+                <table class="data-table">
+                    <thead>
+                    <tr>
+                        <th class="data-table__column-name">ID</th>
+                        <th class="data-table__column-name">OAuth ID</th>
+                        <th class="data-table__column-name">이름</th>
+                        <th class="data-table__column-name">이메일</th>
+                        <th class="data-table__column-name">등급</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="accountSummary : ${accountSummaries}">
+                        <td th:text="${accountSummary.id}" class="data-table__row jsData jsDataId"></td>
+                        <td th:text="${accountSummary.oauthId}" class="data-table__row jsData"></td>
+                        <td th:text="${accountSummary.name}" class="data-table__row jsData"></td>
+                        <td th:text="${accountSummary.email}" class="data-table__row jsData"></td>
+                        <td th:text="${accountSummary.role}" class="data-table__row jsData"></td>
+                    </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <ul class="sub-navigation">
-            <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/users}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">회원 목록</span></a></li>
-            <li class="sub-navigation__item"><a href="#"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">승인 대기 목록</span></a></li>
-        </ul>
     </div>
-</header>
-<div class="main">
-    <div class="container">
-        <div class="main-contents">
-            <h2 class="main-contents__navigation-title">회원 목록</h2>
-            <form class="search-form">
-                <div class="search-form__box">
-                    <input type="search" class="search-form__bar" placeholder="검색어를 입력하세요."/>
-                    <i class="fas fa-search search-form__icon"></i>
-                </div>
-            </form>
-            <table class="data-table">
-                <thead>
-                <tr>
-                    <th class="data-table__column-name">ID</th>
-                    <th class="data-table__column-name">OAuth ID</th>
-                    <th class="data-table__column-name">이름</th>
-                    <th class="data-table__column-name">이메일</th>
-                    <th class="data-table__column-name">등급</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="accountSummary : ${accountSummaries}">
-                    <td th:text="${accountSummary.id}" class="data-table__row jsAccountId"></td>
-                    <td th:text="${accountSummary.oauthId}" class="data-table__row"></td>
-                    <td th:text="${accountSummary.name}" class="data-table__row"></td>
-                    <td th:text="${accountSummary.email}" class="data-table__row"></td>
-                    <td th:text="${accountSummary.role}" class="data-table__row"></td>
-                </tr>
-                </tbody>
-            </table>
+    <footer class="footer">
+        <div class="container">
+            <p class="copyright-text">Copyright © 2020. Codesquad Library. All rights reserved</p>
+            <p class="copyright-author">Ragdoll @CODESQUAD</p>
         </div>
-    </div>
-</div>
-<footer class="footer">
-    <div class="container">
-        <p class="copyright-text">Copyright © 2020. Codesquad Library. All rights reserved</p>
-        <p class="copyright-author">Ragdoll @CODESQUAD</p>
-    </div>
-</footer>
+    </footer>
+    <script type="text/javascript" th:src="@{/js/accountDataTableSelector.js}"></script>
 </body>
 </html>
