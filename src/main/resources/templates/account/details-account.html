@@ -45,26 +45,26 @@
     <div class="container">
         <div class="main-contents">
             <h2 class="main-contents__navigation-title">회원 상세 정보</h2>
-            <div class="account">
+            <div class="account" th:object="${accountDetails}">
                 <div class="account-brief">
-                    <img th:src="@{/images/logo.png}" alt="" class="account-brief__avatar">
+                    <img th:src="${(!#strings.isEmpty(accountDetails.avatarUrl)) ? accountDetails.avatarUrl : '/images/logo.png'}" alt="" class="account-brief__avatar">
                     <div class="account-brief__column">
-                        <span class="account-brief__name">Account Name</span>
-                        <span class="account-brief__role">Account Role</span>
+                        <span class="account-brief__name" th:text="${accountDetails.name}"></span>
+                        <span class="account-brief__role" th:text="${accountDetails.role}"></span>
                     </div>
                 </div>
                 <table class="account-details">
                     <tr>
                         <th class="account-details__title"><i class="far fa-id-card"></i>ID</th>
-                        <td class="account-details__contents">1</td>
+                        <td class="account-details__contents" th:text="${accountDetails.id}"></td>
                     </tr>
                     <tr>
                         <th class="account-details__title"><i class="fab fa-github"></i>OAuth ID</th>
-                        <td class="account-details__contents">34513212</td>
+                        <td class="account-details__contents" th:text="${accountDetails.oauthId}"></td>
                     </tr>
                     <tr>
                         <th class="account-details__title"><i class="far fa-envelope"></i>EMAIL</th>
-                        <td class="account-details__contents">honux77@github.com</td>
+                        <td class="account-details__contents" th:text="${accountDetails.email}"></td>
                     </tr>
                     <tr>
                         <th class="account-details__title"><i class="fas fa-book-reader"></i>총 대여 수</th>
