@@ -1,5 +1,6 @@
 package kr.codesquad.library.admin.controller;
 
+import kr.codesquad.library.admin.domain.account.AccountDetailsResponse;
 import kr.codesquad.library.admin.domain.account.AccountSummaryResponse;
 import kr.codesquad.library.admin.service.AccountAdminService;
 import kr.codesquad.library.domain.account.LibraryRole;
@@ -25,6 +26,13 @@ public class AccountAdminController {
         List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccounts();
         model.addAttribute("accountSummaries", accountSummaries);
         return "account/all-accounts";
+    }
+
+    @GetMapping("/{accountId}")
+    public String findDetails(@PathVariable Long accountId, Model model) {
+        AccountDetailsResponse accountDetails = accountAdminService.findAccountDetails(accountId);
+        model.addAttribute("accountDetails", accountDetails);
+        return "/account/detail-account";
     }
 
     @GetMapping("/guest")
