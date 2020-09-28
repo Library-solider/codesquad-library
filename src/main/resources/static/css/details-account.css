@@ -72,7 +72,11 @@
     opacity: 0.5;
 }
 
-/* Return Button */
+/* Return Form */
+.return-form {
+    /*margin-top: 60px;*/
+}
+
 .return-button {
     display: inline-block;
     margin-top: 60px;
@@ -84,8 +88,4 @@
     border-radius: 5px;
     box-shadow: 2px 5px 15px -3px rgba(67,143,242,0.5);
     outline: none;
-}
-
-.return-button a {
-    color: #fff;
 }
