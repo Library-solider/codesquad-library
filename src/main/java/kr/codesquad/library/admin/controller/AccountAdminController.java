@@ -20,6 +20,13 @@ public class AccountAdminController {
 
     private final AccountAdminService accountAdminService;
 
+    @GetMapping("")
+    public String findAll(Model model) {
+        List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccounts();
+        model.addAttribute("accountSummaries", accountSummaries);
+        return "account/all-accounts";
+    }
+
     @GetMapping("/guest")
     public String guestAccounts(Model model) {
         List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccountsByRole(LibraryRole.GUEST);
