@@ -3,7 +3,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    height: 900px;
+    /*height: 900px;*/
 }
 
 .main .container {
@@ -128,6 +128,7 @@
 .authorization-button {
     font-size: 14px;
     margin-top: 50px;
+    margin-bottom: 100px;
     width: 110px;
     height: 40px;
     border: none;
@@ -141,6 +142,7 @@
 /* Paging Numbers */
 .paging-numbers {
     margin-top: 50px;
+    margin-bottom: 150px;
     display: flex;
     width: 110px;
     justify-content: space-around;
