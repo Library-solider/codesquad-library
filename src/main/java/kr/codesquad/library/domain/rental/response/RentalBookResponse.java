@@ -12,16 +12,16 @@ public class RentalBookResponse {
 
     private final Long id;
     private final String title;
+    private final String author;
     private final String imageUrl;
-    private final LocalDate beginDate;
     private final LocalDate returnDate;
 
     @Builder
-    public RentalBookResponse(Long id, String title, String imageUrl, LocalDate beginDate, LocalDate returnDate) {
+    public RentalBookResponse(Long id, String title, String imageUrl, String author, LocalDate returnDate) {
         this.id = id;
         this.title = title;
+        this.author = author;
         this.imageUrl = imageUrl;
-        this.beginDate = beginDate;
         this.returnDate = returnDate;
     }
 
@@ -29,8 +29,8 @@ public class RentalBookResponse {
         return RentalBookResponse.builder()
                 .id(book.getId())
                 .title(book.getTitle())
+                .author(book.getAuthor())
                 .imageUrl(book.getImageUrl())
-                .beginDate(rental.getBeginDate())
                 .returnDate(rental.getReturnDate())
                 .build();
     }
