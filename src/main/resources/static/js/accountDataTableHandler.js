@@ -4,7 +4,7 @@ function addStylesOnData(event) {
     dataNodes.forEach(dataNode => dataNode.classList.add('data-table__row--hover'));
 }
 
-function removeStylesOnData(event) {
+function removeStylesFromData(event) {
     const data = event.currentTarget.parentNode;
     const dataNodes = data.querySelectorAll('td');
     dataNodes.forEach(dataNode => dataNode.classList.remove('data-table__row--hover'));
@@ -21,7 +21,7 @@ function main() {
     const dataList = document.querySelectorAll('.jsData');
     dataList.forEach(data => {
         data.addEventListener('mouseover', addStylesOnData);
-        data.addEventListener('mouseout', removeStylesOnData);
+        data.addEventListener('mouseout', removeStylesFromData);
         data.addEventListener('click', getDataId)
     });
 }
