@@ -142,7 +142,6 @@
 /* Paging Numbers */
 .paging-numbers {
     margin-top: 50px;
-    margin-bottom: 150px;
     display: flex;
     width: 110px;
     justify-content: space-around;
