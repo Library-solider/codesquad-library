@@ -21,8 +21,8 @@
 
 .account-brief .account-brief__avatar {
     border-radius: 50%;
-    width: auto; max-width: 100px;
-    height: auto; max-height: 100px;
+    width: auto; max-width: 80px;
+    height: auto; max-height: 80px;
 }
 
 .account-brief .account-brief__column {
@@ -38,7 +38,7 @@
 
 .account-brief__role {
     margin-top: 10px;
-    font-size: 14px;
+    font-size: 12px;
     opacity: 0.5;
 }
 
