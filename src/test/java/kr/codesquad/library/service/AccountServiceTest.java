@@ -39,7 +39,7 @@ class AccountServiceTest {
     @Transactional
     public void 마이페이지_확인하기(Long accountId, Long book1, Long book2, Long book3, int size, int first) {
         //given
-        Book book = bookRepository.findById(book1).orElseThrow(BookNotFoundException::new);
+        Book firstBook = bookRepository.findById(book1).orElseThrow(BookNotFoundException::new);
         bookService.rentalBook(book1, accountId);
         bookService.rentalBook(book2, accountId);
         bookService.rentalBook(book3, accountId);
@@ -47,6 +47,7 @@ class AccountServiceTest {
         //when
         AccountMyPageResponse myPage = accountService.getMyPage(accountId);
         String bookTitle = myPage.getRentalBookResponses().get(first).getTitle();
+        String bookAuthor = myPage.getRentalBookResponses().get(first).getAuthor();
 
         //then
         assertAll(
@@ -54,7 +55,8 @@ class AccountServiceTest {
                 () -> assertThat(myPage.getRole()).isEqualTo(LibraryRole.USER),
                 () -> assertThat(myPage.getRentalBookResponses()).isNotEmpty(),
                 () -> assertThat(myPage.getRentalBookResponses().size()).isEqualTo(size),
-                () -> assertThat(bookTitle).isEqualTo(book.getTitle())
+                () -> assertThat(bookTitle).isEqualTo(firstBook.getTitle()),
+                () -> assertThat(bookAuthor).isEqualTo(firstBook.getAuthor())
         );
     }
 
