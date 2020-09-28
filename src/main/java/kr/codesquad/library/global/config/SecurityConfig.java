@@ -49,11 +49,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/oauth2/redirect").permitAll()
-                .antMatchers("/admin/login").permitAll()
-//                .antMatchers("/admin/**").permitAll()
+//                .antMatchers("/admin/login").permitAll()
+                .antMatchers("/admin/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers( "/admin/**").hasRole("ADMIN")
+//                .antMatchers( "/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         http.oauth2Login()
