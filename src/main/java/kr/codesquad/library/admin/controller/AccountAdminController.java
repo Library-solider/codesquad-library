@@ -32,7 +32,7 @@ public class AccountAdminController {
     public String findDetails(@PathVariable Long accountId, Model model) {
         AccountDetailsResponse accountDetails = accountAdminService.findAccountDetails(accountId);
         model.addAttribute("accountDetails", accountDetails);
-        return "/account/detail-account";
+        return "account/details-account";
     }
 
     @GetMapping("/guest")
