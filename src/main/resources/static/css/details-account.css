@@ -88,4 +88,5 @@
     border-radius: 5px;
     box-shadow: 2px 5px 15px -3px rgba(67,143,242,0.5);
     outline: none;
+    cursor: pointer;
 }
