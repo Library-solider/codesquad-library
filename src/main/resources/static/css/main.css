@@ -67,7 +67,7 @@
 
 /* Data Table */
 .data-table {
-    margin: 50px 0 0 60px;
+    margin-top: 50px;
     text-align: center;
     font-size: 14px;
     border: 1px solid rgba(0, 0, 0, .12);
@@ -97,12 +97,6 @@
 }
 .data-table .data-table__column-name:nth-child(6) {
     width: 100px;
-}
-.data-table .data-table__column-name:nth-child(7) {
-    width: 100px;
-}
-.data-table .data-table__column-name:nth-child(8) {
-    width: 140px;
 }
 
 .data-table .data-table__row {
