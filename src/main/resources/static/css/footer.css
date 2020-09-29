@@ -5,6 +5,7 @@
     box-shadow: 1px -5px 19px -10px rgba(38,51,64,1);
     display: flex;
     justify-content: center;
+    margin-top: 150px;
 }
 .footer .container {
     display: flex;

@@ -19,7 +19,7 @@ function findCheckedAccountIds(accountCheckBoxes) {
     accountCheckBoxes.forEach(checkBox => {
         if (checkBox.checked) {
             const checkBoxWrapNode = checkBox.parentElement;
-            const accountIdNode = checkBoxWrapNode.parentElement.querySelector('.jsAccountId');
+            const accountIdNode = checkBoxWrapNode.parentElement.querySelector('.jsDataId');
             checkedAccountIds.push(accountIdNode.textContent);
         }
     });
@@ -38,7 +38,7 @@ function removeAuthorizedAccountFromDataTable(accountCheckBoxes) {
 
 function postAjaxRequest(checkedAccountIds, accountCheckBoxes) {
     const ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.open('POST', 'http://localhost:8080/admin/accounts/role');
+    ajaxRequest.open('POST', '/admin/users/role');
     ajaxRequest.setRequestHeader('Content-Type', 'application/json');
     ajaxRequest.send(JSON.stringify(checkedAccountIds));
     ajaxRequest.onreadystatechange = function() {

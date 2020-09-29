@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CODESQUAD LIBRARY - ADMIN</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css}" />
+    <script th:src="@{https://kit.fontawesome.com/1099c14a72.js}" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js}"></script>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="header__box">
+            <div class="site-title">
+                <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo" src="">
+                <div class="site-title__column">
+                    <h1 class="site-title__main-text">
+                        CODESQUAD LIBRARY
+                    </h1>
+                    <h2 class="site-title__sub-text">ADMIN</h2>
+                </div>
+            </div>
+            <ul class="navigation">
+                <li class="navigation__item"><a href="#">공지사항 관리</a></li>
+                <li class="navigation__item"><a href="#">도서 관리</a></li>
+                <li class="navigation__item navigation__item--clicked"><a th:href="@{/admin/users}">회원 관리</a></li>
+                <li class="navigation__item"><a href="#">대여 관리</a></li>
+            </ul>
+            <div class="user-info">
+                <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image" src="">
+                <span class="user-info__name">USER_NAME</span>
+            </div>
+        </div>
+        <ul class="sub-navigation">
+            <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/users}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">회원 목록</span></a></li>
+            <li class="sub-navigation__item"><a th:href="@{/admin/users/guest}"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">승인 대기 목록</span></a></li>
+        </ul>
+    </div>
+</header>
+<div class="main">
+    <div class="container">
+        <div class="main-contents">
+            <h2 class="main-contents__navigation-title">회원 상세 정보</h2>
+            <div class="account" th:object="${accountDetails}">
+                <div class="account-brief">
+                    <img th:src="${(!#strings.isEmpty(accountDetails.avatarUrl)) ? accountDetails.avatarUrl : '/images/logo.png'}" alt="" class="account-brief__avatar">
+                    <div class="account-brief__column">
+                        <span class="account-brief__name" th:text="${accountDetails.name}"></span>
+                        <span class="account-brief__role" th:text="${accountDetails.role}"></span>
+                    </div>
+                </div>
+                <table class="account-details">
+                    <tr>
+                        <th class="account-details__title"><i class="far fa-id-card"></i>ID</th>
+                        <td class="account-details__contents" th:text="${accountDetails.id}"></td>
+                    </tr>
+                    <tr>
+                        <th class="account-details__title"><i class="fab fa-github"></i>OAuth ID</th>
+                        <td class="account-details__contents" th:text="${accountDetails.oauthId}"></td>
+                    </tr>
+                    <tr>
+                        <th class="account-details__title"><i class="far fa-envelope"></i>EMAIL</th>
+                        <td class="account-details__contents" th:text="${accountDetails.email}"></td>
+                    </tr>
+                    <tr>
+                        <th class="account-details__title"><i class="fas fa-book-reader"></i>총 대여 수</th>
+                        <td class="account-details__contents">611</td>
+                    </tr>
+                    <tr>
+                        <th class="account-details__title"><i class="fas fa-book"></i>대여중인 도서</th>
+                        <td class="account-details__contents">웹 개발을 위한 Git Github 시작하기</td>
+                    </tr>
+                </table>
+            </div>
+            <form action="/admin/users" method="get" class="return-form">
+                <button type="submit" class="return-button">되돌아가기</button>
+            </form>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <div class="container">
+        <p class="copyright-text">Copyright © 2020. Codesquad Library. All rights reserved</p>
+        <p class="copyright-author">Ragdoll @CODESQUAD</p>
+    </div>
+</footer>
+</body>
+</html>

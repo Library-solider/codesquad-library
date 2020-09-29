@@ -3,7 +3,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    height: 800px;
+    /*height: 900px;*/
 }
 
 .main .container {
@@ -20,7 +20,7 @@
 
 .main-contents .main-contents__navigation-title {
     align-self: flex-start;
-    margin: 50px 0 0 60px;
+    margin: 80px 0 0 60px;
     padding-bottom: 15px;
     font-size: 23px;
     border-bottom: 3px solid #173F5F;
@@ -67,7 +67,7 @@
 
 /* Data Table */
 .data-table {
-    margin: 50px 0 0 60px;
+    margin-top: 50px;
     text-align: center;
     font-size: 14px;
     border: 1px solid rgba(0, 0, 0, .12);
@@ -98,16 +98,17 @@
 .data-table .data-table__column-name:nth-child(6) {
     width: 100px;
 }
-.data-table .data-table__column-name:nth-child(7) {
-    width: 100px;
-}
-.data-table .data-table__column-name:nth-child(8) {
-    width: 140px;
-}
 
 .data-table .data-table__row {
     height: 40px;
     line-height: 40px;
+}
+
+.data-table .data-table__row--hover {
+    font-weight: 600;
+    color: #fff;
+    background-color: #018ABE;
+    cursor: pointer;
 }
 
 .data-table .data-table__checkbox {
@@ -121,6 +122,7 @@
 .authorization-button {
     font-size: 14px;
     margin-top: 50px;
+    margin-bottom: 100px;
     width: 110px;
     height: 40px;
     border: none;

@@ -1,6 +1,7 @@
 package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.account.AccountAdminRepository;
+import kr.codesquad.library.admin.domain.account.AccountDetailsResponse;
 import kr.codesquad.library.admin.domain.account.AccountSummaryResponse;
 import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.LibraryRole;
@@ -9,11 +10,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestPropertySource;
-import org.springframework.test.context.support.AnnotationConfigContextLoader;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -87,5 +83,22 @@ class AccountAdminServiceTest {
 
         //then
         assertThat(accounts.size()).isEqualTo(countOfAllAccounts);
+    }
+
+    @CsvSource({"1, 11111, HONUX, honux77@github.com, http://img.honux, GUEST"})
+    @ParameterizedTest
+    public void 회원의_상세정보를_조회한다(Long accountId, Long oauthId, String name, String email, String avatarUrl, LibraryRole role) {
+        //when
+        AccountDetailsResponse accountDetails = accountAdminService.findAccountDetails(accountId);
+
+        //then
+        assertAll(
+                () -> assertThat(accountDetails.getId()).isEqualTo(accountId),
+                () -> assertThat(accountDetails.getOauthId()).isEqualTo(oauthId),
+                () -> assertThat(accountDetails.getName()).isEqualTo(name),
+                () -> assertThat(accountDetails.getEmail()).isEqualTo(email),
+                () -> assertThat(accountDetails.getAvatarUrl()).isEqualTo(avatarUrl),
+                () -> assertThat(accountDetails.getRole()).isEqualTo(role)
+        );
     }
 }
