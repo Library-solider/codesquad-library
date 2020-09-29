@@ -23,6 +23,7 @@ public class BookAdminController {
     @GetMapping("")
     public String findAll(Model model) {
         List<BookSummaryResponse> bookSummaries = bookAdminService.findAllBooks();
+        model.addAttribute("bookSummaries", bookSummaries);
         return "book/books-all";
     }
 

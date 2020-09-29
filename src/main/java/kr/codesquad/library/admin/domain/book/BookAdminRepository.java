@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface BookAdminRepository extends JpaRepository<Book, Long> {
 
-    @Query("SELECT b FROM Book b JOIN FETCH b.category")
+    @Query("SELECT b FROM Book b JOIN FETCH b.category ORDER BY b.id")
     List<Book> findAllWithCategory();
 }
