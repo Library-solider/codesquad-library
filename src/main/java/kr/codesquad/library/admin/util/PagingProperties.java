@@ -20,7 +20,7 @@ public class PagingProperties {
 
     private PagingProperties(int pageSize, int currentPage, int totalPages) {
         this.pageSize = pageSize;
-        this.currentPage = currentPage + 1;
+        this.currentPage = currentPage;
         this.totalPages = totalPages;
         this.pageGroupSize = 10;
         this.totalPageGroups = calculateTotalPageGroups(totalPages, pageGroupSize);
@@ -62,7 +62,7 @@ public class PagingProperties {
     }
 
     public static PagingProperties from(Page entityWithPaging) {
-        return new PagingProperties(entityWithPaging.getSize(), entityWithPaging.getNumber(),
+        return new PagingProperties(entityWithPaging.getSize(), entityWithPaging.getNumber() + 1,
                                     entityWithPaging.getTotalPages());
     }
 }
