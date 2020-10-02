@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,10 +22,9 @@ public class BookAdminController {
     private final BookAdminService bookAdminService;
 
     @GetMapping("")
-    public String findAll(Model model) {
-        List<BookSummaryResponse> bookSummaries = bookAdminService.findAllBooks();
-        model.addAttribute("bookSummaries", bookSummaries);
+    public String findAll(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+        List<BookSummaryResponse> bookSummaries = bookAdminService.findAllBooks(page);
+        model.addAttribute("bookSummaries",     bookSummaries);
         return "book/books-all";
     }
-
 }
