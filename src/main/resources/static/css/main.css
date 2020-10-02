@@ -3,7 +3,7 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    /*height: 900px;*/
+    padding-bottom: 90px;
 }
 
 .main .container {
@@ -137,25 +137,37 @@
 .paging-numbers {
     margin-top: 50px;
     display: flex;
-    width: 110px;
+    /* width: 110px; */
     justify-content: space-around;
 }
 
 .paging-numbers .paging-numbers__number {
-    border: 1px solid lightgray;
-    padding: 5px 10px;
+    border: 1px solid rgba(197, 196, 196, 0.35);
+    border-collapse: collapse;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
     text-align: center;
-    margin: 0 3px;
-    color: #173F5F;
+    vertical-align: middle;
+    color: #02457A;
 }
 
 .paging-numbers .paging-numbers__number:hover {
-    background-color: #173F5F;
+    background-color: #018ABE;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.paging-numbers .paging-numbers__number--clicked {
+    background-color: #018ABE;
     color: #fff;
     transition: 0.3s;
 }
 
 .paging-numbers .paging-numbers__number a {
-    width: inherit;
+    display: block;
+    width: 100%;
+    height: 100%;
     color: inherit;
 }
