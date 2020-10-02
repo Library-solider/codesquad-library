@@ -62,21 +62,32 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="bookSummay : ${bookSummaries}">
-                        <td th:text="${bookSummay.id}" class="book-table__row jsData jsDataId"></td>
-                        <td th:text="${bookSummay.title}" class="book-table__row jsData"></td>
-                        <td th:text="${bookSummay.author}" class="book-table__row jsData"></td>
-                        <td th:text="${bookSummay.categoryTitle}" class="book-table__row jsData"></td>
-                        <td th:text="${bookSummay.isbn}" class="book-table__row jsData"></td>
+                    <tr th:each="bookSummary : ${bookSummaries}">
+                        <td th:text="${bookSummary.id}" class="book-table__row jsData jsDataId"></td>
+                        <td th:text="${bookSummary.title}" class="book-table__row jsData"></td>
+                        <td th:text="${bookSummary.author}" class="book-table__row jsData"></td>
+                        <td th:text="${bookSummary.categoryTitle}" class="book-table__row jsData"></td>
+                        <td th:text="${bookSummary.isbn}" class="book-table__row jsData"></td>
                     </tr>
                     </tbody>
                 </table>
-                <ol class="paging-numbers">
-                    <li class="paging-numbers__number">1</li>
-                    <li class="paging-numbers__number">2</li>
-                    <li class="paging-numbers__number">3</li>
-                    <li class="paging-numbers__number">4</li>
-                    <li class="paging-numbers__number">5</li>
+                <ol class="paging-numbers"
+                    th:with="start=${pagingProperties.startPageOfPageGroup}, end=${pagingProperties.endPageOfPageGroup}">
+                    <li class="paging-numbers__number">
+                        <a th:href="@{books(page=1)}"><i class="fas fa-angle-double-left"></i></a>
+                    </li>
+                    <li class="paging-numbers__number">
+                        <a th:href="@{books(page=${pagingProperties.endPageOfPreviousPageGroup})}"><i class="fas fa-angle-left"></i></a>
+                    </li>
+                    <li class="paging-numbers__number" th:each="page : ${#numbers.sequence(start, end)}" th:classappend="${page == pagingProperties.currentPage} ? 'paging-numbers__number--clicked'">
+                        <a th:href="@{books(page=${page})}" th:text="${page}"></a>
+                    </li>
+                    <li class="paging-numbers__number">
+                        <a th:href="@{books(page=${pagingProperties.startPageOfNextPageGroup})}"><i class="fas fa-angle-right"></i></a>
+                    </li>
+                    <li class="paging-numbers__number">
+                        <a th:href="@{books(page=${pagingProperties.totalPages})}"><i class="fas fa-angle-double-right"></i></a>
+                    </li>
                 </ol>
             </div>
         </div>
