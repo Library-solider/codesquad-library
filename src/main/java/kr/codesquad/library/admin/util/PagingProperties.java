@@ -40,7 +40,9 @@ public class PagingProperties {
     }
 
     private int calculateStartPageOfPageGroup(int currentPageGroup, int pageGroupSize) {
-        return (currentPageGroup - 1) * pageGroupSize + 1;
+        int startPageOfPageGroup = (currentPageGroup - 1) * pageGroupSize + 1;
+        if (startPageOfPageGroup > totalPages) { startPageOfPageGroup = totalPages; }
+        return startPageOfPageGroup;
     }
 
     private int calculateEndPageOfPageGroup(int startPageOfPageGroup, int pageGroupSize, int totalPages) {
