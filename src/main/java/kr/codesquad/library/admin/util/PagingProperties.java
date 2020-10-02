@@ -20,7 +20,7 @@ public class PagingProperties {
 
     private PagingProperties(int pageSize, int currentPage, int totalPages) {
         this.pageSize = pageSize;
-        this.currentPage = currentPage;
+        this.currentPage = currentPage + 1;
         this.totalPages = totalPages;
         this.pageGroupSize = 10;
         this.totalPageGroups = calculateTotalPageGroups(totalPages, pageGroupSize);
