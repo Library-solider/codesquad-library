@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class BookSummaryResponse {
+public class BookSummary {
 
     private final Long id;
     private final String title;
@@ -14,7 +14,7 @@ public class BookSummaryResponse {
     private final String isbn;
 
     @Builder
-    private BookSummaryResponse(Long id, String title, String author, String categoryTitle, String isbn) {
+    private BookSummary(Long id, String title, String author, String categoryTitle, String isbn) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -22,8 +22,8 @@ public class BookSummaryResponse {
         this.isbn = isbn;
     }
 
-    public static BookSummaryResponse from(Book book) {
-        return BookSummaryResponse.builder()
+    public static BookSummary from(Book book) {
+        return BookSummary.builder()
                                   .id(book.getId())
                                   .title(book.getTitle())
                                   .author(book.getAuthor())

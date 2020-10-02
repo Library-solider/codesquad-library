@@ -1,8 +1,7 @@
 package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.book.BookAdminRepository;
-import kr.codesquad.library.admin.domain.book.BookSummaryResponse;
-import kr.codesquad.library.admin.util.PagingProperties;
+import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.domain.book.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,10 +19,10 @@ public class BookAdminService {
 
     private final BookAdminRepository bookAdminRepository;
 
-    public List<BookSummaryResponse> findAllBooks(int page) {
+    public List<BookSummary> findAllBooks(int page) {
         Page<Book> books = bookAdminRepository.findAllWithCategory(PageRequest.of(page - 1, 10));
         return books.stream()
-                    .map(BookSummaryResponse::from)
+                    .map(BookSummary::from)
                     .collect(Collectors.toList());
     }
 }

@@ -1,8 +1,7 @@
 package kr.codesquad.library.admin.controller;
 
-import kr.codesquad.library.admin.domain.book.BookSummaryResponse;
+import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.service.BookAdminService;
-import kr.codesquad.library.domain.book.Book;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,7 +22,7 @@ public class BookAdminController {
 
     @GetMapping("")
     public String findAll(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
-        List<BookSummaryResponse> bookSummaries = bookAdminService.findAllBooks(page);
+        List<BookSummary> bookSummaries = bookAdminService.findAllBooks(page);
         model.addAttribute("bookSummaries",     bookSummaries);
         return "book/books-all";
     }
