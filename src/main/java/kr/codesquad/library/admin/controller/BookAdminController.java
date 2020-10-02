@@ -25,7 +25,7 @@ public class BookAdminController {
     public String findAll(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
         BooksWithPagingResponse books = bookAdminService.findAllBooks(page);
         model.addAttribute("bookSummaries", books.getBookSummaries());
-        model.addAttribute("PagingProperties", books.getPagingProperties());
+        model.addAttribute("pagingProperties", books.getPagingProperties());
         return "book/books-all";
     }
 }
