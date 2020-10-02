@@ -1,6 +1,7 @@
 package kr.codesquad.library.admin.controller;
 
 import kr.codesquad.library.admin.domain.book.BookSummary;
+import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
 import kr.codesquad.library.admin.service.BookAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,8 +23,9 @@ public class BookAdminController {
 
     @GetMapping("")
     public String findAll(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
-        List<BookSummary> bookSummaries = bookAdminService.findAllBooks(page);
-        model.addAttribute("bookSummaries",     bookSummaries);
+        BooksWithPagingResponse books = bookAdminService.findAllBooks(page);
+        model.addAttribute("bookSummaries", books.getBookSummaries());
+        model.addAttribute("PagingProperties", books.getPagingProperties());
         return "book/books-all";
     }
 }
