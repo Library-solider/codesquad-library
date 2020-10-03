@@ -1,5 +1,6 @@
 package kr.codesquad.library.domain.book;
 
+import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
 import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.rental.Rental;
@@ -58,7 +59,8 @@ public class Book {
 
     @Builder
     private Book(Long id, String title, String description, String author, String publisher,
-                 LocalDate publicationDate, String imageUrl, String isbn, boolean available, int recommendCount) {
+                 LocalDate publicationDate, String imageUrl, String isbn,
+                 Category category, boolean available, int recommendCount, Bookcase bookcase) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -69,6 +71,8 @@ public class Book {
         this.isbn = isbn;
         this.available = available;
         this.recommendCount = recommendCount;
+        this.category = category;
+        this.bookcase = bookcase;
     }
 
     public void rentalBook() {
@@ -81,5 +85,21 @@ public class Book {
 
     public void setCategoryToTest(Category category) {
         this.category = category;
+    }
+
+    public static Book of(CreateNewBookRequest createNewBookRequest, Category category, Bookcase bookcase) {
+        return Book.builder()
+                   .title(createNewBookRequest.getTitle())
+                   .description(createNewBookRequest.getDescription())
+                   .author(createNewBookRequest.getAuthor())
+                   .publisher(createNewBookRequest.getPublisher())
+                   .publicationDate(createNewBookRequest.getPublicationDate())
+                   .imageUrl(createNewBookRequest.getImageUrl())
+                   .isbn(createNewBookRequest.getIsbn())
+                   .available(true)
+                   .recommendCount(0)
+                   .category(category)
+                   .bookcase(bookcase)
+                   .build();
     }
 }
