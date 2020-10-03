@@ -4,10 +4,17 @@ import kr.codesquad.library.admin.domain.book.BookAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
+import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
 import kr.codesquad.library.admin.domain.bookopenapi.BookData;
 import kr.codesquad.library.admin.domain.bookopenapi.BookDataFromOpenApi;
+import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
+import kr.codesquad.library.admin.domain.category.CategoryAdminRepository;
 import kr.codesquad.library.domain.book.Book;
+import kr.codesquad.library.domain.bookcase.Bookcase;
+import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.global.config.properties.InterparkProperties;
+import kr.codesquad.library.global.error.exception.domain.BookcaseNotFoundException;
+import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -37,6 +44,10 @@ public class BookAdminService {
 
     private final BookAdminRepository bookAdminRepository;
 
+    private final CategoryAdminRepository categoryAdminRepository;
+
+    private final BookcaseAdminRepository bookcaseAdminRepository;
+
     private final InterparkProperties interparkProperties;
 
     public BooksWithPagingResponse findAllBooks(int page) {
@@ -50,8 +61,13 @@ public class BookAdminService {
     }
 
 
-    public void createNewBook(String isbn) {
-       BookData bookData = findBookDataFromOpenApi(isbn);
+    @Transactional
+    public Long createNewBook(CreateNewBookRequest createNewBookRequest) {
+        Category category = categoryAdminRepository.findById(createNewBookRequest.getCategoryId()).orElseThrow(CategoryNotFoundException::new);
+        Bookcase bookcase = bookcaseAdminRepository.findById(createNewBookRequest.getBookcaseId()).orElseThrow(BookcaseNotFoundException::new);
+        Book newBook = bookAdminRepository.save(Book.of(createNewBookRequest, category, bookcase));
+        log.debug("New Book ID ::: {}", newBook.getId());
+        return newBook.getId();
     }
 
     public BookData findBookDataFromOpenApi(String isbn) {
