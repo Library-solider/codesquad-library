@@ -2,6 +2,7 @@ package kr.codesquad.library.admin.controller;
 
 import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.bookopenapi.BookData;
 import kr.codesquad.library.admin.service.BookAdminService;
 import kr.codesquad.library.domain.book.response.BookDetailResponse;
 import lombok.RequiredArgsConstructor;
@@ -32,8 +33,15 @@ public class BookAdminController {
     }
 
     @GetMapping("/open_api")
-    public String create(@RequestParam("isbn") String isbn) {
-        bookAdminService.createNewBook(isbn);
+    public String findBookFromOpenApi(@RequestParam("isbn") String isbn, Model model) {
+        BookData bookData = bookAdminService.findBookDataFromOpenApi(isbn);
+        model.addAttribute("bookData", bookData);
+        return "book/books-form";
+    }
+
+    @PostMapping("")
+    public String createNew() {
+        bookAdminService.createNewBook();
         return "book/books-create";
     }
 }
