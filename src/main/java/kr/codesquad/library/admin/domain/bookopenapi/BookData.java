@@ -5,10 +5,10 @@ import lombok.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Getter
 public class BookData {
 
+    private String isbn;
     private String title;
     private String description;
     private String author;
@@ -16,4 +16,7 @@ public class BookData {
 
     @JsonProperty("coverLargeUrl")
     private String imageUrl;
+
+    @JsonProperty("pubDate")
+    private String publicationDate;
 }
