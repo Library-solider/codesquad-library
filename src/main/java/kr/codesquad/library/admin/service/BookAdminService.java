@@ -22,12 +22,17 @@ public class BookAdminService {
     private final BookAdminRepository bookAdminRepository;
 
     public BooksWithPagingResponse findAllBooks(int page) {
-        Page<Book> books = bookAdminRepository.findAllWithCategory(PageRequest.of(page - 1, 10));
+        Page<Book> books = bookAdminRepository.findAllWithCategory(PageRequest.of(validatePageNumber(page), 10));
         List<Book> bookEntities = books.getContent();
         List<BookSummary> bookSummaries = bookEntities.stream()
                                                       .map(BookSummary::from)
                                                       .collect((Collectors.toList()));
         PagingProperties pagingProperties = PagingProperties.from(books);
         return BooksWithPagingResponse.of(bookSummaries, pagingProperties);
+    }
+
+    private int validatePageNumber(int page) {
+        if (page < 1) { page = 1; }
+        return page - 1;
     }
 }
