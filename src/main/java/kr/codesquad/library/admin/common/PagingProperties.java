@@ -3,6 +3,8 @@ package kr.codesquad.library.admin.common;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
+import static kr.codesquad.library.admin.common.ConstantsCoveringMagicNumber.PAGE_GROUP_SIZE;
+
 @Getter
 public class PagingProperties {
 
@@ -21,7 +23,7 @@ public class PagingProperties {
         this.pageSize = pageSize;
         this.currentPage = currentPage;
         this.totalPages = totalPages;
-        this.pageGroupSize = 10;
+        this.pageGroupSize = PAGE_GROUP_SIZE;
         this.totalPageGroups = calculateTotalPageGroups(totalPages, pageGroupSize);
         this.currentPageGroup = calculateCurrentPageGroup(currentPage, pageGroupSize);
         this.startPageOfPageGroup = calculateStartPageOfPageGroup(currentPageGroup, pageGroupSize);
