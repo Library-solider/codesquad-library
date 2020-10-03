@@ -1,6 +1,5 @@
-package kr.codesquad.library.admin.util;
+package kr.codesquad.library.admin.common;
 
-import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
