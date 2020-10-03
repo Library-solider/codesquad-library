@@ -7,7 +7,8 @@
 
 /* Pages */
 @import "access-admin.css";
-@import  "details-account.css";
+@import "details-account.css";
+@import "books-all.css";
 
 body {
     font-family: 'Roboto', sans-serif;
