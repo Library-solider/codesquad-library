@@ -4,6 +4,7 @@ import kr.codesquad.library.admin.domain.book.BookAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
+import kr.codesquad.library.admin.domain.bookopenapi.BookData;
 import kr.codesquad.library.admin.domain.bookopenapi.BookDataFromOpenApi;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.global.config.properties.InterparkProperties;
@@ -50,11 +51,17 @@ public class BookAdminService {
 
 
     public void createNewBook(String isbn) {
-        URI bookRequestUri = createBookRequestUri(isbn);
-        log.debug("bookRequestUrl ::: {}", bookRequestUri);
+       BookData bookData = findBookDataFromOpenApi(isbn);
+    }
+
+    public BookData findBookDataFromOpenApi(String isbn) {
         RestTemplate restTemplate = createCustomRestTemplate();
+        URI bookRequestUri = createBookRequestUri(isbn);
         BookDataFromOpenApi bookDataFromOpenApi = restTemplate.getForObject(bookRequestUri, BookDataFromOpenApi.class);
-        log.debug("bookDataFromOpenApi ::: {}", bookDataFromOpenApi.getBookData().stream().findFirst());
+        return bookDataFromOpenApi.getBookData()
+                                  .stream()
+                                  .findFirst()
+                                  .orElseGet(BookData::new);
     }
 
     private int validatePageNumber(int page) {
