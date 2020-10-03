@@ -8,11 +8,11 @@ import lombok.*;
 @Getter
 public class BookData {
 
-    private String isbn;
     private String title;
     private String description;
     private String author;
     private String publisher;
+    private String isbn;
 
     @JsonProperty("coverLargeUrl")
     private String imageUrl;
