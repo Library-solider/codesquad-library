@@ -70,23 +70,29 @@
                         </tr>
                     </table>
                 </div>
-                <form class="create-form" action="/admin/books" method="post">
+                <form class="create-form" th:action="@{/admin/books}" method="post" th:object="${createNewBookRequest}">
                     <label for="title">제목</label>
-                    <input type="text" id="title" name="title">
+                    <input type="text" id="title" name="title" th:field="*{title}">
                     <label for="author">작가</label>
-                    <input type="text" id="author" name="author">
+                    <input type="text" id="author" name="author" th:field="*{author}">
                     <label for="publicationdate">출판일</label>
-                    <input type="date" id="publicationdate" name="publicationDate">
+                    <input type="date" id="publicationdate" name="publicationDate" th:field="*{publicationDate}">
                     <label for="category">카테고리</label>
-                    <select id="category" name="categoryId">
+                    <select id="category" name="categoryId" th:field="*{categoryId}">
                         <option value="1">프론트엔드</option>
                         <option value="2">교양</option>
                         <option value="3">백엔드</option>
                         <option value="4">모바일</option>
                         <option value="5">컴퓨터공학/IT</option>
                     </select>
+                    <label for="bookcase">도서 위치</label>
+                    <select id="bookcase" name="bookcaseId" th:field="*{bookcaseId}">
+                        <option value="1">프론트, 모바일</option>
+                        <option value="2">백엔드</option>
+                        <option value="3">교양, 컴퓨터공학/IT</option>
+                    </select>
                     <label for="description">책소개</label>
-                    <textarea id="description" cols="30" rows="10" maxlength="1000" name="description"></textarea>
+                    <textarea id="description" cols="30" rows="10" maxlength="2000" name="description" th:field="*{description}"></textarea>
                     <input type="submit" value="도서 등록">
                 </form>
                 <div class="action-button">
