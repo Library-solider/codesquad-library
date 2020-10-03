@@ -70,6 +70,25 @@
                         </tr>
                     </table>
                 </div>
+                <form class="create-form" action="/admin/books" method="post">
+                    <label for="title">제목</label>
+                    <input type="text" id="title" name="title">
+                    <label for="author">작가</label>
+                    <input type="text" id="author" name="author">
+                    <label for="publicationdate">출판일</label>
+                    <input type="date" id="publicationdate" name="publicationDate">
+                    <label for="category">카테고리</label>
+                    <select id="category" name="categoryId">
+                        <option value="1">프론트엔드</option>
+                        <option value="2">교양</option>
+                        <option value="3">백엔드</option>
+                        <option value="4">모바일</option>
+                        <option value="5">컴퓨터공학/IT</option>
+                    </select>
+                    <label for="description">책소개</label>
+                    <textarea id="description" cols="30" rows="10" maxlength="1000" name="description"></textarea>
+                    <input type="submit" value="도서 등록">
+                </form>
                 <div class="action-button">
                     <a th:href="@{/admin/books/open_api/search_form}">돌아가기</a>
                     <button type="button">입력하기</button>
