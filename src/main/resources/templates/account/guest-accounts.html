@@ -15,23 +15,25 @@
     <header class="header">
         <div class="container">
             <div class="header__box">
-                <div class="site-title">
-                    <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo" src="">
-                    <div class="site-title__column">
-                        <h1 class="site-title__main-text">
-                            CODESQUAD LIBRARY
-                        </h1>
-                        <h2 class="site-title__sub-text">ADMIN</h2>
+                <a th:href="@{/admin/users/guest}" class="site-link">
+                    <div class="site-title">
+                        <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo">
+                        <div class="site-title__column">
+                            <h1 class="site-title__main-text">
+                                CODESQUAD LIBRARY
+                            </h1>
+                            <h2 class="site-title__sub-text">ADMIN</h2>
+                        </div>
                     </div>
-                </div>
+                </a>
                 <ul class="navigation">
                     <li class="navigation__item"><a href="#">공지사항 관리</a></li>
-                    <li class="navigation__item"><a href="#">도서 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/books}">도서 관리</a></li>
                     <li class="navigation__item navigation__item--clicked"><a th:href="@{/admin/users}">회원 관리</a></li>
                     <li class="navigation__item"><a href="#">대여 관리</a></li>
                 </ul>
                 <div class="user-info">
-                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image" src="">
+                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image">
                     <span class="user-info__name">USER_NAME</span>
                 </div>
             </div>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CODESQUAD LIBRARY - ADMIN</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css}" />
+    <script th:src="@{https://kit.fontawesome.com/1099c14a72.js}" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js}"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__box">
+                <a th:href="@{/admin/users/guest}" class="site-link">
+                    <div class="site-title">
+                        <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo">
+                        <div class="site-title__column">
+                            <h1 class="site-title__main-text">
+                                CODESQUAD LIBRARY
+                            </h1>
+                            <h2 class="site-title__sub-text">ADMIN</h2>
+                        </div>
+                    </div>
+                </a>
+                <ul class="navigation">
+                    <li class="navigation__item"><a href="#">공지사항 관리</a></li>
+                    <li class="navigation__item navigation__item--clicked"><a th:href="@{/admin/books}">도서 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/users}">회원 관리</a></li>
+                    <li class="navigation__item"><a href="#">대여 관리</a></li>
+                </ul>
+                <div class="user-info">
+                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image">
+                    <span class="user-info__name">USER_NAME</span>
+                </div>
+            </div>
+            <ul class="sub-navigation">
+                <li class="sub-navigation__item"><a th:href="@{/admin/books}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">도서 목록</span></a></li>
+                <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/books/open_api/search_form}"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">도서 등록</span></a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="main">
+        <div class="container">
+            <div class="main-contents">
+                <h2 class="main-contents__navigation-title">도서 등록</h2>
+                <div class="isbn-search-box">
+                    <i class="fas fa-desktop screen-icon"></i>
+                    <form class="search-form isbn-search-form" th:action="@{/admin/books/open_api}" method="get">
+                        <div class="search-form__box">
+                            <input type="search" class="search-form__bar" placeholder="등록 할 도서의 ISBN을 입력 하세요." name="isbn"/>
+                            <i class="fas fa-search search-form__icon"></i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="copyright-text">Copyright © 2020. Codesquad Library. All rights reserved</p>
+            <p class="copyright-author">Ragdoll @CODESQUAD</p>
+        </div>
+    </footer>
+</body>
+</html>

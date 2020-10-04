@@ -1,17 +1,14 @@
 package kr.codesquad.library.admin.controller;
 
-import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.bookopenapi.BookWithRequiredFormDataResponse;
+import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
 import kr.codesquad.library.admin.service.BookAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -27,5 +24,25 @@ public class BookAdminController {
         model.addAttribute("bookSummaries", books.getBookSummaries());
         model.addAttribute("pagingProperties", books.getPagingProperties());
         return "book/books-all";
+    }
+
+    @GetMapping("/open_api/search_form")
+    public String searchForm() {
+        return "book/books-searchform";
+    }
+
+    @GetMapping("/open_api")
+    public String createFormWithBookDataDerivedFromOpenApi(@RequestParam("isbn") String isbn, Model model) {
+        BookWithRequiredFormDataResponse bookWithRequiredFormData = bookAdminService.findBookWithRequiredFormData(isbn);
+        model.addAttribute("bookData", bookWithRequiredFormData.getBookData());
+        model.addAttribute("categories", bookWithRequiredFormData.getCategories());
+        model.addAttribute("bookcases", bookWithRequiredFormData.getBookcases());
+        return "book/books-createform";
+    }
+
+    @PostMapping("")
+    public String createNew(CreateNewBookRequest createNewBookRequest) {
+        Long bookId = bookAdminService.createNewBook(createNewBookRequest);
+        return "book/books-searchform";
     }
 }

@@ -23,6 +23,12 @@
 }
 
 /* Header Title */
+.site-link {
+    display: inline-block;
+    width: 220px;
+    text-decoration: none;
+    color: #fff;
+}
 .site-title {
     display: flex;
     flex-direction: column;
