@@ -1,0 +1,158 @@
+/* Search Result Box */
+.search-result-box {
+    display: unset;
+}
+.search-result-box--disable {
+    display: none;
+}
+
+/* Book Search Form */
+.book-search-form {
+    width: 300px;
+    margin: 50px auto 0 auto;
+}
+
+/* Search Result */
+.search-result {
+    margin-top: 60px;
+    display: flex;
+    justify-content: center;
+    width: 800px;
+    height: 400px;
+    box-shadow: 0px 0px 15px -10px rgba(0,0,0,0.15);
+}
+.search-result .search-result__image {
+    width: auto; max-width: 250px;
+    height: auto; max-height: 250px;
+    margin-top: 60px;
+    border: 1px solid rgba(211,211,211, 0.5);
+    box-shadow: 0px 0px 15px -5px rgba(0,0,0,1);
+}
+.search-result .search-result__column {
+    display: flex;
+    flex-direction: column;
+    margin-left: 60px;
+}
+.search-result .search-result__book-title {
+    margin-top: 80px;
+    font-size: 25px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(211,211,211, 0.9);
+    font-weight: 700;
+}
+.search-result .search-result__detail {
+    font-size: 14px;
+    margin-top: 60px;
+}
+.search-result__name {
+    text-align: left;
+    font-size: 15px;
+    font-weight: 700;
+    padding: 10px 0px;
+}
+.search-result__value {
+    padding: 10px 30px;
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+/* Action Button */
+.action-button {
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+.action-button .action-button__input {
+    border: none;
+    padding: 15px 20px;
+    background-color: #0455BF;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* CREATE FORM */
+.create-form-box {
+    display: none;
+}
+.create-form-box--enable {
+    display: unset;
+}
+.create-form {
+    width: 600px;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.input-box {
+    margin-top: 35px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+.select-box {
+    margin-top: 35px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+}
+.textarea-box {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    margin-top: 35px;
+}
+.create-form label {
+    padding-left: 2px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    font-size: 12px;
+    font-weight: 600;
+    opacity: 0.5;
+}
+.create-form input[type=text],
+.create-form input[type=date] {
+    width: inherit;
+    height: 30px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: 0.3s;
+    outline: none;
+}
+.create-form select {
+    width: 300px;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 5px;
+    box-sizing: border-box;
+    opacity: 0.7;
+    outline: none;
+}
+.create-form textarea {
+    width: inherit;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding: 10px;
+    resize: none;
+    outline: none;
+}
+.create-form input[type=text]:hover,
+.create-form input[type=date]:hover,
+.create-form select:hover,
+.create-form textarea:hover {
+    border: 1px solid #2D78DB;
+    box-shadow: 0 0 5px #2D78DB;
+}
+.create-form__button {
+    margin-top: 50px;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #0455BF;
+    cursor: pointer;
+}

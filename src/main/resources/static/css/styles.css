@@ -9,6 +9,7 @@
 @import "access-admin.css";
 @import "details-account.css";
 @import "books-all.css";
+@import "books-searchresult.css";
 
 body {
     font-family: 'Roboto', sans-serif;
