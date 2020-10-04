@@ -16,7 +16,7 @@
         <div class="container">
             <div class="header__box">
                 <div class="site-title">
-                    <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo" src="">
+                    <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo">
                     <div class="site-title__column">
                         <h1 class="site-title__main-text">
                             CODESQUAD LIBRARY
@@ -31,13 +31,13 @@
                     <li class="navigation__item"><a href="#">대여 관리</a></li>
                 </ul>
                 <div class="user-info">
-                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image" src="">
+                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image">
                     <span class="user-info__name">USER_NAME</span>
                 </div>
             </div>
             <ul class="sub-navigation">
                 <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/books}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">도서 목록</span></a></li>
-                <li class="sub-navigation__item"><a th:href="@{/admin/users/guest}"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">도서 등록</span></a></li>
+                <li class="sub-navigation__item"><a th:href="@{/admin/books/open_api/search_form}"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">도서 등록</span></a></li>
             </ul>
         </div>
     </header>
