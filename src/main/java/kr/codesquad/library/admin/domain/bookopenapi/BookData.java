@@ -1,10 +1,11 @@
 package kr.codesquad.library.admin.domain.bookopenapi;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-@AllArgsConstructor
-@NoArgsConstructor
+import java.time.LocalDate;
+
 @Getter
 public class BookData {
 
@@ -18,5 +19,6 @@ public class BookData {
     private String imageUrl;
 
     @JsonProperty("pubDate")
-    private String publicationDate;
+    @JsonFormat(pattern = "yyyyMMdd")
+    private LocalDate publicationDate;
 }
