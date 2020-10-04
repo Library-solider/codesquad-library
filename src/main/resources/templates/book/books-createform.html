@@ -108,20 +108,16 @@
                         </div>
                         <div class="select-box">
                             <label for="category">카테고리</label>
-                            <select id="category" name="categoryId">
-                                <option value="1">프론트엔드</option>
-                                <option value="2">교양</option>
-                                <option value="3">백엔드</option>
-                                <option value="4">모바일</option>
-                                <option value="5">컴퓨터공학/IT</option>
+                            <select id="category" name="categoryId" th:object="${categories}">
+                                <option label="도서의 카테고리를 선택 해주세요."></option>
+                                <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
                             </select>
                         </div>
                         <div class="select-box">
                             <label for="bookcase">도서 위치</label>
-                            <select id="bookcase" name="bookcaseId">
-                                <option value="1">프론트, 모바일</option>
-                                <option value="2">백엔드</option>
-                                <option value="3">교양, 컴퓨터공학/IT</option>
+                            <select id="bookcase" name="bookcaseId" th:object="${bookcases}">
+                                <option label="도서 위치를 선택 해주세요."></option>
+                                <option th:each="bookcase : ${bookcases}" th:value="${bookcase.id}" th:text="${bookcase.location}"></option>
                             </select>
                         </div>
                         <div class="textarea-box">
