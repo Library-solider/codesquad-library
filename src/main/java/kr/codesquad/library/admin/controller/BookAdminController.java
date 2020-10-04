@@ -34,11 +34,9 @@ public class BookAdminController {
     }
 
     @GetMapping("/open_api")
-    public String findBookFromOpenApi(@RequestParam("isbn") String isbn, Model model,
-                                      CreateNewBookRequest createNewBookRequest) {
+    public String findBookFromOpenApi(@RequestParam("isbn") String isbn, Model model) {
         BookData bookData = bookAdminService.findBookDataFromOpenApi(isbn);
         model.addAttribute("bookData", bookData);
-        model.addAttribute("createNewBookRequest", createNewBookRequest);
         return "book/books-searchresult";
     }
 

@@ -43,7 +43,7 @@
     </header>
     <div class="main">
         <div class="container">
-            <div class="main-contents">
+            <div class="main-contents" th:object="${bookData}">
                 <h2 class="main-contents__navigation-title">도서 등록</h2>
                 <div class="search-result-box">
                     <form class="search-form book-search-form" th:action="@{/admin/books/open_api}" method="get">
@@ -52,7 +52,7 @@
                             <i class="fas fa-search search-form__icon"></i>
                         </div>
                     </form>
-                    <div class="search-result" th:object="${bookData}">
+                    <div class="search-result">
                         <img th:src="${(!#strings.isEmpty(bookData.imageUrl)) ? bookData.imageUrl : '/images/book-not-found.png'}" class="search-result__image"/>
                         <div class="search-result__column">
                             <h3 class="search-result__book-title" th:text="${(!#strings.isEmpty(bookData.title)) ? bookData.title : '요청 데이터가 존재하지 않습니다.'}"></h3>
@@ -81,34 +81,34 @@
                     </div>
                 </div>
                 <div class="create-form-box">
-                    <form class="create-form" th:action="@{/admin/books}" method="post" th:object="${createNewBookRequest}">
+                    <form class="create-form" th:action="@{/admin/books}" method="post">
                         <div class="input-box">
                             <label for="title">제목</label>
-                            <input type="text" id="title" name="title" th:field="*{title}">
+                            <input type="text" id="title" name="title" th:value="${bookData.title}">
                         </div>
                         <div class="input-box">
                             <label for="author">저자</label>
-                            <input type="text" id="author" name="author" th:field="*{author}">
+                            <input type="text" id="author" name="author" th:value="${bookData.author}">
                         </div>
                         <div class="input-box">
                             <label for="publisher">출판사</label>
-                            <input type="text" id="publisher" name="publisher" th:field="*{publisher}">
+                            <input type="text" id="publisher" name="publisher" th:value="${bookData.publisher}">
                         </div>
                         <div class="input-box">
-                            <label for="publicationdate">출판일</label>
-                            <input type="date" id="publicationdate" name="publicationDate" th:field="*{publicationDate}">
+                            <label for="publicationDate">출판일</label>
+                            <input type="date" id="publicationDate" name="publicationDate" th:value="${bookData.publicationDate}">
                         </div>
                         <div class="input-box">
                             <label for="imageUrl">이미지 URL</label>
-                            <input type="text" id="imageUrl" name="imageUrl" th:field="*{imageUrl}">
+                            <input type="text" id="imageUrl" name="imageUrl" th:value="${bookData.imageUrl}">
                         </div>
                         <div class="input-box">
                             <label for="isbn">ISBN</label>
-                            <input type="text" id="isbn" name="isbn" th:field="*{isbn}">
+                            <input type="text" id="isbn" name="isbn" th:value="${bookData.isbn}">
                         </div>
                         <div class="select-box">
                             <label for="category">카테고리</label>
-                            <select id="category" name="categoryId" th:field="*{categoryId}">
+                            <select id="category" name="categoryId">
                                 <option value="1">프론트엔드</option>
                                 <option value="2">교양</option>
                                 <option value="3">백엔드</option>
@@ -118,7 +118,7 @@
                         </div>
                         <div class="select-box">
                             <label for="bookcase">도서 위치</label>
-                            <select id="bookcase" name="bookcaseId" th:field="*{bookcaseId}">
+                            <select id="bookcase" name="bookcaseId">
                                 <option value="1">프론트, 모바일</option>
                                 <option value="2">백엔드</option>
                                 <option value="3">교양, 컴퓨터공학/IT</option>
@@ -126,7 +126,7 @@
                         </div>
                         <div class="textarea-box">
                             <label for="description">책소개</label>
-                            <textarea id="description" cols="30" rows="10" maxlength="2000" name="description" th:field="*{description}"></textarea>
+                            <textarea id="description" cols="30" rows="10" maxlength="2000" name="description" th:text="${bookData.description}"></textarea>
                         </div>
                         <input type="submit" value="도서 등록">
                     </form>
