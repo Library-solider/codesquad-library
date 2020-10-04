@@ -10,6 +10,7 @@
 @import "details-account.css";
 @import "books-all.css";
 @import "books-searchresult.css";
+@import "books-searchform.css";
 
 body {
     font-family: 'Roboto', sans-serif;
