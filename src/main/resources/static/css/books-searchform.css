@@ -22,7 +22,7 @@
 }
 .isbn-search-form .search-form__box .search-form__bar {
     width: 350px;
-    border: 2px solid #001B48;
+    border: 1px solid #001B48;
 }
 .isbn-search-form .search-form__box .search-form__bar::placeholder {
     opacity: 1;
