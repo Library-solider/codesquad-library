@@ -1,9 +1,9 @@
 package kr.codesquad.library.admin.controller;
 
-import kr.codesquad.library.admin.domain.book.BookDetailResponse;
-import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
-import kr.codesquad.library.admin.domain.bookopenapi.BookWithRequiredFormDataResponse;
-import kr.codesquad.library.admin.domain.book.BookFormRequest;
+import kr.codesquad.library.admin.domain.book.response.BookDetailResponse;
+import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.book.response.BookWithRequiredFormDataResponse;
+import kr.codesquad.library.admin.domain.book.request.BookFormRequest;
 import kr.codesquad.library.admin.service.BookAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

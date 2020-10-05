@@ -1,4 +1,4 @@
-package kr.codesquad.library.admin.domain.book;
+package kr.codesquad.library.admin.domain.book.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

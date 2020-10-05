@@ -1,4 +1,4 @@
-package kr.codesquad.library.admin.domain.bookopenapi;
+package kr.codesquad.library.admin.domain.book;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

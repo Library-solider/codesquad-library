@@ -1,8 +1,8 @@
 package kr.codesquad.library.admin.domain.bookopenapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import kr.codesquad.library.admin.domain.book.BookData;
 import lombok.Getter;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,6 @@
 package kr.codesquad.library.domain.book;
 
-import kr.codesquad.library.admin.domain.book.BookFormRequest;
+import kr.codesquad.library.admin.domain.book.request.BookFormRequest;
 import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.rental.Rental;

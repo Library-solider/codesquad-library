@@ -2,11 +2,11 @@ package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.book.BookAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookSummary;
-import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
-import kr.codesquad.library.admin.domain.bookopenapi.BookData;
-import kr.codesquad.library.admin.domain.book.BookFormRequest;
+import kr.codesquad.library.admin.domain.book.BookData;
+import kr.codesquad.library.admin.domain.book.request.BookFormRequest;
 import kr.codesquad.library.admin.domain.category.CategoryAdminRepository;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
