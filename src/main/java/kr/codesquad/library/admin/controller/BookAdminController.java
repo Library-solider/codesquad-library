@@ -51,6 +51,6 @@ public class BookAdminController {
     @PostMapping("")
     public String createNew(CreateNewBookRequest createNewBookRequest) {
         Long bookId = bookAdminService.createNewBook(createNewBookRequest);
-        return "book/books-searchform";
+        return "redirect:/admin/books/" + bookId;
     }
 }
