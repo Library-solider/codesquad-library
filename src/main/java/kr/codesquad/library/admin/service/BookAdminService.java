@@ -46,11 +46,8 @@ import static kr.codesquad.library.admin.common.ConstantsCoveringMagicNumber.MIN
 public class BookAdminService {
 
     private final BookAdminRepository bookAdminRepository;
-
     private final CategoryAdminRepository categoryAdminRepository;
-
     private final BookcaseAdminRepository bookcaseAdminRepository;
-
     private final InterparkProperties interparkProperties;
 
     public BooksWithPagingResponse findAllBooks(int page) {
