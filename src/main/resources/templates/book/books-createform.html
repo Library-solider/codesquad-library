@@ -86,15 +86,15 @@
                     <form class="book-form" th:action="@{/admin/books}" method="post">
                         <div class="input-box">
                             <label for="title">제목</label>
-                            <input type="text" id="title" name="title" th:value="${bookData.title}" required>
+                            <input type="text" id="title" name="title" th:value="${bookData.title}" maxlength="128" required>
                         </div>
                         <div class="input-box">
                             <label for="author">저자</label>
-                            <input type="text" id="author" name="author" th:value="${bookData.author}" required>
+                            <input type="text" id="author" name="author" th:value="${bookData.author}" maxlength="64" required>
                         </div>
                         <div class="input-box">
                             <label for="publisher">출판사</label>
-                            <input type="text" id="publisher" name="publisher" th:value="${bookData.publisher}" required>
+                            <input type="text" id="publisher" name="publisher" th:value="${bookData.publisher}" maxlength="30" required>
                         </div>
                         <div class="input-box">
                             <label for="publicationDate">출판일</label>
@@ -102,11 +102,11 @@
                         </div>
                         <div class="input-box">
                             <label for="imageUrl">이미지 URL</label>
-                            <input type="text" id="imageUrl" name="imageUrl" th:value="${bookData.imageUrl}">
+                            <input type="url" id="imageUrl" name="imageUrl" th:value="${bookData.imageUrl}">
                         </div>
                         <div class="input-box">
                             <label for="isbn">ISBN</label>
-                            <input type="text" id="isbn" name="isbn" th:value="${bookData.isbn}" required>
+                            <input type="text" id="isbn" name="isbn" th:value="${bookData.isbn}" maxlength="13" required>
                         </div>
                         <div class="select-box">
                             <label for="category">카테고리</label>
