@@ -47,47 +47,47 @@
         <div class="container">
             <div class="main-contents">
                 <h2 class="main-contents__navigation-title">도서 상세 정보</h2>
-                <div class="book-box">
-                    <div class="book-detail">
-                        <div class="book-detail__row">
-                            <div class="book-detail__column">
-                                <span class="book-category" th:text="${book.categoryTitle}"></span>
-                                <img th:src="${(!#strings.isEmpty(book.imageUrl)) ? book.imageUrl : '/images/book-not-found.png'}" class="book-image">
-                                <div class="book-isbn">
-                                    <span class="book-isbn__title">ISBN</span>
-                                    <span class="book-isbn__contents" th:text="${book.isbn}"></span>
-                                </div>
-                            </div>
-                            <div class="book-detail__column">
-                                <h3 class="book-title" th:text="${book.title}"></h3>
-                                <table class="book-detail__table">
-                                    <tr>
-                                        <th class="book-detail__title">저자</th>
-                                        <td class="book-detail__contents" th:text="${book.author}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="book-detail__title">출판사</th>
-                                        <td class="book-detail__contents" th:text="${book.publisher}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="book-detail__title">출판일</th>
-                                        <td class="book-detail__contents" th:text="${book.publicationDate}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="book-detail__title">대여 가능 여부</th>
-                                        <td class="book-detail__contents" th:text="${book.available}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="book-detail__title">추천수</th>
-                                        <td class="book-detail__contents" th:text="${book.recommendCount}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th class="book-detail__title">위치</th>
-                                        <td class="book-detail__contents" th:text="${book.location}"></td>
-                                    </tr>
-                                </table>
+                <div class="book-detail">
+                    <div class="book-detail__row">
+                        <div class="book-detail__column">
+                            <span class="book-category" th:text="${book.categoryTitle}"></span>
+                            <img th:src="${(!#strings.isEmpty(book.imageUrl)) ? book.imageUrl : '/images/book-not-found.png'}" class="book-image">
+                            <div class="book-isbn">
+                                <span class="book-isbn__title">ISBN</span>
+                                <span class="book-isbn__contents" th:text="${book.isbn}"></span>
                             </div>
                         </div>
+                        <div class="book-detail__column">
+                            <h3 class="book-title" th:text="${book.title}"></h3>
+                            <table class="book-detail__table">
+                                <tr>
+                                    <th class="book-detail__title">저자</th>
+                                    <td class="book-detail__contents" th:text="${book.author}"></td>
+                                </tr>
+                                <tr>
+                                    <th class="book-detail__title">출판사</th>
+                                    <td class="book-detail__contents" th:text="${book.publisher}"></td>
+                                </tr>
+                                <tr>
+                                    <th class="book-detail__title">출판일</th>
+                                    <td class="book-detail__contents" th:text="${book.publicationDate}"></td>
+                                </tr>
+                                <tr>
+                                    <th class="book-detail__title">대여 가능 여부</th>
+                                    <td class="book-detail__contents" th:text="${book.available}"></td>
+                                </tr>
+                                <tr>
+                                    <th class="book-detail__title">추천수</th>
+                                    <td class="book-detail__contents" th:text="${book.recommendCount}"></td>
+                                </tr>
+                                <tr>
+                                    <th class="book-detail__title">위치</th>
+                                    <td class="book-detail__contents" th:text="${book.location}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="book-detail__row">
                         <div class="book-description">
                             <h3 class="book-description__title">책소개</h3>
                             <p class="book-description__contents" th:text="${book.description}"></p>
