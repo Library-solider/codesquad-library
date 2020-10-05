@@ -24,41 +24,41 @@ public class PagingProperties {
         this.currentPage = currentPage;
         this.totalPages = totalPages;
         this.pageGroupSize = PAGE_GROUP_SIZE;
-        this.totalPageGroups = calculateTotalPageGroups(totalPages, pageGroupSize);
-        this.currentPageGroup = calculateCurrentPageGroup(currentPage, pageGroupSize);
-        this.startPageOfPageGroup = calculateStartPageOfPageGroup(currentPageGroup, pageGroupSize);
-        this.endPageOfPageGroup = calculateEndPageOfPageGroup(startPageOfPageGroup, pageGroupSize, totalPages);
-        this.endPageOfPreviousPageGroup = calculateEndPageOfPreviousPageGroup(currentPageGroup, pageGroupSize);
-        this.startPageOfNextPageGroup = calculateStartPageOfNextPageGroup(currentPageGroup, pageGroupSize, totalPages);
+        this.totalPageGroups = calculateTotalPageGroups();
+        this.currentPageGroup = calculateCurrentPageGroup();
+        this.startPageOfPageGroup = calculateStartPageOfPageGroup();
+        this.endPageOfPageGroup = calculateEndPageOfPageGroup();
+        this.endPageOfPreviousPageGroup = calculateEndPageOfPreviousPageGroup();
+        this.startPageOfNextPageGroup = calculateStartPageOfNextPageGroup();
     }
 
-    private int calculateTotalPageGroups(int totalPages, int pageGroupSize) {
+    private int calculateTotalPageGroups() {
         return (int) (Math.ceil((double) totalPages / pageGroupSize));
     }
 
-    private int calculateCurrentPageGroup(int currentPage, int pageGroupSize) {
+    private int calculateCurrentPageGroup() {
         return (int) (Math.ceil((double) currentPage / pageGroupSize));
     }
 
-    private int calculateStartPageOfPageGroup(int currentPageGroup, int pageGroupSize) {
+    private int calculateStartPageOfPageGroup() {
         int startPageOfPageGroup = (currentPageGroup - 1) * pageGroupSize + 1;
         if (startPageOfPageGroup > totalPages) { startPageOfPageGroup = totalPages; }
         return startPageOfPageGroup;
     }
 
-    private int calculateEndPageOfPageGroup(int startPageOfPageGroup, int pageGroupSize, int totalPages) {
+    private int calculateEndPageOfPageGroup() {
         int endPageOfPageGroup = startPageOfPageGroup + pageGroupSize - 1;
         if (endPageOfPageGroup > totalPages) { endPageOfPageGroup = totalPages; }
         return endPageOfPageGroup;
     }
 
-    private int calculateEndPageOfPreviousPageGroup(int currentPageGroup, int pageGroupSize) {
+    private int calculateEndPageOfPreviousPageGroup() {
         int endPageOfPreviousPageGroup = (currentPageGroup * pageGroupSize) - pageGroupSize;
         if (endPageOfPreviousPageGroup < 1) { endPageOfPreviousPageGroup = 1; }
         return endPageOfPreviousPageGroup;
     }
 
-    private int calculateStartPageOfNextPageGroup(int currentPageGroup, int pageGroupSize, int totalPages) {
+    private int calculateStartPageOfNextPageGroup() {
         int startPageOfNextPageGroup = (currentPageGroup * pageGroupSize) + 1;
         if (startPageOfNextPageGroup > totalPages) { startPageOfNextPageGroup = totalPages; }
         return startPageOfNextPageGroup;

@@ -11,6 +11,7 @@
 @import "books-all.css";
 @import "books-createform.css";
 @import "books-searchform.css";
+@import "books-detail.css";
 
 body {
     font-family: 'Roboto', sans-serif;

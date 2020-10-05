@@ -6,11 +6,15 @@ import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
 import kr.codesquad.library.admin.domain.bookopenapi.BookData;
 import kr.codesquad.library.admin.domain.bookopenapi.BookDataFromOpenApi;
+import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
+import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.global.config.properties.InterparkProperties;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
+@Transactional
 class BookAdminServiceTest {
 
     @Autowired
@@ -55,10 +60,10 @@ class BookAdminServiceTest {
     }
 
     @CsvSource({"9791186697276, 제대로 배우는 도커, 아드리안 모트(Adrian Mouat), 비제이퍼블릭, " +
-               "http://bimage.interpark.com/goods_image/0/7/3/1/263240731s.jpg, 20161226, 12345"})
+               "http://bimage.interpark.com/goods_image/0/7/3/1/263240731s.jpg, 2016-12-26, 12345"})
     @ParameterizedTest
     public void Open_API로부터_도서_데이터를_가져온다(String isbn, String title, String author, String publisher,
-                                                String imageUrl, String publicationDate, String wrongIsbn) {
+                                                String imageUrl, LocalDate publicationDate, String wrongIsbn) {
         //when
         BookData bookData = bookAdminService.findBookDataFromOpenApi(isbn);
         BookData emptyData = bookAdminService.findBookDataFromOpenApi(wrongIsbn);
@@ -74,5 +79,33 @@ class BookAdminServiceTest {
         );
 
         assertThat(emptyData.getIsbn()).isNull();
+    }
+
+    @CsvSource({"'TCP/IP 쉽게, 더 쉽게', Description, 리브로웍스, 제이펍, 9791185890678, " +
+                "http://bimage.interpark.com/goods_image/2/9/3/5/257842935s.jpg, 5, 1, 2016-09-21"})
+    @ParameterizedTest
+    public void 새로운_도서_데이터를_등록한다(String title, String description, String author, String publisher, String isbn,
+                                        String imageUrl, Long categoryId, Long bookcaseId,
+                                        LocalDate publicationDate) {
+        //given
+        CreateNewBookRequest createNewBookRequest = new CreateNewBookRequest(title, description, author,
+                                                                             publisher, isbn, imageUrl, categoryId,
+                                                                             bookcaseId, publicationDate);
+
+        //when
+        Long newBookId = bookAdminService.createNewBook(createNewBookRequest);
+        Book book = bookAdminRepository.findById(newBookId).orElseGet(Book::new);
+
+        //then
+        assertAll(
+                () -> assertThat(book.getDescription()).isEqualTo(description),
+                () -> assertThat(book.getAuthor()).isEqualTo(author),
+                () -> assertThat(book.getPublisher()).isEqualTo(publisher),
+                () -> assertThat(book.getIsbn()).isEqualTo(isbn),
+                () -> assertThat(book.getImageUrl()).isEqualTo(imageUrl),
+                () -> assertThat(book.getCategory().getId()).isEqualTo(categoryId),
+                () -> assertThat(book.getBookcase().getId()).isEqualTo(bookcaseId),
+                () -> assertThat(book.getPublicationDate()).isEqualTo(publicationDate)
+        );
     }
 }

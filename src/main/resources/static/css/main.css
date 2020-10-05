@@ -104,18 +104,18 @@
     line-height: 40px;
 }
 
-.data-table .data-table__row--hover {
-    font-weight: 600;
-    color: #fff;
-    background-color: #018ABE;
-    cursor: pointer;
-}
-
 .data-table .data-table__checkbox {
     width: 17px;
     height: 17px;
     margin-top: -1px;
     vertical-align: middle;
+}
+
+.data-table__row--hover {
+    font-weight: 600;
+    color: #fff;
+    background-color: #018ABE;
+    cursor: pointer;
 }
 
 /* Authorization Button */
