@@ -87,9 +87,13 @@ public class BookAdminService {
 
     public BookWithRequiredFormDataResponse findBookWithRequiredFormDataByIsbn(String isbn) {
         BookData bookData = findBookDataFromOpenApi(isbn);
-        List<Category> categories = categoryAdminRepository.findAll();
-        List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
-        return BookWithRequiredFormDataResponse.of(bookData, categories, bookcases);
+        return createRequiredFormData(bookData);
+    }
+
+    public BookWithRequiredFormDataResponse findBookWithRequiredFormDataByBookId(Long bookId) {
+        Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        BookData bookData = BookData.from(book);
+        return createRequiredFormData(bookData);
     }
 
     public BookDetailResponse findBook(Long bookId) {
@@ -105,6 +109,12 @@ public class BookAdminService {
                                   .stream()
                                   .findFirst()
                                   .orElseGet(BookData::new);
+    }
+
+    private BookWithRequiredFormDataResponse createRequiredFormData(BookData bookData) {
+        List<Category> categories = categoryAdminRepository.findAll();
+        List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
+        return BookWithRequiredFormDataResponse.of(bookData, categories, bookcases);
     }
 
     private int validatePageNumber(int page) {
@@ -130,13 +140,5 @@ public class BookAdminService {
         messageConverters.add(converter);
         restTemplate.setMessageConverters(messageConverters);
         return restTemplate;
-    }
-
-    public BookWithRequiredFormDataResponse findBookWithRequiredFormDataByBookId(Long bookId) {
-        Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
-        BookData bookData = BookData.from(book);
-        List<Category> categories = categoryAdminRepository.findAll();
-        List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
-        return BookWithRequiredFormDataResponse.of(bookData, categories, bookcases);
     }
 }
