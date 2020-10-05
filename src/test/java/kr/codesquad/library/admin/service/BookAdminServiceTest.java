@@ -4,9 +4,12 @@ import kr.codesquad.library.admin.domain.book.BookAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
+import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
 import kr.codesquad.library.admin.domain.bookopenapi.BookData;
-import kr.codesquad.library.admin.domain.bookopenapi.BookFormRequest;
+import kr.codesquad.library.admin.domain.book.BookFormRequest;
+import kr.codesquad.library.admin.domain.category.CategoryAdminRepository;
 import kr.codesquad.library.domain.book.Book;
+import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +31,12 @@ class BookAdminServiceTest {
 
     @Autowired
     BookAdminRepository bookAdminRepository;
+
+    @Autowired
+    CategoryAdminRepository categoryAdminRepository;
+
+    @Autowired
+    BookcaseAdminRepository bookcaseAdminRepository;
 
     @CsvSource({"3, 10, 44, 10, 5, 1, 1, 10, 1, 11"})
     @ParameterizedTest
@@ -86,15 +95,45 @@ class BookAdminServiceTest {
                                         LocalDate publicationDate) {
         //given
         BookFormRequest bookFormRequest = new BookFormRequest(title, description, author,
-                                                                             publisher, isbn, imageUrl, categoryId,
-                                                                             bookcaseId, publicationDate);
+                                                              publisher, isbn, imageUrl, categoryId,
+                                                              bookcaseId, publicationDate);
 
         //when
         Long newBookId = bookAdminService.createNewBook(bookFormRequest);
-        Book book = bookAdminRepository.findById(newBookId).orElseGet(Book::new);
+        Book book = bookAdminRepository.findById(newBookId).orElseThrow(BookNotFoundException::new);
 
         //then
         assertAll(
+                () -> assertThat(book.getDescription()).isEqualTo(description),
+                () -> assertThat(book.getAuthor()).isEqualTo(author),
+                () -> assertThat(book.getPublisher()).isEqualTo(publisher),
+                () -> assertThat(book.getIsbn()).isEqualTo(isbn),
+                () -> assertThat(book.getImageUrl()).isEqualTo(imageUrl),
+                () -> assertThat(book.getCategory().getId()).isEqualTo(categoryId),
+                () -> assertThat(book.getBookcase().getId()).isEqualTo(bookcaseId),
+                () -> assertThat(book.getPublicationDate()).isEqualTo(publicationDate)
+        );
+    }
+
+    @CsvSource({"3, Changed Title, Changed description, Changed author, Changed publisher, Changed isbn, " +
+                "Changed imageUrl, 1, 3, 1992-04-25"})
+    @ParameterizedTest
+    public void 도서정보를_업데이트_한다(Long bookId, String title, String description, String author, String publisher,
+                                    String isbn, String imageUrl, Long categoryId, Long bookcaseId,
+                                    LocalDate publicationDate) {
+        //given
+        BookFormRequest bookFormRequest = new BookFormRequest(title, description, author,
+                                                              publisher, isbn, imageUrl, categoryId,
+                                                              bookcaseId, publicationDate);
+
+        //when
+        Long updatedBookId = bookAdminService.updateBook(bookId, bookFormRequest);
+        Book book = bookAdminRepository.findById(updatedBookId).orElseThrow(BookNotFoundException::new);
+
+        //then
+        assertAll(
+                () -> assertThat(book.getId()).isEqualTo(updatedBookId),
+                () -> assertThat(book.getTitle()).isEqualTo(title),
                 () -> assertThat(book.getDescription()).isEqualTo(description),
                 () -> assertThat(book.getAuthor()).isEqualTo(author),
                 () -> assertThat(book.getPublisher()).isEqualTo(publisher),
