@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 @AllArgsConstructor
 @Getter
-public class CreateNewBookRequest {
+public class BookFormRequest {
 
     private final String title;
     private final String description;

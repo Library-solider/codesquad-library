@@ -5,15 +5,12 @@ import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
 import kr.codesquad.library.admin.domain.bookopenapi.BookData;
-import kr.codesquad.library.admin.domain.bookopenapi.BookDataFromOpenApi;
-import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
+import kr.codesquad.library.admin.domain.bookopenapi.BookFormRequest;
 import kr.codesquad.library.domain.book.Book;
-import kr.codesquad.library.global.config.properties.InterparkProperties;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -88,12 +85,12 @@ class BookAdminServiceTest {
                                         String imageUrl, Long categoryId, Long bookcaseId,
                                         LocalDate publicationDate) {
         //given
-        CreateNewBookRequest createNewBookRequest = new CreateNewBookRequest(title, description, author,
+        BookFormRequest bookFormRequest = new BookFormRequest(title, description, author,
                                                                              publisher, isbn, imageUrl, categoryId,
                                                                              bookcaseId, publicationDate);
 
         //when
-        Long newBookId = bookAdminService.createNewBook(createNewBookRequest);
+        Long newBookId = bookAdminService.createNewBook(bookFormRequest);
         Book book = bookAdminRepository.findById(newBookId).orElseGet(Book::new);
 
         //then

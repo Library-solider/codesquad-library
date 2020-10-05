@@ -1,6 +1,6 @@
 package kr.codesquad.library.domain.book;
 
-import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
+import kr.codesquad.library.admin.domain.bookopenapi.BookFormRequest;
 import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.rental.Rental;
@@ -87,15 +87,15 @@ public class Book {
         this.category = category;
     }
 
-    public static Book of(CreateNewBookRequest createNewBookRequest, Category category, Bookcase bookcase) {
+    public static Book of(BookFormRequest bookFormRequest, Category category, Bookcase bookcase) {
         return Book.builder()
-                   .title(createNewBookRequest.getTitle())
-                   .description(createNewBookRequest.getDescription())
-                   .author(createNewBookRequest.getAuthor())
-                   .publisher(createNewBookRequest.getPublisher())
-                   .publicationDate(createNewBookRequest.getPublicationDate())
-                   .imageUrl(createNewBookRequest.getImageUrl())
-                   .isbn(createNewBookRequest.getIsbn())
+                   .title(bookFormRequest.getTitle())
+                   .description(bookFormRequest.getDescription())
+                   .author(bookFormRequest.getAuthor())
+                   .publisher(bookFormRequest.getPublisher())
+                   .publicationDate(bookFormRequest.getPublicationDate())
+                   .imageUrl(bookFormRequest.getImageUrl())
+                   .isbn(bookFormRequest.getIsbn())
                    .available(true)
                    .recommendCount(0)
                    .category(category)
