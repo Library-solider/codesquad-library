@@ -8,7 +8,7 @@ import kr.codesquad.library.admin.common.PagingProperties;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
 import kr.codesquad.library.admin.domain.bookopenapi.BookData;
 import kr.codesquad.library.admin.domain.bookopenapi.BookDataFromOpenApi;
-import kr.codesquad.library.admin.domain.bookopenapi.BookFormRequest;
+import kr.codesquad.library.admin.domain.book.BookFormRequest;
 import kr.codesquad.library.admin.domain.bookopenapi.BookWithRequiredFormDataResponse;
 import kr.codesquad.library.admin.domain.category.CategoryAdminRepository;
 import kr.codesquad.library.domain.book.Book;
@@ -66,11 +66,23 @@ public class BookAdminService {
 
     @Transactional
     public Long createNewBook(BookFormRequest bookFormRequest) {
-        Category category = categoryAdminRepository.findById(bookFormRequest.getCategoryId()).orElseThrow(CategoryNotFoundException::new);
-        Bookcase bookcase = bookcaseAdminRepository.findById(bookFormRequest.getBookcaseId()).orElseThrow(BookcaseNotFoundException::new);
+        Category category = categoryAdminRepository.findById(bookFormRequest.getCategoryId())
+                                                   .orElseThrow(CategoryNotFoundException::new);
+        Bookcase bookcase = bookcaseAdminRepository.findById(bookFormRequest.getBookcaseId())
+                                                   .orElseThrow(BookcaseNotFoundException::new);
         Book newBook = bookAdminRepository.save(Book.of(bookFormRequest, category, bookcase));
         log.debug("New Book ID ::: {}", newBook.getId());
         return newBook.getId();
+    }
+
+    @Transactional
+    public Long updateBook(Long bookId, BookFormRequest bookFormRequest) {
+        Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        Category category = categoryAdminRepository.findById(bookFormRequest.getCategoryId())
+                                                   .orElseThrow(CategoryNotFoundException::new);
+        Bookcase bookcase = bookcaseAdminRepository.findById(bookFormRequest.getBookcaseId())
+                                                   .orElseThrow(BookcaseNotFoundException::new);
+        return book.updateBook(bookFormRequest, category, bookcase);
     }
 
     public BookWithRequiredFormDataResponse findBookWithRequiredFormData(String isbn) {

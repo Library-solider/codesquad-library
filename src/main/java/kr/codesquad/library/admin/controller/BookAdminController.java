@@ -3,7 +3,7 @@ package kr.codesquad.library.admin.controller;
 import kr.codesquad.library.admin.domain.book.BookDetailResponse;
 import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
 import kr.codesquad.library.admin.domain.bookopenapi.BookWithRequiredFormDataResponse;
-import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
+import kr.codesquad.library.admin.domain.book.BookFormRequest;
 import kr.codesquad.library.admin.service.BookAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -49,8 +49,14 @@ public class BookAdminController {
     }
 
     @PostMapping("")
-    public String createNew(CreateNewBookRequest createNewBookRequest) {
-        Long bookId = bookAdminService.createNewBook(createNewBookRequest);
+    public String createNew(BookFormRequest bookFormRequest) {
+        Long bookId = bookAdminService.createNewBook(bookFormRequest);
         return "redirect:/admin/books/" + bookId;
+    }
+
+    @PostMapping("/{bookId}")
+    public String update(@PathVariable Long bookId, BookFormRequest bookFormRequest) {
+        Long updatedBookId = bookAdminService.updateBook(bookId, bookFormRequest);
+        return "redirect:/admin/books/" + updatedBookId;
     }
 }

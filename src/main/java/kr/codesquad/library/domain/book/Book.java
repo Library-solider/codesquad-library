@@ -1,6 +1,6 @@
 package kr.codesquad.library.domain.book;
 
-import kr.codesquad.library.admin.domain.bookopenapi.BookFormRequest;
+import kr.codesquad.library.admin.domain.book.BookFormRequest;
 import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.domain.rental.Rental;
@@ -85,6 +85,36 @@ public class Book {
 
     public void setCategoryToTest(Category category) {
         this.category = category;
+    }
+
+    public Long updateBook(BookFormRequest bookFormRequest, Category category, Bookcase bookcase) {
+        this.title = bookFormRequest.getTitle();
+        this.description = bookFormRequest.getDescription();
+        this.author = bookFormRequest.getAuthor();
+        this.publisher = bookFormRequest.getPublisher();
+        this.publicationDate = bookFormRequest.getPublicationDate();
+        this.imageUrl = bookFormRequest.getImageUrl();
+        this.isbn = bookFormRequest.getIsbn();
+        this.category = changeCategory(category);
+        this.bookcase = changeBookcase(bookcase);
+        return this.id;
+    }
+
+    public Category changeCategory(Category category) {
+        if (isDifferentCategory(category)) {
+            this.category.getBooks().add(this);
+            return category;
+        }
+        return category;
+    }
+
+    public Bookcase changeBookcase(Bookcase bookcase) {
+        this.bookcase = bookcase;
+        return bookcase;
+    }
+
+    private boolean isDifferentCategory(Category category) {
+        return this.category.equals(category);
     }
 
     public static Book of(BookFormRequest bookFormRequest, Category category, Bookcase bookcase) {
