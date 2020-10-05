@@ -93,7 +93,7 @@ public class BookAdminService {
         return createRequiredFormData(bookData);
     }
 
-    public BookDetailResponse findBook(Long bookId) {
+    public BookDetailResponse findBookDetail(Long bookId) {
         Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         return BookDetailResponse.from(book);
     }

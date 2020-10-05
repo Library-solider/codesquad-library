@@ -27,9 +27,15 @@ public class BookAdminController {
         return "book/books-all";
     }
 
+    @PostMapping("")
+    public String createNew(BookFormRequest bookFormRequest) {
+        Long bookId = bookAdminService.createNewBook(bookFormRequest);
+        return "redirect:/admin/books/" + bookId;
+    }
+
     @GetMapping("/{bookId}")
-    public String detail(@PathVariable Long bookId, Model model) {
-        BookDetailResponse bookDetail = bookAdminService.findBook(bookId);
+    public String findDetail(@PathVariable Long bookId, Model model) {
+        BookDetailResponse bookDetail = bookAdminService.findBookDetail(bookId);
         model.addAttribute("bookId", bookId);
         model.addAttribute("book", bookDetail);
         return "book/books-detail";
@@ -45,8 +51,14 @@ public class BookAdminController {
         return "book/books-updateform";
     }
 
+    @PostMapping("/{bookId}")
+    public String update(@PathVariable Long bookId, BookFormRequest bookFormRequest) {
+        Long updatedBookId = bookAdminService.updateBook(bookId, bookFormRequest);
+        return "redirect:/admin/books/" + updatedBookId;
+    }
+
     @GetMapping("/open_api/search_form")
-    public String searchForm() {
+    public String findBookFromOpenApi() {
         return "book/books-searchform";
     }
 
@@ -57,17 +69,5 @@ public class BookAdminController {
         model.addAttribute("categories", bookWithRequiredFormData.getCategories());
         model.addAttribute("bookcases", bookWithRequiredFormData.getBookcases());
         return "book/books-createform";
-    }
-
-    @PostMapping("")
-    public String createNew(BookFormRequest bookFormRequest) {
-        Long bookId = bookAdminService.createNewBook(bookFormRequest);
-        return "redirect:/admin/books/" + bookId;
-    }
-
-    @PostMapping("/{bookId}")
-    public String update(@PathVariable Long bookId, BookFormRequest bookFormRequest) {
-        Long updatedBookId = bookAdminService.updateBook(bookId, bookFormRequest);
-        return "redirect:/admin/books/" + updatedBookId;
     }
 }
