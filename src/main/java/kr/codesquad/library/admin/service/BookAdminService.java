@@ -1,6 +1,7 @@
 package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.book.BookAdminRepository;
+import kr.codesquad.library.admin.domain.book.BookDetailResponse;
 import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
@@ -14,6 +15,7 @@ import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.global.config.properties.InterparkProperties;
+import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
 import kr.codesquad.library.global.error.exception.domain.BookcaseNotFoundException;
 import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -76,6 +78,11 @@ public class BookAdminService {
         List<Category> categories = categoryAdminRepository.findAll();
         List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
         return BookWithRequiredFormDataResponse.of(bookData, categories, bookcases);
+    }
+
+    public BookDetailResponse findBook(Long bookId) {
+        Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        return BookDetailResponse.from(book);
     }
 
     public BookData findBookDataFromOpenApi(String isbn) {

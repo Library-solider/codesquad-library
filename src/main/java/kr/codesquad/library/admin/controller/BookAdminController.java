@@ -1,5 +1,6 @@
 package kr.codesquad.library.admin.controller;
 
+import kr.codesquad.library.admin.domain.book.BookDetailResponse;
 import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
 import kr.codesquad.library.admin.domain.bookopenapi.BookWithRequiredFormDataResponse;
 import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
@@ -24,6 +25,13 @@ public class BookAdminController {
         model.addAttribute("bookSummaries", books.getBookSummaries());
         model.addAttribute("pagingProperties", books.getPagingProperties());
         return "book/books-all";
+    }
+
+    @GetMapping("/{bookId}")
+    public String detail(@PathVariable Long bookId, Model model) {
+        BookDetailResponse bookDetail = bookAdminService.findBook(bookId);
+        model.addAttribute("book", bookDetail);
+        return "book/books-detail";
     }
 
     @GetMapping("/open_api/search_form")
