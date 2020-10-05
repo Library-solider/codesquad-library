@@ -1,5 +1,6 @@
-package kr.codesquad.library.admin.domain.bookopenapi;
+package kr.codesquad.library.admin.domain.book.response;
 
+import kr.codesquad.library.admin.domain.book.BookData;
 import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
 import lombok.Builder;

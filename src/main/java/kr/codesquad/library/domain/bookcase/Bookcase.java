@@ -13,7 +13,7 @@ public class Bookcase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "bookcase_id")
-    public Long id;
+    private Long id;
 
     private String location;
 }

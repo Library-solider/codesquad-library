@@ -1,4 +1,4 @@
-package kr.codesquad.library.admin.domain.book;
+package kr.codesquad.library.admin.domain.book.response;
 
 import kr.codesquad.library.domain.book.Book;
 import lombok.Builder;

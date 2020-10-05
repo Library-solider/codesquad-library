@@ -1,11 +1,10 @@
 package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.account.AccountAdminRepository;
-import kr.codesquad.library.admin.domain.account.AccountDetailsResponse;
-import kr.codesquad.library.admin.domain.account.AccountSummaryResponse;
+import kr.codesquad.library.admin.domain.account.response.AccountDetailsResponse;
+import kr.codesquad.library.admin.domain.account.response.AccountSummaryResponse;
 import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.LibraryRole;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;

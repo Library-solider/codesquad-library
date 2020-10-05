@@ -1,15 +1,12 @@
 package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.account.AccountAdminRepository;
-import kr.codesquad.library.admin.domain.account.AccountDetailsResponse;
-import kr.codesquad.library.admin.domain.account.AccountSummaryResponse;
+import kr.codesquad.library.admin.domain.account.response.AccountDetailsResponse;
+import kr.codesquad.library.admin.domain.account.response.AccountSummaryResponse;
 import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.LibraryRole;
 import kr.codesquad.library.global.error.exception.domain.AccountNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,15 +1,15 @@
 package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.book.BookAdminRepository;
-import kr.codesquad.library.admin.domain.book.BookDetailResponse;
+import kr.codesquad.library.admin.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.admin.domain.book.BookSummary;
-import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
-import kr.codesquad.library.admin.domain.bookopenapi.BookData;
+import kr.codesquad.library.admin.domain.book.BookData;
 import kr.codesquad.library.admin.domain.bookopenapi.BookDataFromOpenApi;
-import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
-import kr.codesquad.library.admin.domain.bookopenapi.BookWithRequiredFormDataResponse;
+import kr.codesquad.library.admin.domain.book.request.BookFormRequest;
+import kr.codesquad.library.admin.domain.book.response.BookWithRequiredFormDataResponse;
 import kr.codesquad.library.admin.domain.category.CategoryAdminRepository;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.bookcase.Bookcase;
@@ -46,11 +46,8 @@ import static kr.codesquad.library.admin.common.ConstantsCoveringMagicNumber.MIN
 public class BookAdminService {
 
     private final BookAdminRepository bookAdminRepository;
-
     private final CategoryAdminRepository categoryAdminRepository;
-
     private final BookcaseAdminRepository bookcaseAdminRepository;
-
     private final InterparkProperties interparkProperties;
 
     public BooksWithPagingResponse findAllBooks(int page) {
@@ -65,22 +62,38 @@ public class BookAdminService {
 
 
     @Transactional
-    public Long createNewBook(CreateNewBookRequest createNewBookRequest) {
-        Category category = categoryAdminRepository.findById(createNewBookRequest.getCategoryId()).orElseThrow(CategoryNotFoundException::new);
-        Bookcase bookcase = bookcaseAdminRepository.findById(createNewBookRequest.getBookcaseId()).orElseThrow(BookcaseNotFoundException::new);
-        Book newBook = bookAdminRepository.save(Book.of(createNewBookRequest, category, bookcase));
+    public Long createNewBook(BookFormRequest bookFormRequest) {
+        Category category = categoryAdminRepository.findById(bookFormRequest.getCategoryId())
+                                                   .orElseThrow(CategoryNotFoundException::new);
+        Bookcase bookcase = bookcaseAdminRepository.findById(bookFormRequest.getBookcaseId())
+                                                   .orElseThrow(BookcaseNotFoundException::new);
+        Book newBook = bookAdminRepository.save(Book.of(bookFormRequest, category, bookcase));
         log.debug("New Book ID ::: {}", newBook.getId());
         return newBook.getId();
     }
 
-    public BookWithRequiredFormDataResponse findBookWithRequiredFormData(String isbn) {
-        BookData bookData = findBookDataFromOpenApi(isbn);
-        List<Category> categories = categoryAdminRepository.findAll();
-        List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
-        return BookWithRequiredFormDataResponse.of(bookData, categories, bookcases);
+    @Transactional
+    public Long updateBook(Long bookId, BookFormRequest bookFormRequest) {
+        Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        Category category = categoryAdminRepository.findById(bookFormRequest.getCategoryId())
+                                                   .orElseThrow(CategoryNotFoundException::new);
+        Bookcase bookcase = bookcaseAdminRepository.findById(bookFormRequest.getBookcaseId())
+                                                   .orElseThrow(BookcaseNotFoundException::new);
+        return book.updateBook(bookFormRequest, category, bookcase);
     }
 
-    public BookDetailResponse findBook(Long bookId) {
+    public BookWithRequiredFormDataResponse findBookWithRequiredFormDataByIsbn(String isbn) {
+        BookData bookData = findBookDataFromOpenApi(isbn);
+        return createRequiredFormData(bookData);
+    }
+
+    public BookWithRequiredFormDataResponse findBookWithRequiredFormDataByBookId(Long bookId) {
+        Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
+        BookData bookData = BookData.from(book);
+        return createRequiredFormData(bookData);
+    }
+
+    public BookDetailResponse findBookDetail(Long bookId) {
         Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         return BookDetailResponse.from(book);
     }
@@ -93,6 +106,12 @@ public class BookAdminService {
                                   .stream()
                                   .findFirst()
                                   .orElseGet(BookData::new);
+    }
+
+    private BookWithRequiredFormDataResponse createRequiredFormData(BookData bookData) {
+        List<Category> categories = categoryAdminRepository.findAll();
+        List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
+        return BookWithRequiredFormDataResponse.of(bookData, categories, bookcases);
     }
 
     private int validatePageNumber(int page) {

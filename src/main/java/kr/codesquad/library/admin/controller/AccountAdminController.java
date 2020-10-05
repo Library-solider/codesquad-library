@@ -1,7 +1,7 @@
 package kr.codesquad.library.admin.controller;
 
-import kr.codesquad.library.admin.domain.account.AccountDetailsResponse;
-import kr.codesquad.library.admin.domain.account.AccountSummaryResponse;
+import kr.codesquad.library.admin.domain.account.response.AccountDetailsResponse;
+import kr.codesquad.library.admin.domain.account.response.AccountSummaryResponse;
 import kr.codesquad.library.admin.service.AccountAdminService;
 import kr.codesquad.library.domain.account.LibraryRole;
 import lombok.RequiredArgsConstructor;

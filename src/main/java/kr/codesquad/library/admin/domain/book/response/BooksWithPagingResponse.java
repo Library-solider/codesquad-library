@@ -1,6 +1,7 @@
-package kr.codesquad.library.admin.domain.book;
+package kr.codesquad.library.admin.domain.book.response;
 
 import kr.codesquad.library.admin.common.PagingProperties;
+import kr.codesquad.library.admin.domain.book.BookSummary;
 import lombok.Getter;
 
 import java.util.List;

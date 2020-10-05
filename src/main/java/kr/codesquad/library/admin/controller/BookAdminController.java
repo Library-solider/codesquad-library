@@ -1,9 +1,9 @@
 package kr.codesquad.library.admin.controller;
 
-import kr.codesquad.library.admin.domain.book.BookDetailResponse;
-import kr.codesquad.library.admin.domain.book.BooksWithPagingResponse;
-import kr.codesquad.library.admin.domain.bookopenapi.BookWithRequiredFormDataResponse;
-import kr.codesquad.library.admin.domain.bookopenapi.CreateNewBookRequest;
+import kr.codesquad.library.admin.domain.book.response.BookDetailResponse;
+import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.book.response.BookWithRequiredFormDataResponse;
+import kr.codesquad.library.admin.domain.book.request.BookFormRequest;
 import kr.codesquad.library.admin.service.BookAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,30 +27,47 @@ public class BookAdminController {
         return "book/books-all";
     }
 
+    @PostMapping("")
+    public String createNew(BookFormRequest bookFormRequest) {
+        Long bookId = bookAdminService.createNewBook(bookFormRequest);
+        return "redirect:/admin/books/" + bookId;
+    }
+
     @GetMapping("/{bookId}")
-    public String detail(@PathVariable Long bookId, Model model) {
-        BookDetailResponse bookDetail = bookAdminService.findBook(bookId);
+    public String findDetail(@PathVariable Long bookId, Model model) {
+        BookDetailResponse bookDetail = bookAdminService.findBookDetail(bookId);
+        model.addAttribute("bookId", bookId);
         model.addAttribute("book", bookDetail);
         return "book/books-detail";
     }
 
+    @GetMapping("/{bookId}/update_form")
+    public String fillUpdateFormWithBookData(@PathVariable Long bookId, Model model) {
+        BookWithRequiredFormDataResponse bookWithRequiredFormData = bookAdminService.findBookWithRequiredFormDataByBookId(bookId);
+        model.addAttribute("bookId", bookId);
+        model.addAttribute("bookData", bookWithRequiredFormData.getBookData());
+        model.addAttribute("categories", bookWithRequiredFormData.getCategories());
+        model.addAttribute("bookcases", bookWithRequiredFormData.getBookcases());
+        return "book/books-updateform";
+    }
+
+    @PostMapping("/{bookId}")
+    public String update(@PathVariable Long bookId, BookFormRequest bookFormRequest) {
+        Long updatedBookId = bookAdminService.updateBook(bookId, bookFormRequest);
+        return "redirect:/admin/books/" + updatedBookId;
+    }
+
     @GetMapping("/open_api/search_form")
-    public String searchForm() {
+    public String findBookFromOpenApi() {
         return "book/books-searchform";
     }
 
     @GetMapping("/open_api")
     public String createFormWithBookDataDerivedFromOpenApi(@RequestParam("isbn") String isbn, Model model) {
-        BookWithRequiredFormDataResponse bookWithRequiredFormData = bookAdminService.findBookWithRequiredFormData(isbn);
+        BookWithRequiredFormDataResponse bookWithRequiredFormData = bookAdminService.findBookWithRequiredFormDataByIsbn(isbn);
         model.addAttribute("bookData", bookWithRequiredFormData.getBookData());
         model.addAttribute("categories", bookWithRequiredFormData.getCategories());
         model.addAttribute("bookcases", bookWithRequiredFormData.getBookcases());
         return "book/books-createform";
-    }
-
-    @PostMapping("")
-    public String createNew(CreateNewBookRequest createNewBookRequest) {
-        Long bookId = bookAdminService.createNewBook(createNewBookRequest);
-        return "redirect:/admin/books/" + bookId;
     }
 }
