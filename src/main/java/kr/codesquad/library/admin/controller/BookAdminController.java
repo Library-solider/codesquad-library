@@ -30,8 +30,19 @@ public class BookAdminController {
     @GetMapping("/{bookId}")
     public String detail(@PathVariable Long bookId, Model model) {
         BookDetailResponse bookDetail = bookAdminService.findBook(bookId);
+        model.addAttribute("bookId", bookId);
         model.addAttribute("book", bookDetail);
         return "book/books-detail";
+    }
+
+    @GetMapping("/{bookId}/update_form")
+    public String fillUpdateFormWithBookData(@PathVariable Long bookId, Model model) {
+        BookWithRequiredFormDataResponse bookWithRequiredFormData = bookAdminService.findBookWithRequiredFormDataByBookId(bookId);
+        model.addAttribute("bookId", bookId);
+        model.addAttribute("bookData", bookWithRequiredFormData.getBookData());
+        model.addAttribute("categories", bookWithRequiredFormData.getCategories());
+        model.addAttribute("bookcases", bookWithRequiredFormData.getBookcases());
+        return "book/books-updateform";
     }
 
     @GetMapping("/open_api/search_form")
@@ -41,7 +52,7 @@ public class BookAdminController {
 
     @GetMapping("/open_api")
     public String createFormWithBookDataDerivedFromOpenApi(@RequestParam("isbn") String isbn, Model model) {
-        BookWithRequiredFormDataResponse bookWithRequiredFormData = bookAdminService.findBookWithRequiredFormData(isbn);
+        BookWithRequiredFormDataResponse bookWithRequiredFormData = bookAdminService.findBookWithRequiredFormDataByIsbn(isbn);
         model.addAttribute("bookData", bookWithRequiredFormData.getBookData());
         model.addAttribute("categories", bookWithRequiredFormData.getCategories());
         model.addAttribute("bookcases", bookWithRequiredFormData.getBookcases());
