@@ -47,7 +47,7 @@
         <div class="container">
             <div class="main-contents" th:object="${bookData}">
                 <h2 class="main-contents__navigation-title">도서 수정</h2>
-                <form class="book-form" th:action="@{/admin/books}" method="post">
+                <form class="book-form" th:action="@{/admin/books/__${bookId}__}" method="post">
                     <div class="input-box">
                         <label for="title">제목</label>
                         <input type="text" id="title" name="title" th:value="${bookData.title}" maxlength="128" required>
@@ -90,7 +90,7 @@
                         <label for="description">책소개</label>
                         <textarea id="description" cols="30" rows="10" maxlength="2000" name="description" th:text="${bookData.description}"></textarea>
                     </div>
-                    <input type="submit" value="도서 등록" class="book-form__button">
+                    <input type="submit" value="도서 수정" class="book-form__button">
                 </form>
             </div>
         </div>
