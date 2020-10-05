@@ -1,13 +1,13 @@
 function changeToCreateForm() {
     const searchResult = document.querySelector('.search-result-box');
-    const createForm = document.querySelector('.create-form-box');
+    const bookForm = document.querySelector('.book-form-box');
     searchResult.classList.add('search-result-box--disable');
-    createForm.classList.add('create-form-box--enable');
+    bookForm.classList.add('book-form-box--enable');
 }
 
 function main() {
-    const changeToCreateFormButton = document.querySelector('.action-button__input');
-    changeToCreateFormButton.addEventListener('click', changeToCreateForm);
+    const changeToBookFormButton = document.querySelector('.action-button__input');
+    changeToBookFormButton.addEventListener('click', changeToCreateForm);
 }
 
 main();

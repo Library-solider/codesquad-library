@@ -71,14 +71,14 @@
     cursor: pointer;
 }
 
-/* CREATE FORM */
-.create-form-box {
+/* BOOK FORM */
+.book-form-box {
     display: none;
 }
-.create-form-box--enable {
+.book-form-box--enable {
     display: unset;
 }
-.create-form {
+.book-form {
     width: 600px;
     margin-top: 30px;
     display: flex;
@@ -103,7 +103,7 @@
     width: 300px;
     margin-top: 35px;
 }
-.create-form label {
+.book-form label {
     padding-left: 2px;
     margin-bottom: 10px;
     box-sizing: border-box;
@@ -111,8 +111,8 @@
     font-weight: 600;
     opacity: 0.5;
 }
-.create-form input[type=text],
-.create-form input[type=date] {
+.book-form input[type=text],
+.book-form input[type=date] {
     width: inherit;
     height: 30px;
     border: 1px solid lightgray;
@@ -122,7 +122,7 @@
     transition: 0.3s;
     outline: none;
 }
-.create-form select {
+.book-form select {
     width: 300px;
     border: 1px solid lightgray;
     border-radius: 5px;
@@ -131,7 +131,7 @@
     opacity: 0.7;
     outline: none;
 }
-.create-form textarea {
+.book-form textarea {
     width: inherit;
     border: 1px solid lightgray;
     border-radius: 5px;
@@ -139,14 +139,14 @@
     resize: none;
     outline: none;
 }
-.create-form input[type=text]:hover,
-.create-form input[type=date]:hover,
-.create-form select:hover,
-.create-form textarea:hover {
+.book-form input[type=text]:hover,
+.book-form input[type=date]:hover,
+.book-form select:hover,
+.book-form textarea:hover {
     border: 1px solid #2D78DB;
     box-shadow: 0 0 5px #2D78DB;
 }
-.create-form__button {
+.book-form__button {
     margin-top: 50px;
     border: none;
     padding: 10px 25px;
