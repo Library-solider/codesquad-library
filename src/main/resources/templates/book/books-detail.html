@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CODESQUAD LIBRARY - ADMIN</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css}" />
+    <script th:src="@{https://kit.fontawesome.com/1099c14a72.js}" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js}"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__box">
+                <a th:href="@{/admin/users/guest}" class="site-link">
+                    <div class="site-title">
+                        <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo">
+                        <div class="site-title__column">
+                            <h1 class="site-title__main-text">
+                                CODESQUAD LIBRARY
+                            </h1>
+                            <h2 class="site-title__sub-text">ADMIN</h2>
+                        </div>
+                    </div>
+                </a>
+                <ul class="navigation">
+                    <li class="navigation__item"><a href="#">공지사항 관리</a></li>
+                    <li class="navigation__item navigation__item--clicked"><a th:href="@{/admin/books}">도서 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/users}">회원 관리</a></li>
+                    <li class="navigation__item"><a href="#">대여 관리</a></li>
+                </ul>
+                <div class="user-info">
+                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image">
+                    <span class="user-info__name">USER_NAME</span>
+                </div>
+            </div>
+            <ul class="sub-navigation">
+                <li class="sub-navigation__item"><a th:href="@{/admin/books}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">도서 목록</span></a></li>
+                <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/books/open_api/search_form}"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">도서 등록</span></a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="main">
+        <div class="container">
+            <div class="main-contents">
+                <h2 class="main-contents__navigation-title">도서 상세 정보</h2>
+                <div class="book-box">
+                    <div class="book-detail">
+                        <div class="book-detail__row">
+                            <div class="book-detail__column">
+                                <span class="book-category" th:text="${book.categoryTitle}"></span>
+                                <img th:src="${(!#strings.isEmpty(book.imageUrl)) ? book.imageUrl : '/images/book-not-found.png'}" class="book-image">
+                                <div class="book-isbn">
+                                    <span class="book-isbn__title">ISBN</span>
+                                    <span class="book-isbn__contents" th:text="${book.isbn}"></span>
+                                </div>
+                            </div>
+                            <div class="book-detail__column">
+                                <h3 class="book-title" th:text="${book.title}"></h3>
+                                <table class="book-detail__table">
+                                    <tr>
+                                        <th class="book-detail__title">저자</th>
+                                        <td class="book-detail__contents" th:text="${book.author}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="book-detail__title">출판사</th>
+                                        <td class="book-detail__contents" th:text="${book.publisher}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="book-detail__title">출판일</th>
+                                        <td class="book-detail__contents" th:text="${book.publicationDate}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="book-detail__title">대여 가능 여부</th>
+                                        <td class="book-detail__contents" th:text="${book.available}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="book-detail__title">추천수</th>
+                                        <td class="book-detail__contents" th:text="${book.recommendCount}"></td>
+                                    </tr>
+                                    <tr>
+                                        <th class="book-detail__title">위치</th>
+                                        <td class="book-detail__contents" th:text="${book.location}"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="book-description">
+                            <h3 class="book-description__title">책소개</h3>
+                            <p class="book-description__contents" th:text="${book.description}"></p>
+                        </div>
+                    </div>
+                </div>
+                <form class="book-detail__button-form" th:action="@{/admin/books/open_api/search_form}" method="get">
+                    <input type="submit" class="book-detail__button" value="되돌아가기"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="copyright-text">Copyright © 2020. Codesquad Library. All rights reserved</p>
+            <p class="copyright-author">Ragdoll @CODESQUAD</p>
+        </div>r
+    </footer>
+</body>
+</html>
