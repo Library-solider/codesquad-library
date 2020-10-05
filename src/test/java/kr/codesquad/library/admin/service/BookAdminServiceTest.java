@@ -55,10 +55,10 @@ class BookAdminServiceTest {
     }
 
     @CsvSource({"9791186697276, 제대로 배우는 도커, 아드리안 모트(Adrian Mouat), 비제이퍼블릭, " +
-               "http://bimage.interpark.com/goods_image/0/7/3/1/263240731s.jpg, 20161226, 12345"})
+               "http://bimage.interpark.com/goods_image/0/7/3/1/263240731s.jpg, 2016-12-26, 12345"})
     @ParameterizedTest
     public void Open_API로부터_도서_데이터를_가져온다(String isbn, String title, String author, String publisher,
-                                                String imageUrl, String publicationDate, String wrongIsbn) {
+                                                String imageUrl, LocalDate publicationDate, String wrongIsbn) {
         //when
         BookData bookData = bookAdminService.findBookDataFromOpenApi(isbn);
         BookData emptyData = bookAdminService.findBookDataFromOpenApi(wrongIsbn);
