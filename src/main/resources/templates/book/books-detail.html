@@ -94,8 +94,8 @@
                         </div>
                     </div>
                 </div>
-                <form class="book-detail__button-form" th:action="@{/admin/books/open_api/search_form}" method="get">
-                    <input type="submit" class="book-detail__button" value="되돌아가기"/>
+                <form class="book-detail__button-form" th:action="@{/admin/books/__${bookId}__/update_form}" method="get">
+                    <input type="submit" class="book-detail__button" value="수정하기"/>
                 </form>
             </div>
         </div>

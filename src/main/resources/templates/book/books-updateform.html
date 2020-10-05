@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CODESQUAD LIBRARY - ADMIN</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css}" />
+    <script th:src="@{https://kit.fontawesome.com/1099c14a72.js}" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js}"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__box">
+                <a th:href="@{/admin/users/guest}" class="site-link">
+                    <div class="site-title">
+                        <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo">
+                        <div class="site-title__column">
+                            <h1 class="site-title__main-text">
+                                CODESQUAD LIBRARY
+                            </h1>
+                            <h2 class="site-title__sub-text">ADMIN</h2>
+                        </div>
+                    </div>
+                </a>
+                <ul class="navigation">
+                    <li class="navigation__item"><a href="#">공지사항 관리</a></li>
+                    <li class="navigation__item navigation__item--clicked"><a th:href="@{/admin/books}">도서 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/users}">회원 관리</a></li>
+                    <li class="navigation__item"><a href="#">대여 관리</a></li>
+                </ul>
+                <div class="user-info">
+                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image">
+                    <span class="user-info__name">USER_NAME</span>
+                </div>
+            </div>
+            <ul class="sub-navigation">
+                <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/books}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">도서 목록</span></a></li>
+                <li class="sub-navigation__item"><a th:href="@{/admin/books/open_api/search_form}"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">도서 등록</span></a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="main">
+        <div class="container">
+            <div class="main-contents" th:object="${bookData}">
+                <h2 class="main-contents__navigation-title">도서 수정</h2>
+                <form class="book-form" th:action="@{/admin/books}" method="post">
+                    <div class="input-box">
+                        <label for="title">제목</label>
+                        <input type="text" id="title" name="title" th:value="${bookData.title}" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="author">저자</label>
+                        <input type="text" id="author" name="author" th:value="${bookData.author}" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="publisher">출판사</label>
+                        <input type="text" id="publisher" name="publisher" th:value="${bookData.publisher}" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="publicationDate">출판일</label>
+                        <input type="date" id="publicationDate" name="publicationDate" th:value="${bookData.publicationDate}" required>
+                    </div>
+                    <div class="input-box">
+                        <label for="imageUrl">이미지 URL</label>
+                        <input type="url" id="imageUrl" name="imageUrl" th:value="${bookData.imageUrl}">
+                    </div>
+                    <div class="input-box">
+                        <label for="isbn">ISBN</label>
+                        <input type="text" id="isbn" name="isbn" th:value="${bookData.isbn}" required>
+                    </div>
+                    <div class="select-box">
+                        <label for="category">카테고리</label>
+                        <select id="category" name="categoryId" th:object="${categories}" required>
+                            <option label="도서의 카테고리를 선택 해주세요."></option>
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
+                        </select>
+                    </div>
+                    <div class="select-box">
+                        <label for="bookcase">도서 위치</label>
+                        <select id="bookcase" name="bookcaseId" th:object="${bookcases}" required>
+                            <option label="도서 위치를 선택 해주세요."></option>
+                            <option th:each="bookcase : ${bookcases}" th:value="${bookcase.id}" th:text="${bookcase.location}"></option>
+                        </select>
+                    </div>
+                    <div class="textarea-box">
+                        <label for="description">책소개</label>
+                        <textarea id="description" cols="30" rows="10" maxlength="2000" name="description" th:text="${bookData.description}"></textarea>
+                    </div>
+                    <input type="submit" value="도서 등록" class="book-form__button">
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="copyright-text">Copyright © 2020. Codesquad Library. All rights reserved</p>
+            <p class="copyright-author">Ragdoll @CODESQUAD</p>
+        </div>
+    </footer>
+</body>
+</html>
