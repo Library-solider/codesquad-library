@@ -7,17 +7,24 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CODESQUAD LIBRARY ADMIN</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <script th:src="@{https://kit.fontawesome.com/1099c14a72.js}" crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="authorization">
-    <div class="container">
-        <img th:src="@{/images/logo-with-title.png}" alt="CODESQUAD" class="authorization-logo">
-        <form action="/admin/login" method="post">
-            <input type="text" name="adminName">
-            <input type="password" name="password">
-            <button type="submit" class="authorization-form__button">LOGIN</button>
-        </form>
+    <div class="authorization">
+        <div class="container">
+            <img th:src="@{/images/logo-with-title.png}" alt="CODESQUAD" class="authorization-logo">
+            <form th:action="@{/admin/login}" method="post" class="authorization-form">
+                <div class="authorization-form__input-box">
+                    <input type="text" name="adminName" class="authorization-form__input" placeholder="Username">
+                    <i class="far fa-user authorization-form__icon"></i>
+                </div>
+                <div class="authorization-form__input-box">
+                    <input type="password" name="password" class="authorization-form__input" placeholder="Password">
+                    <i class="fas fa-lock authorization-form__icon"></i>
+                </div>
+                <button type="submit" class="authorization-form__button">LOGIN</button>
+            </form>
+        </div>
     </div>
-</div>
 </body>
 </html>
