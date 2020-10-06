@@ -67,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userService(customOAuth2UserService);
 
         http.formLogin()
-                .loginPage("/admin/login")
+                .loginPage("/admin")
                 .loginProcessingUrl("/admin/login")
                 .defaultSuccessUrl("/admin/users/guest")
                 .failureUrl("/admin/login/failure")
