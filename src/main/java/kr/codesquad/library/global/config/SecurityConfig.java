@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/configuration/security",
                 "/swagger-ui.html",
                 "/webjars/**");
+        web.ignoring().antMatchers("/favicon.ico", "/resources/**", "/error");
     }
 
     @Override
