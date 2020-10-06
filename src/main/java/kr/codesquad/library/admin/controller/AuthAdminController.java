@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequestMapping("/admin")
 public class AuthAdminController {
 
-    @GetMapping("/login")
+    @GetMapping("")
     public String access() {
         return "access-admin";
     }
