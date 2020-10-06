@@ -7,6 +7,7 @@
 
 /* Pages */
 @import "access-admin.css";
+@import "access-failure.css";
 @import "details-account.css";
 @import "books-all.css";
 @import "books-createform.css";
