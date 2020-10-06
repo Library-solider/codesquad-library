@@ -54,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/oauth2/redirect").permitAll()
-                .antMatchers("/admin/login").permitAll()
+                .antMatchers("/admin/login", "/admin/login/failure").permitAll()
 //                .antMatchers("/admin/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER", "ADMIN")
@@ -70,6 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/admin/login")
                 .loginProcessingUrl("/admin/login")
                 .defaultSuccessUrl("/admin/users/guest")
+                .failureUrl("/admin/login/failure")
                 .usernameParameter("adminName")
                 .passwordParameter("password");
     }

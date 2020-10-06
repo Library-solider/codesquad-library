@@ -18,4 +18,7 @@ public class AuthAdminController {
     public String access() {
         return "access-admin";
     }
+
+    @GetMapping("/login/failure")
+    public String accessFailure() { return "access-failure"; }
 }
