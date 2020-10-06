@@ -12,7 +12,9 @@
 <div class="authorization">
     <div class="container">
         <img th:src="@{/images/logo-with-title.png}" alt="CODESQUAD" class="authorization-logo">
-        <form action="http://localhost:8080/oauth2/authorization/github" method="get" class="authorization-form">
+        <form action="/admin/login" method="post">
+            <input type="text" name="adminName">
+            <input type="password" name="password">
             <button type="submit" class="authorization-form__button">LOGIN</button>
         </form>
     </div>
