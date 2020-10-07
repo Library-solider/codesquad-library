@@ -101,10 +101,10 @@ public class Book {
     }
 
     public Category changeCategory(Category category) {
-        if (isDifferentCategory(category)) {
-            this.category.getBooks().add(this);
+        if (isSameCategory(category)) {
             return category;
         }
+        this.category.getBooks().add(this);
         return category;
     }
 
@@ -113,7 +113,7 @@ public class Book {
         return bookcase;
     }
 
-    private boolean isDifferentCategory(Category category) {
+    private boolean isSameCategory(Category category) {
         return this.category.equals(category);
     }
 

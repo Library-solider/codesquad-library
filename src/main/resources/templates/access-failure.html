@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CODESQUAD LIBRARY ADMIN</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <script th:src="@{https://kit.fontawesome.com/1099c14a72.js}" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="authorization">
+    <div class="container">
+        <img th:src="@{/images/logo-with-title.png}" alt="CODESQUAD" class="authorization-logo">
+        <form th:action="@{/admin/login}" method="post" class="authorization-form">
+            <div class="authorization-form__input-box">
+                <input type="text" name="adminName" class="authorization-form__input" placeholder="Username">
+                <i class="far fa-user authorization-form__icon"></i>
+            </div>
+            <div class="authorization-form__input-box">
+                <input type="password" name="password" class="authorization-form__input" placeholder="Password">
+                <i class="fas fa-lock authorization-form__icon"></i>
+            </div>
+            <p class="failure-message">로그인에 실패 했습니다. 다시 입력 해주세요.</p>
+            <button type="submit" class="authorization-form__button">LOGIN</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

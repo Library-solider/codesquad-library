@@ -1,16 +1,21 @@
 package kr.codesquad.library.global.config;
 
+import kr.codesquad.library.domain.account.LibraryRole;
 import kr.codesquad.library.global.config.oauth.security.CustomAccessDeniedHandler;
 import kr.codesquad.library.global.config.oauth.security.CustomAuthenticationEntryPoint;
 import kr.codesquad.library.global.config.oauth.security.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -33,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/configuration/security",
                 "/swagger-ui.html",
                 "/webjars/**");
+        web.ignoring().antMatchers("/favicon.ico", "/resources/**", "/error");
     }
 
     @Override
@@ -49,16 +55,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests()
                 .antMatchers("/", "/v1/main", "/v1/category/**", "/v1/search/**", "/oauth2/redirect").permitAll()
-//                .antMatchers("/admin/login").permitAll()
-                .antMatchers("/admin/**").permitAll()
+                .antMatchers("/admin", "/admin/login/failure").permitAll()
+//                .antMatchers("/admin/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER", "ADMIN")
-//                .antMatchers( "/admin/**").hasRole("ADMIN")
+                .antMatchers( "/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
         http.oauth2Login()
                 .defaultSuccessUrl(redirectUrl, true)
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
+
+        http.formLogin()
+                .loginPage("/admin")
+                .loginProcessingUrl("/admin/login")
+                .defaultSuccessUrl("/admin/users/guest")
+                .failureUrl("/admin/login/failure")
+                .usernameParameter("adminName")
+                .passwordParameter("password");
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
 }

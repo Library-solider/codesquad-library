@@ -64,7 +64,7 @@ public class PagingProperties {
         return startPageOfNextPageGroup;
     }
 
-    public static PagingProperties from(Page entityWithPaging) {
+    public static PagingProperties from(Page<?> entityWithPaging) {
         return new PagingProperties(entityWithPaging.getSize(), entityWithPaging.getNumber() + 1,
                                     entityWithPaging.getTotalPages());
     }

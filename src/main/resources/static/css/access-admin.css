@@ -5,7 +5,6 @@
     align-items: center;
     height: 700px;
 }
-
 .authorization .container {
     display: flex;
     flex-direction: column;
@@ -19,20 +18,69 @@
     height: auto; max-height: 300px;
 }
 
+
 /* Authorization Form */
-.authorization-form .authorization-form__button {
+.authorization-form {
     margin-top: 30px;
-    width: 120px;
-    height: 40px;
-    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+.authorization-form .authorization-form__input-box {
+    width: 200px;
+    margin-bottom: 7px;
+    position: relative;
+}
+
+/* Authorization Form Input */
+.authorization-form .authorization-form__input {
+    border: 1px solid lightgray;
+    width: inherit;
+    height: 30px;
+    padding: 10px;
+    padding-left: 30px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+    transition: 0.3s;
+}
+.authorization-form .authorization-form__input::placeholder {
+    font-size: 12px;
+    opacity: 0.5;
+}
+.authorization-form .authorization-form__input:focus {
+    border: 1px solid #0455BF;
+    box-shadow: 0px 0px 5px 1px rgba(67,143,242,1);
+}
+.authorization-form .authorization-form__input:focus::placeholder {
+    visibility: hidden;
+}
+.authorization-form .authorization-form__input:focus + .authorization-form__icon {
+    visibility: hidden;
+}
+
+/* Authorization Form Icon */
+.authorization-form .authorization-form__icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: lightgray;
+    font-size: 15px;
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+/* Authorization Form Button */
+.authorization-form .authorization-form__button {
+    margin-top: 25px;
+    width: 90px;
+    height: 35px;
+    font-size: 12px;
     border: none;
     background-color: #0455BF;
     color: #fff;
     border-radius: 5px;
     box-shadow: 2px 5px 15px -3px rgba(67,143,242,1);
-}
-
-.authorization-form .authorization-form__button:hover {
-    box-shadow: 0 1px 12px 3px rgba(67,143,242,1);
-    transition: 0.3s;
 }
