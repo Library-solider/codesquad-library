@@ -2,9 +2,9 @@
 
 도메인: https://librarycodesquad.com
 
-프론트 저장소 V1: https://github.com/Library-solider/codesquad-library-frontend
+프론트 저장소 V1(React + JavaScript): https://github.com/Library-solider/codesquad-library-frontend
 
-프론트 저장소 V2: https://github.com/Library-solider/codesquad-library-frontend-v2
+프론트 저장소 V2(React + TypeScript): https://github.com/Library-solider/codesquad-library-frontend-v2
 # 프로젝트 소개
 코드스쿼드 내 도서 검색 및 대여 서비스.
 
@@ -31,6 +31,10 @@
 
 ## Client-side
 - React.js
+- styled-component
+- TypeScript
+- Redux
+- Redux-thunk
 - Webpack
 
 ## Dev-ops
