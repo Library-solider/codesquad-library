@@ -1,0 +1,79 @@
+/* Item Edit*/
+.item-edit--enable {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+.item-edit--enable .item-edit__icon--enable {
+    font-size: 16px;
+    color: gray;
+    cursor: pointer;
+}
+.item-edit--disable {
+    display: none;
+}
+.item-edit__icon--disable {
+    display: none;
+}
+
+/* Item Form */
+.item-form--enable {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.item-form__input {
+    width: 160px;
+    height: 20px;
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    outline: none;
+}
+.item-form__input::placeholder {
+    font-size: 11px;
+    padding-left: 10px;
+    opacity: 0.5;
+}
+.item-form__input:focus::placeholder {
+    visibility: hidden;
+}
+.item-form__button-box {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+}
+.item-form__submit-button {
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+    background-color: #35BBDB;
+    color: #fff;
+    cursor: pointer;
+}
+.item-form__cancel-button {
+    width: 25px;
+    height: 25px;
+    margin-left: 2px;
+    border: none;
+    border-radius: 5px;
+    background-color: crimson;
+    color: #fff;
+    cursor: pointer;
+}
+.item-form--disable {
+    display: none;
+}
+
+/* Item New */
+.item-new .item-new__icon--enable {
+    display: unset;
+    cursor: pointer;
+}
+.item-new--disable {
+    display: none;
+}
+.item-new__icon--disable {
+    display: none;
+}
