@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CODESQUAD LIBRARY - ADMIN</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css}" />
+    <script th:src="@{https://kit.fontawesome.com/1099c14a72.js}" crossorigin="anonymous"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js}"></script>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header__box">
+                <a th:href="@{/admin/users/guest}" class="site-link">
+                    <div class="site-title">
+                        <img th:src="@{/images/logo.png}" alt="CODE SQUAD" class="site-title__logo">
+                        <div class="site-title__column">
+                            <h1 class="site-title__main-text">
+                                CODESQUAD LIBRARY
+                            </h1>
+                            <h2 class="site-title__sub-text">ADMIN</h2>
+                        </div>
+                    </div>
+                </a>
+                <ul class="navigation">
+                    <li class="navigation__item"><a href="#">공지사항 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/books}">도서 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/users}">회원 관리</a></li>
+                    <li class="navigation__item navigation__item--clicked"><a th:href="@{/admin/category}">카테고리 관리</a></li>
+                </ul>
+                <div class="user-info">
+                    <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image">
+                    <span class="user-info__name">USER_NAME</span>
+                </div>
+            </div>
+            <ul class="sub-navigation">
+                <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/category}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">카테고리 목록</span></a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="main">
+        <div class="container">
+            <div class="main-contents">
+                <h2 class="main-contents__navigation-title">카테고리 목록</h2>
+                <div class="table-box">
+                    <form class="edit-form">
+                        <select name="" id="" class="edit-form__select-box jsSelectedCategory">
+                            <option label="카테고리"></option>
+                            <option value="5">컴퓨터공학/IT</option>
+                        </select>
+                        <select class="edit-form__select-box jsSelectedLocation">
+                            <option label="도서 위치"></option>
+                            <option value="1">현관문</option>
+                        </select>
+                        <button type="button"class="edit-form__button jsEditButton">이동</button>
+                    </form>
+                    <table class="book-table">
+                        <thead>
+                        <tr>
+                            <th class="book-table__column-name"><input type="checkbox" class="book-table__checkbox jsAllCheckBox"></th>
+                            <th class="book-table__column-name">ID</th>
+                            <th class="book-table__column-name">제목</th>
+                            <th class="book-table__column-name">카테고리</th>
+                            <th class="book-table__column-name">위치</th>
+                            <th class="book-table__column-name">ISBN</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="book-table__row"><input type="checkbox" class="book-table__checkbox jsNormalCheckBox"></td>
+                            <td class="book-table__row jsDataId">1</td>
+                            <td class="book-table__row jsData">(명쾌한 설명과 풍부한 그림으로 배우는) TCP/IP 쉽게 더 쉽게</td>
+                            <td class="book-table__row jsData">컴퓨터공학/IT</td>
+                            <td class="book-table__row jsData">출입문-1</td>
+                            <td class="book-table__row jsData">9791185890678</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <form action="" class="delete-form">
+                    <input type="submit" class="delete-form__submit" value="카테고리 삭제">
+                </form>
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="container">
+            <p class="copyright-text">Copyright © 2020. Codesquad Library. All rights reserved</p>
+            <p class="copyright-author">Ragdoll @CODESQUAD</p>
+        </div>
+    </footer>
+    <script type="text/javascript" th:src="@{/js/bookDataTableHandler.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bookEditHandler.js}"></script>
+    </body>
+</html>
