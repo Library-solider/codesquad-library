@@ -9,7 +9,6 @@
 @import "access-admin.css";
 @import "access-failure.css";
 @import "details-account.css";
-@import "books-all.css";
 @import "books-createform.css";
 @import "books-searchform.css";
 @import "books-detail.css";
@@ -17,7 +16,12 @@
 @import "categories-books.css";
 
 /* Component */
+@import "authorization-table.css";
+@import "accounts-table.css";
+@import "books-table.css";
+@import "categories-table.css";
 @import "grid-items.css";
+
 
 
 body {
