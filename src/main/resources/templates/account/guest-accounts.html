@@ -54,25 +54,25 @@
                     </div>
                 </form>
 <!--                <form>-->
-                <table class="data-table">
+                <table class="authorization-table">
                     <thead>
                         <tr>
-                            <th class="data-table__column-name">ID</th>
-                            <th class="data-table__column-name">OAuth ID</th>
-                            <th class="data-table__column-name">이름</th>
-                            <th class="data-table__column-name">이메일</th>
-                            <th class="data-table__column-name">등급</th>
-                            <th class="data-table__column-name">선택</th>
+                            <th class="authorization-table__column-name">ID</th>
+                            <th class="authorization-table__column-name">OAuth ID</th>
+                            <th class="authorization-table__column-name">이름</th>
+                            <th class="authorization-table__column-name">이메일</th>
+                            <th class="authorization-table__column-name">등급</th>
+                            <th class="authorization-table__column-name">선택</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr th:each="accountSummary : ${accountSummaries}">
-                            <td th:text="${accountSummary.id}" class="data-table__row  jsData jsDataId"></td>
-                            <td th:text="${accountSummary.oauthId}" class="data-table__row jsData"></td>
-                            <td th:text="${accountSummary.name}" class="data-table__row jsData"></td>
-                            <td th:text="${accountSummary.email}" class="data-table__row jsData"></td>
-                            <td th:text="${accountSummary.role}" class="data-table__row jsData"></td>
-                            <td class="data-table__row"><input type="checkbox" class="data-table__checkbox jsAccountCheckBox" name="accountId"/></td>
+                            <td th:text="${accountSummary.id}" class="authorization-table__row  jsData jsDataId"></td>
+                            <td th:text="${accountSummary.oauthId}" class="authorization-table__row jsData"></td>
+                            <td th:text="${accountSummary.name}" class="authorization-table__row jsData"></td>
+                            <td th:text="${accountSummary.email}" class="authorization-table__row jsData"></td>
+                            <td th:text="${accountSummary.role}" class="authorization-table__row jsData"></td>
+                            <td class="authorization-table__row"><input type="checkbox" class="data-table__checkbox jsAccountCheckBox" name="accountId"/></td>
                         </tr>
                     </tbody>
                 </table>

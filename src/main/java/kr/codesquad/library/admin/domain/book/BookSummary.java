@@ -9,16 +9,16 @@ public class BookSummary {
 
     private final Long id;
     private final String title;
-    private final String author;
     private final String categoryTitle;
+    private final String location;
     private final String isbn;
 
     @Builder
-    private BookSummary(Long id, String title, String author, String categoryTitle, String isbn) {
+    private BookSummary(Long id, String title, String categoryTitle, String location, String isbn) {
         this.id = id;
         this.title = title;
-        this.author = author;
         this.categoryTitle = categoryTitle;
+        this.location = location;
         this.isbn = isbn;
     }
 
@@ -26,8 +26,8 @@ public class BookSummary {
         return BookSummary.builder()
                           .id(book.getId())
                           .title(book.getTitle())
-                          .author(book.getAuthor())
                           .categoryTitle(book.getCategory().getTitle())
+                          .location(book.getBookcase().getLocation())
                           .isbn(book.getIsbn())
                           .build();
     }

@@ -5,12 +5,17 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface BookAdminRepository extends JpaRepository<Book, Long> {
 
-    @Query(value = "SELECT b FROM Book b JOIN FETCH b.category ORDER BY b.id",
+    @Query(value = "SELECT b FROM Book b JOIN FETCH b.category ORDER BY b.id DESC",
            countQuery = "SELECT COUNT(b) FROM Book b INNER JOIN b.category")
     Page<Book> findAllWithCategory(Pageable pageable);
+
+    @Query(value ="SELECT b FROM Book b JOIN FETCH b.category WHERE b.category.id = :categoryId ORDER BY b.id DESC",
+           countQuery = "SELECT COUNT(b) FROM Book b INNER JOIN b.category WHERE b.category.id = :categoryId")
+    Page<Book> findAllByCategoryId(@Param("categoryId") Long categoryId, Pageable pageable);
 }

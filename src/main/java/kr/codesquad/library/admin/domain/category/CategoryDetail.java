@@ -23,9 +23,9 @@ public class CategoryDetail {
 
     public static CategoryDetail of(Category category, List<Book> books) {
         return CategoryDetail.builder()
-                                     .id(category.getId())
-                                     .title(category.getTitle())
-                                     .bookCount(books.size())
-                                     .build();
+                             .id(category.getId())
+                             .title(category.getTitle())
+                             .bookCount(books.size())
+                             .build();
     }
 }

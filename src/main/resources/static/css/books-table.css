@@ -7,33 +7,42 @@
     opacity: 0.7;
 }
 
+/* Book Table Column */
 .book-table .book-table__column-name {
     font-weight: 600;
     height: 35px;
     line-height: 35px;
+    padding: 0px 10px;
 }
-
 .book-table__column-name:nth-child(1) {
-    width: 50px;
+    width: 60px;
 }
-
 .book-table__column-name:nth-child(2) {
-    width: 480px;
+    width: 500px;
 }
-
 .book-table__column-name:nth-child(3) {
-    width: 200px;
+    width: 90px;
 }
-
 .book-table__column-name:nth-child(4) {
-    width: 100px;
+    width: 90px;
 }
-
 .book-table__column-name:nth-child(5) {
-    width: 120px;
+    width: 110px;
 }
 
+/* Book Table Checkbox */
+.book-table__checkbox {
+    width: 15px;
+    height: 15px;
+    line-height: 40px;
+    vertical-align: middle;
+    margin-top: -1px;
+}
+
+/* Book Table Row */
 .book-table .book-table__row {
     height: 40px;
     line-height: 40px;
+    word-break: break-all;
+    padding: 0px 10px;
 }
