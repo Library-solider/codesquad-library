@@ -21,6 +21,6 @@ public class CategoryAdminController {
     public String findAll(Model model) {
         List<CategoryDetailResponse> categories = categoryAdminService.findAllCategory();
         model.addAttribute("categories", categories);
-        return "category/category-all";
+        return "category/categories-all";
     }
 }
