@@ -2,15 +2,17 @@ package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseSummary;
+import kr.codesquad.library.admin.domain.category.CategoryAdminRepository;
 import kr.codesquad.library.admin.domain.category.CategoryDataResponse;
 import kr.codesquad.library.admin.domain.category.CategoryDetail;
 import kr.codesquad.library.admin.domain.category.CategorySummary;
-import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
+import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,10 +20,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
+@Transactional
 class CategoryAdminServiceTest {
 
     @Autowired
     CategoryAdminService categoryAdminService;
+
+    @Autowired
+    CategoryAdminRepository categoryAdminRepository;
 
     @CsvSource({"5, 3, 64"})
     @ParameterizedTest
@@ -56,5 +62,21 @@ class CategoryAdminServiceTest {
                 () -> assertThat(categories.size()).isEqualTo(categoryCount),
                 () -> assertThat(bookcases.size()).isEqualTo(bookcaseCount)
         );
+    }
+
+    @CsvSource({"새 카테고리, 6"})
+    @ParameterizedTest
+    public void 새로운_카테고리를_등록한다(String title, int categoryCount) {
+        //when
+        Long categoryId = categoryAdminService.createNewCategory(title);
+        Category newCategory = categoryAdminRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+        List<Category> categories = categoryAdminRepository.findAll();
+
+        //then
+        assertAll(
+                () -> assertThat(categoryId).isEqualTo(newCategory.getId()),
+                () -> assertThat(categories.size()).isEqualTo(categoryCount)
+        );
+
     }
 }
