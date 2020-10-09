@@ -52,6 +52,9 @@
 /* Book Count */
 .book-count {
     margin-top: 7px;
-    font-size: 14px;
+    font-size: 12px;
+    opacity: 0.7;
+    color: gray;
+    font-weight: 500;
 }
 
