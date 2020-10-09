@@ -1,6 +1,6 @@
 package kr.codesquad.library.admin.controller;
 
-import kr.codesquad.library.admin.domain.category.CategoryDetailResponse;
+import kr.codesquad.library.admin.domain.category.CategoryDetail;
 import kr.codesquad.library.admin.service.CategoryAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ public class CategoryAdminController {
 
     @GetMapping("")
     public String findAll(Model model) {
-        List<CategoryDetailResponse> categories = categoryAdminService.findAllCategory();
+        List<CategoryDetail> categories = categoryAdminService.findAllCategory();
         model.addAttribute("categories", categories);
         return "category/categories-all";
     }
