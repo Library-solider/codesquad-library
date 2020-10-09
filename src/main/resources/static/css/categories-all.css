@@ -46,5 +46,12 @@
 /* Category Title */
 .category-title {
     font-size: 17px;
+    font-weight: 600;
+}
+
+/* Book Count */
+.book-count {
+    margin-top: 7px;
+    font-size: 14px;
 }
 
