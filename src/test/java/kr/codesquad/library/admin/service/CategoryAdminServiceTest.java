@@ -1,6 +1,12 @@
 package kr.codesquad.library.admin.service;
 
+import kr.codesquad.library.admin.domain.book.BookSummary;
+import kr.codesquad.library.admin.domain.bookcase.BookcaseSummary;
+import kr.codesquad.library.admin.domain.category.CategoryDataResponse;
 import kr.codesquad.library.admin.domain.category.CategoryDetail;
+import kr.codesquad.library.admin.domain.category.CategorySummary;
+import kr.codesquad.library.domain.bookcase.Bookcase;
+import kr.codesquad.library.domain.category.Category;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @SpringBootTest
 class CategoryAdminServiceTest {
@@ -31,4 +38,23 @@ class CategoryAdminServiceTest {
         assertThat(categoryDetail.getBookCount()).isEqualTo(bookCount);
     }
 
+    @CsvSource({"1, 3, 10, 5, 3"})
+    @ParameterizedTest
+    public void 특정_카테고리를_도서와_함께_조회한다(Long categoryId, int page, int bookCount,
+                                             int categoryCount, int bookcaseCount) {
+        //when
+        CategoryDataResponse categoryData = categoryAdminService.findCategoryDataById(categoryId, page);
+        CategorySummary category = categoryData.getCategory();
+        List<BookSummary> books = categoryData.getBooks();
+        List<CategorySummary> categories = categoryData.getCategories();
+        List<BookcaseSummary> bookcases = categoryData.getBookcases();
+
+        //then
+        assertAll(
+                () -> assertThat(category.getId()).isEqualTo(categoryId),
+                () -> assertThat(books.size()).isEqualTo(10),
+                () -> assertThat(categories.size()).isEqualTo(categoryCount),
+                () -> assertThat(bookcases.size()).isEqualTo(bookcaseCount)
+        );
+    }
 }
