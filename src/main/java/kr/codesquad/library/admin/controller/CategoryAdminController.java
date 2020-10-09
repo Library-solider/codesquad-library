@@ -33,7 +33,11 @@ public class CategoryAdminController {
                            @RequestParam(value = "page", defaultValue = "1") int page,
                            Model model) {
         CategoryDataResponse categoryData = categoryAdminService.findCategoryDataById(categoryId, page);
-        model.addAttribute("categoryData", categoryData);
+        model.addAttribute("categoryData", categoryData.getCategory());
+        model.addAttribute("books", categoryData.getBooks());
+        model.addAttribute("categories", categoryData.getCategories());
+        model.addAttribute("bookcases", categoryData.getBookcases());
+        model.addAttribute("pagingProperties", categoryData.getPagingProperties());
         return "category/categories-books";
     }
 }
