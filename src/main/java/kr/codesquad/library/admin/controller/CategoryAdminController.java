@@ -32,7 +32,7 @@ public class CategoryAdminController {
     public String findData(@PathVariable Long categoryId,
                            @RequestParam(value = "page", defaultValue = "1") int page,
                            Model model) {
-        CategoryDataResponse categoryData = categoryAdminService.findCategoryDataById(categoryId, page);
+        CategoryDataResponse categoryData = categoryAdminService.findCategoryDataById(categoryId, page - 1);
         model.addAttribute("categoryData", categoryData.getCategory());
         model.addAttribute("books", categoryData.getBooks());
         model.addAttribute("categories", categoryData.getCategories());
