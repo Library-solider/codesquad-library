@@ -25,9 +25,17 @@ public class Category {
     @OneToMany(mappedBy = "category")
     List<Book> books = new ArrayList<>();
 
+    private Category(String title) {
+        this.title = title;
+    }
+
     @Builder
     private Category(Long id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    public static Category from(String title) {
+        return new Category(title);
     }
 }

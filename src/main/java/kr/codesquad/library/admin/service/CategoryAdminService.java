@@ -55,4 +55,11 @@ public class CategoryAdminService {
                                    .pagingProperties(PagingProperties.from(books))
                                    .build();
     }
+
+    @Transactional
+    public Long createNewCategory(String title) {
+        Category category = Category.from(title);
+        Category newCategory = categoryAdminRepository.save(category);
+        return newCategory.getId();
+    }
 }
