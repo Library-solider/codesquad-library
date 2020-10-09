@@ -53,23 +53,23 @@
                         <i class="fas fa-search search-form__icon"></i>
                     </div>
                 </form>
-                <table class="data-table">
+                <table class="account-table">
                     <thead>
                     <tr>
-                        <th class="data-table__column-name">ID</th>
-                        <th class="data-table__column-name">OAuth ID</th>
-                        <th class="data-table__column-name">이름</th>
-                        <th class="data-table__column-name">이메일</th>
-                        <th class="data-table__column-name">등급</th>
+                        <th class="account-table__column-name">ID</th>
+                        <th class="account-table__column-name">OAuth ID</th>
+                        <th class="account-table__column-name">이름</th>
+                        <th class="account-table__column-name">이메일</th>
+                        <th class="account-table__column-name">등급</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="accountSummary : ${accountSummaries}">
-                        <td th:text="${accountSummary.id}" class="data-table__row jsData jsDataId"></td>
-                        <td th:text="${accountSummary.oauthId}" class="data-table__row jsData"></td>
-                        <td th:text="${accountSummary.name}" class="data-table__row jsData"></td>
-                        <td th:text="${accountSummary.email}" class="data-table__row jsData"></td>
-                        <td th:text="${accountSummary.role}" class="data-table__row jsData"></td>
+                        <td th:text="${accountSummary.id}" class="account-table__row jsData jsDataId"></td>
+                        <td th:text="${accountSummary.oauthId}" class="account-table__row jsData"></td>
+                        <td th:text="${accountSummary.name}" class="account-table__row jsData"></td>
+                        <td th:text="${accountSummary.email}" class="account-table__row jsData"></td>
+                        <td th:text="${accountSummary.role}" class="account-table__row jsData"></td>
                     </tr>
                     </tbody>
                 </table>
