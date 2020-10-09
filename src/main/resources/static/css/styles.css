@@ -13,6 +13,11 @@
 @import "books-createform.css";
 @import "books-searchform.css";
 @import "books-detail.css";
+@import "categories-all.css";
+
+/* Component */
+@import "grid-items.css";
+
 
 body {
     font-family: 'Roboto', sans-serif;

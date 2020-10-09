@@ -1,0 +1,60 @@
+/* Category List */
+.category-list {
+    margin-top: 50px;
+    margin-left: 30px;
+    width: 700px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.category-list .category-list__item {
+    position: relative;
+    border: 1px solid lightslategray;
+    border-radius: 3px;
+    flex: 0 0 30%;
+    height: 200px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    opacity: 0.5;
+}
+.category-list .category-list__item:hover {
+    box-shadow: 0 0 15px #018ABE;
+    opacity: 1;
+}
+.category-list .category-list__item:hover a i {
+    color: #018ABE;
+}
+.category-list .category-list__item a {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Category Icon */
+.category-icon {
+    margin-bottom: 10px;
+    font-size: 27px;
+    /* color: #018ABE; */
+}
+
+/* Category Title */
+.category-title {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+/* Book Count */
+.book-count {
+    margin-top: 7px;
+    font-size: 12px;
+    opacity: 0.9;
+    color: gray;
+    font-weight: 500;
+}
+
