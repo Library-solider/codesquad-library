@@ -5,6 +5,7 @@ import kr.codesquad.library.admin.domain.category.CategoryDetail;
 import kr.codesquad.library.admin.service.BookAdminService;
 import kr.codesquad.library.admin.service.CategoryAdminService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequiredArgsConstructor
+@Slf4j
 @Controller
 @RequestMapping("/admin/category")
 public class CategoryAdminController {
@@ -47,6 +49,7 @@ public class CategoryAdminController {
 
     @PostMapping("/{categoryId}")
     public String delete(@PathVariable Long categoryId) {
+        log.debug("Category Id ::: {}", categoryId);
         categoryAdminService.deleteCategory(categoryId);
         return "redirect:/admin/category";
     }
