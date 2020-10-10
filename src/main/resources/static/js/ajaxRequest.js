@@ -9,7 +9,6 @@ function confirm() {
         closeOnCancel : true
     }, function() {
         authorize();
-        swal('', '완료 되었습니다.', 'success');
         // location.reload();
     });
 }
@@ -45,6 +44,7 @@ function postAjaxRequest(checkedAccountIds, accountCheckBoxes) {
         if (ajaxRequest.readyState !== ajaxRequest.DONE) { return; }
         if (ajaxRequest.status === 200) {
             removeAuthorizedAccountFromDataTable(accountCheckBoxes);
+            swal('', '완료 되었습니다.', 'success');
             return;
         }
         swal('요청 실패', '요청을 다시 시도 해주세요.', 'error');
@@ -54,6 +54,10 @@ function postAjaxRequest(checkedAccountIds, accountCheckBoxes) {
 function authorize() {
     const accountCheckBoxes = document.querySelectorAll('.jsAccountCheckBox');
     const checkedAccountIds = findCheckedAccountIds(accountCheckBoxes);
+    if (checkedAccountIds.length === 0) {
+        swal('요청 실패', '요청 할 계정을 하나 이상 선택 해주세요.', 'error');
+        return;
+    }
     postAjaxRequest(checkedAccountIds, accountCheckBoxes);
 }
 
