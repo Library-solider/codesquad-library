@@ -68,7 +68,7 @@
                         <div class="item-new jsNewBox">
                             <span class="item-new__icon--enable jsNewIcon">+ New</span>
                             <form th:action="@{/admin/category}" class="item-form item-form--disable jsNewForm" th:method="post">
-                                <input type="text" class="item-form__input" placeholder="새로운 카테고리명을 입력하세요.">
+                                <input type="text" name="title" class="item-form__input" placeholder="새로운 카테고리명을 입력하세요.">
                                 <div class="item-form__button-box">
                                     <button type="submit" class="item-form__submit-button"><i class="fas fa-check"></i></button>
                                     <button type="button" class="item-form__cancel-button jsNewCancelButton"><i class="fas fa-times"></i></button>
