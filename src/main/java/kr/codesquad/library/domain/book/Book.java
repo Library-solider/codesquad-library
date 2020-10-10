@@ -95,26 +95,24 @@ public class Book {
         this.publicationDate = bookFormRequest.getPublicationDate();
         this.imageUrl = bookFormRequest.getImageUrl();
         this.isbn = bookFormRequest.getIsbn();
-        this.category = changeCategory(category);
-        this.bookcase = changeBookcase(bookcase);
+        changeCategory(category);
+        changeBookcase(bookcase);
         return this.id;
     }
 
-    public Category changeCategory(Category category) {
-        if (isSameCategory(category)) {
-            return category;
+    public void changeCategory(Category category) {
+        if (isDifferentCategory(category)) {
+            this.category = category;
+            category.getBooks().add(this);
         }
-        this.category.getBooks().add(this);
-        return category;
     }
 
-    public Bookcase changeBookcase(Bookcase bookcase) {
+    public void changeBookcase(Bookcase bookcase) {
         this.bookcase = bookcase;
-        return bookcase;
     }
 
-    private boolean isSameCategory(Category category) {
-        return this.category.equals(category);
+    private boolean isDifferentCategory(Category category) {
+        return !this.category.equals(category);
     }
 
     public static Book of(BookFormRequest bookFormRequest, Category category, Bookcase bookcase) {
