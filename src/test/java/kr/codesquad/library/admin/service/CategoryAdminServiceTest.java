@@ -81,6 +81,17 @@ class CategoryAdminServiceTest {
         );
     }
 
+    @CsvSource({"1, 새제목"})
+    @ParameterizedTest
+    public void 카테고리를_수정한다(Long categoryId, String title) {
+        //when
+        Long updatedCategoryId = categoryAdminService.updateCategoryTitle(categoryId, title);
+        Category updatedCategory = categoryAdminRepository.findById(updatedCategoryId).orElseThrow(CategoryNotFoundException::new);
+
+        //then
+        assertThat(updatedCategory.getTitle()).isEqualTo(title);
+    }
+
     @CsvSource({"9, 1"})
     @ParameterizedTest
     public void 카테고리를_삭제한다(Long noBooksCategoryId, Long booksCategoryId) {
