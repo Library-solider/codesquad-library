@@ -35,6 +35,11 @@ public class Category {
         this.title = title;
     }
 
+    public Category changeTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
     public static Category from(String title) {
         return new Category(title);
     }

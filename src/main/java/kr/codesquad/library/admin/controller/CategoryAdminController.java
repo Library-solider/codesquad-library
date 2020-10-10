@@ -34,6 +34,12 @@ public class CategoryAdminController {
         return "redirect:/admin/category";
     }
 
+    @PostMapping("/{categoryId}/title")
+    public String update(@PathVariable Long categoryId, String title) {
+        categoryAdminService.updateCategoryTitle(categoryId, title);
+        return "redirect:/admin/category";
+    }
+
     @GetMapping("/{categoryId}")
     public String findData(@PathVariable Long categoryId,
                            @RequestParam(value = "page", defaultValue = "1") int page,

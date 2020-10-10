@@ -77,4 +77,11 @@ public class CategoryAdminService {
     private boolean hasAnyBooks(List<Book> books) {
         return !books.isEmpty();
     }
+
+    @Transactional
+    public Long updateCategoryTitle(Long categoryId, String title) {
+        Category category = categoryAdminRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+        category.changeTitle(title);
+        return category.getId();
+    }
 }
