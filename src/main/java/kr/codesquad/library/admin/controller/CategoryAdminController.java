@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -42,5 +43,11 @@ public class CategoryAdminController {
         model.addAttribute("bookcases", categoryData.getBookcases());
         model.addAttribute("pagingProperties", categoryData.getPagingProperties());
         return "category/categories-books";
+    }
+
+    @PostMapping("/{categoryId}")
+    public String delete(@PathVariable Long categoryId) {
+        categoryAdminService.deleteCategory(categoryId);
+        return "redirect:/admin/category";
     }
 }

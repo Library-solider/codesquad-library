@@ -9,6 +9,8 @@ import kr.codesquad.library.admin.domain.category.CategoryDetail;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
+import kr.codesquad.library.global.error.ExceptionView;
+import kr.codesquad.library.global.error.exception.admin.DeleteEntityDeniedException;
 import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,5 +64,17 @@ public class CategoryAdminService {
         Category category = Category.from(title);
         Category newCategory = categoryAdminRepository.save(category);
         return newCategory.getId();
+    }
+
+    @Transactional
+    public void deleteCategory(Long categoryId) {
+        Category category = categoryAdminRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+        List<Book> books = category.getBooks();
+        if (hasAnyBooks(books)) { throw new DeleteEntityDeniedException(); }
+        categoryAdminRepository.delete(category);
+    }
+
+    private boolean hasAnyBooks(List<Book> books) {
+        return !books.isEmpty();
     }
 }
