@@ -7,6 +7,7 @@ import kr.codesquad.library.admin.domain.category.CategoryDataResponse;
 import kr.codesquad.library.admin.domain.category.CategoryDetail;
 import kr.codesquad.library.admin.domain.category.CategorySummary;
 import kr.codesquad.library.domain.category.Category;
+import kr.codesquad.library.global.error.exception.admin.DeleteEntityDeniedException;
 import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -18,6 +19,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -77,6 +79,25 @@ class CategoryAdminServiceTest {
                 () -> assertThat(categoryId).isEqualTo(newCategory.getId()),
                 () -> assertThat(categories.size()).isEqualTo(categoryCount)
         );
+    }
 
+    @CsvSource({"9, 1"})
+    @ParameterizedTest
+    public void 카테고리를_삭제한다(Long noBooksCategoryId, Long booksCategoryId) {
+        //given
+        List<Category> categories = categoryAdminRepository.findAll();
+        int currentCount = categories.size();
+
+
+        //when
+        categoryAdminService.deleteCategory(noBooksCategoryId);
+        List<Category> newCategories = categoryAdminRepository.findAll();
+        int afterCount = newCategories.size();
+
+        //then
+        assertAll(
+                () -> assertThrows(DeleteEntityDeniedException.class, () -> categoryAdminService.deleteCategory(booksCategoryId)),
+                () -> assertThat(currentCount).isEqualTo(afterCount + 1)
+        );
     }
 }
