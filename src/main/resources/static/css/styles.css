@@ -14,6 +14,7 @@
 @import "books-detail.css";
 @import "categories-all.css";
 @import "categories-books.css";
+@import "delete-denied.css";
 
 /* Component */
 @import "authorization-table.css";

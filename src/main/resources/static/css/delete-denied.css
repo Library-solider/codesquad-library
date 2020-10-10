@@ -1,0 +1,32 @@
+/* Message Box */
+.denied-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 500px;
+}
+
+/* Smile Icon */
+.smile-icon {
+    font-size: 70px;
+    color: #F7A8A6;
+}
+
+/* Message Box */
+.message-box {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* Denied Message */
+.denied-message {
+    font-size: 21px;
+    opacity: 0.7;
+    line-height: 35px;
+}
+
+/* Sub Navigation Item*/
+.sub-navigation--exception {
+    visibility: hidden;
+}
