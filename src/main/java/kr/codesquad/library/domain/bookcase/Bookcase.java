@@ -22,4 +22,9 @@ public class Bookcase {
 
     @OneToMany(mappedBy = "bookcase")
     private List<Book> books = new ArrayList<>();
+
+    public Bookcase changeLocation(String location) {
+        this.location = location;
+        return this;
+    }
 }

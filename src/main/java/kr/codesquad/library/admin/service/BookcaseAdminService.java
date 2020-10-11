@@ -53,4 +53,10 @@ public class BookcaseAdminService {
                                    .pagingProperties(PagingProperties.from(books))
                                    .build();
     }
+
+    @Transactional
+    public void updateBookcaseLocation(Long bookcaseId, String location) {
+        Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
+        bookcase.changeLocation(location);
+    }
 }
