@@ -24,6 +24,12 @@ public class BookcaseAdminController {
         return "bookcase/bookcases-all";
     }
 
+    @PostMapping("")
+    public String createNew(String location) {
+        bookcaseAdminService.createNewBookcase(location);
+        return "redirect:/admin/bookcase";
+    }
+
     @GetMapping("/{bookcaseId}")
     public String findDetail(@PathVariable Long bookcaseId,
                              @RequestParam(value = "page", defaultValue = "1") int page,
@@ -42,4 +48,5 @@ public class BookcaseAdminController {
         bookcaseAdminService.updateBookcaseLocation(bookcaseId, location);
         return "redirect:/admin/bookcase";
     }
+
 }

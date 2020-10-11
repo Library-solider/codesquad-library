@@ -59,4 +59,11 @@ public class BookcaseAdminService {
         Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
         bookcase.changeLocation(location);
     }
+
+    @Transactional
+    public Long createNewBookcase(String location) {
+        Bookcase bookcase = Bookcase.from(location);
+        Bookcase newBookcase = bookcaseAdminRepository.save(bookcase);
+        return newBookcase.getId();
+    }
 }
