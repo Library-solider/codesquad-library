@@ -1,6 +1,7 @@
 package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.book.BookAdminRepository;
+import kr.codesquad.library.admin.domain.book.request.BookMoveRequest;
 import kr.codesquad.library.admin.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
@@ -36,6 +37,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static kr.codesquad.library.admin.common.ConstantsCoveringMagicNumber.ADMIN_PAGE_SIZE;
@@ -99,6 +101,21 @@ public class BookAdminService {
     public BookDetailResponse findBookDetail(Long bookId) {
         Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         return BookDetailResponse.from(book);
+    }
+
+    @Transactional
+    public void changeGroup(BookMoveRequest bookMoveRequest) {
+        List<Book> books = bookAdminRepository.findAllByIdIn(bookMoveRequest.getBookIds());
+        Optional.ofNullable(bookMoveRequest.getCategoryId()).ifPresent(categoryId -> {
+            log.debug("Come To Map Category :::");
+            Category category = categoryAdminRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
+            books.forEach(book -> book.changeCategory(category));
+        });
+        Optional.ofNullable(bookMoveRequest.getBookcaseId()).ifPresent(bookcaseId -> {
+            log.debug("Come To Map Bookcase :::");
+            Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
+            books.forEach(book -> book.changeBookcase(bookcase));
+        });
     }
 
     public BookData findBookDataFromOpenApi(String isbn) {

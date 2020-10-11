@@ -1,5 +1,6 @@
 package kr.codesquad.library.admin.controller;
 
+import kr.codesquad.library.admin.domain.book.request.BookMoveRequest;
 import kr.codesquad.library.admin.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
 import kr.codesquad.library.admin.domain.book.response.BookWithRequiredFormDataResponse;
@@ -10,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -31,6 +34,16 @@ public class BookAdminController {
     public String createNew(BookFormRequest bookFormRequest) {
         Long bookId = bookAdminService.createNewBook(bookFormRequest);
         return "redirect:/admin/books/" + bookId;
+    }
+
+    @PostMapping("/groups")
+    @ResponseBody
+    public void move(@RequestBody BookMoveRequest bookMoveRequest) {
+        log.debug("BookMoveRequest ::: {}", bookMoveRequest);
+        log.debug("bookIds ::: {}", bookMoveRequest.getBookIds());
+        log.debug("categoryId ::: {}", bookMoveRequest.getCategoryId());
+        log.debug("bookcaseId ::: {}", bookMoveRequest.getBookcaseId());
+        bookAdminService.changeGroup(bookMoveRequest);
     }
 
     @GetMapping("/{bookId}")
