@@ -47,6 +47,7 @@
         <div class="container">
             <div class="main-contents" th:object="${bookData}">
                 <h2 class="main-contents__navigation-title">도서 수정</h2>
+                <form th:action="@{/admin/books/__${bookId}__/delete_form}" class="book-delete jsDeleteForm" id="delete-form" method="post"></form>
                 <form class="book-form" th:action="@{/admin/books/__${bookId}__}" method="post">
                     <div class="input-box">
                         <label for="title">제목</label>
@@ -90,7 +91,10 @@
                         <label for="description">책소개</label>
                         <textarea id="description" cols="30" rows="10" maxlength="2000" name="description" th:text="${bookData.description}"></textarea>
                     </div>
-                    <input type="submit" value="도서 수정" class="book-form__button">
+                    <div class="button-box">
+                        <input type="submit" value="도서 수정" class="book-form__button">
+                        <input type="submit" value="도서 삭제" class="book-delete__button jsDeleteButton" form="delete-form">
+                    </div>
                 </form>
             </div>
         </div>
@@ -101,5 +105,6 @@
             <p class="copyright-author">Ragdoll @CODESQUAD</p>
         </div>
     </footer>
+    <script type="text/javascript" th:src="@{/js/deleteButtonHandler.js}"></script>
 </body>
 </html>
