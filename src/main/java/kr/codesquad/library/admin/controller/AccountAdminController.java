@@ -45,9 +45,8 @@ public class AccountAdminController {
     }
 
     @PostMapping("/role")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     public void authorizeAccount(@RequestBody List<Long> accountIds) {
-        log.debug("accountIds ::: {}", accountIds);
         accountAdminService.changeAllAccountRoleById(accountIds, LibraryRole.USER);
     }
 }
