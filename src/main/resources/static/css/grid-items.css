@@ -24,16 +24,16 @@
     align-items: center;
 }
 .item-form__input {
-    width: 160px;
-    height: 20px;
+    width: 140px;
+    height: 23px;
     border: 2px solid lightgray;
     border-radius: 5px;
     outline: none;
     text-align: center;
 }
 .item-form__input::placeholder {
-    font-size: 11px;
-    padding-left: 10px;
+    font-size: 10px;
+    padding-left: 3px;
     opacity: 0.5;
 }
 .item-form__input:focus::placeholder {
