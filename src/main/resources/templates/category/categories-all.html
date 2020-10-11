@@ -47,7 +47,7 @@
             <div class="main-contents">
                 <h2 class="main-contents__navigation-title">카테고리 목록</h2>
                 <ul class="category-list">
-                    <li class="category-list__item jsCategoryItem" th:each="category : ${categories}">
+                    <li class="category-list__item" th:each="category : ${categories}">
                         <a th:href="@{/admin/category/__${category.id}__}">
                             <i class="fab fa-buffer category-icon"></i>
                             <span class="category-title" th:text="${category.title}"></span>
@@ -86,6 +86,6 @@
             <p class="copyright-author">Ragdoll @CODESQUAD</p>
         </div>
     </footer>
-    <script type="text/javascript" th:src="@{/js/categoryEditHandler.js}"></script>
+    <script type="text/javascript" th:src="@{/js/groupEditHandler.js}"></script>
 </body>
 </html>
