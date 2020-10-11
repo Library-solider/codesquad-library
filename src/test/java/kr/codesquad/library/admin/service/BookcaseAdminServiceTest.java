@@ -80,6 +80,19 @@ class BookcaseAdminServiceTest {
         assertThat(bookcase.getLocation()).isEqualTo(newLocation);
     }
 
+    @CsvSource({"새 도서위치, 16"})
+    @ParameterizedTest
+    public void 새로운_도서위치를_등록한다(String location, int bookcaseCount) {
+        //when
+        Long bookcaseId = bookcaseAdminService.createNewBookcase(location);
+        Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
+        List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
+
+        //then
+        assertThat(bookcase.getLocation()).isEqualTo(location);
+        assertThat(bookcases.size()).isEqualTo(bookcaseCount);
+    }
+
     static Stream<Arguments> provideSpecificBookcaseDataSource() {
         return Stream.of(
                 Arguments.of(3L, 1, 10, 5, 15)
