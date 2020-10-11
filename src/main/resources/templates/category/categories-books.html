@@ -47,7 +47,7 @@
             <div class="main-contents">
                 <h2 class="main-contents__navigation-title" th:text="${categoryData.title}"></h2>
                 <div class="table-box">
-                    <form class="edit-form" th:action="@{/admin/books/group}" th:method="patch">
+                    <form class="edit-form">
                         <select th:name="categoryId" class="edit-form__select-box jsSelectedCategory">
                             <option label="카테고리"></option>
                             <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
@@ -113,5 +113,6 @@
     </footer>
     <script type="text/javascript" th:src="@{/js/bookDataTableHandler.js}"></script>
     <script type="text/javascript" th:src="@{/js/deleteButtonHandler.js}"></script>
+    <script type="text/javascript" th:src="@{/js/bookMoveRequest.js}"></script>
     </body>
 </html>
