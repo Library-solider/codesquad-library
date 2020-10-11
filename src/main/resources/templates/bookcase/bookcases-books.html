@@ -99,7 +99,7 @@
                         <a th:href="@{${bookcaseData.id}(page=${pagingProperties.totalPages})}"><i class="fas fa-angle-double-right"></i></a>
                     </li>
                 </ol>
-                <form class="delete-form jsDeleteForm" th:action="@{/admin/category/__${bookcaseData.id}__}" method="post">
+                <form class="delete-form jsDeleteForm" th:action="@{/admin/bookcase/__${bookcaseData.id}__}" method="post">
                     <input type="submit" class="delete-form__submit jsDeleteButton" value="도서위치 삭제">
                 </form>
             </div>
