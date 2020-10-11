@@ -154,5 +154,22 @@
     font-weight: 600;
     color: #fff;
     background-color: #0455BF;
+    box-shadow: 0 0 3px #0455BF;
+    cursor: pointer;
+}
+
+/* Delete Form */
+.book-delete {
+    display: none;
+}
+.book-delete__button {
+    margin-left: 15px;
+    padding: 10px 25px;
+    border: none;
+    border-radius: 7px;
+    background-color: #D94452;
+    color: #fff;
+    font-weight: 700;
+    box-shadow: 0 0 3px #EC5564;
     cursor: pointer;
 }
