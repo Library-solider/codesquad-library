@@ -49,4 +49,10 @@ public class BookcaseAdminController {
         return "redirect:/admin/bookcase";
     }
 
+    @PostMapping("/{bookcaseId}")
+    public String delete(@PathVariable Long bookcaseId) {
+        bookcaseAdminService.deleteBookcase(bookcaseId);
+        return "redirect:/admin/bookcase";
+    }
+
 }

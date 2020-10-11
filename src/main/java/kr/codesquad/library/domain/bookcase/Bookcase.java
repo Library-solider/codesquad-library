@@ -32,6 +32,10 @@ public class Bookcase {
         return this;
     }
 
+    public boolean hasAnyBooks() {
+        return !books.isEmpty();
+    }
+
     public static Bookcase from(String location) {
         return new Bookcase(location);
     }

@@ -9,7 +9,9 @@ import kr.codesquad.library.admin.domain.category.CategoryAdminRepository;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.bookcase.Bookcase;
 import kr.codesquad.library.domain.category.Category;
+import kr.codesquad.library.global.error.exception.admin.DeleteEntityDeniedException;
 import kr.codesquad.library.global.error.exception.domain.BookcaseNotFoundException;
+import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -65,5 +67,12 @@ public class BookcaseAdminService {
         Bookcase bookcase = Bookcase.from(location);
         Bookcase newBookcase = bookcaseAdminRepository.save(bookcase);
         return newBookcase.getId();
+    }
+
+    @Transactional
+    public void deleteBookcase(Long bookcaseId) {
+        Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
+        if (bookcase.hasAnyBooks()) { throw new DeleteEntityDeniedException(); }
+        bookcaseAdminRepository.delete(bookcase);
     }
 }
