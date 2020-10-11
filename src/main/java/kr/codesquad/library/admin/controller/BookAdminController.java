@@ -61,6 +61,12 @@ public class BookAdminController {
         return "book/books-updateform";
     }
 
+    @PostMapping("/{bookId}/delete_form")
+    public String delete(@PathVariable Long bookId) {
+        bookAdminService.deleteBook(bookId);
+        return "redirect:/admin/books";
+    }
+
     @PostMapping("/{bookId}")
     public String update(@PathVariable Long bookId, BookFormRequest bookFormRequest) {
         Long updatedBookId = bookAdminService.updateBook(bookId, bookFormRequest);

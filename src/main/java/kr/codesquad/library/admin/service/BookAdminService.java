@@ -128,6 +128,11 @@ public class BookAdminService {
                                   .orElseGet(BookData::new);
     }
 
+    @Transactional
+    public void deleteBook(Long bookId) {
+        bookAdminRepository.deleteById(bookId);
+    }
+
     private BookWithRequiredFormDataResponse createRequiredFormData(BookData bookData) {
         List<Category> categories = categoryAdminRepository.findAll();
         List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
