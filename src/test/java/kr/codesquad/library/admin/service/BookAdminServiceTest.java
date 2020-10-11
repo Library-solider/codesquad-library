@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -181,6 +182,24 @@ class BookAdminServiceTest {
                 () -> assertThat(newCategoryBooks.size()).isEqualTo(bookCountAfterChange),
                 () -> assertThat(newBookcaseBooks.size()).isEqualTo(bookCountAfterChange)
         );
+    }
+
+    @CsvSource({"458"})
+    @ParameterizedTest
+    public void 특정_도서를_삭제한다(Long bookId) {
+        //when
+        List<Book> books = bookAdminRepository.findAll();
+        int oldCount = books.size();
+
+        bookAdminService.deleteBook(bookId);
+
+        List<Book> newBooks = bookAdminRepository.findAll();
+        int newCount = newBooks.size();
+
+        //then
+        assertThrows(BookNotFoundException.class,
+                () -> bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new));
+        assertThat(oldCount).isEqualTo(newCount + 1);
     }
 
     static Stream<Arguments> provideBookMoveRequestSource() {
