@@ -45,7 +45,7 @@
     <div class="main">
         <div class="container">
             <div class="main-contents">
-                <h2 class="main-contents__navigation-title" th:text="${categoryData.title}"></h2>
+                <h2 class="main-contents__navigation-title" th:text="${bookcaseData.location}"></h2>
                 <div class="table-box">
                     <form class="edit-form">
                         <select th:name="categoryId" class="edit-form__select-box jsSelectedCategory">
@@ -84,23 +84,23 @@
                 <ol class="paging-numbers"
                     th:with="start=${pagingProperties.startPageOfPageGroup}, end=${pagingProperties.endPageOfPageGroup}">
                     <li class="paging-numbers__number">
-                        <a th:href="@{${categoryData.id}(page=1)}"><i class="fas fa-angle-double-left"></i></a>
+                        <a th:href="@{${bookcaseData.id}(page=1)}"><i class="fas fa-angle-double-left"></i></a>
                     </li>
                     <li class="paging-numbers__number">
-                        <a th:href="@{${categoryData.id}(page=${pagingProperties.endPageOfPreviousPageGroup})}"><i class="fas fa-angle-left"></i></a>
+                        <a th:href="@{${bookcaseData.id}(page=${pagingProperties.endPageOfPreviousPageGroup})}"><i class="fas fa-angle-left"></i></a>
                     </li>
                     <li class="paging-numbers__number" th:each="page : ${#numbers.sequence(start, end)}" th:classappend="${page == pagingProperties.currentPage} ? 'paging-numbers__number--clicked'">
-                        <a th:href="@{${categoryData.id}(page=${page})}" th:text="${page}"></a>
+                        <a th:href="@{${bookcaseData.id}(page=${page})}" th:text="${page}"></a>
                     </li>
                     <li class="paging-numbers__number">
-                        <a th:href="@{${categoryData.id}(page=${pagingProperties.startPageOfNextPageGroup})}"><i class="fas fa-angle-right"></i></a>
+                        <a th:href="@{${bookcaseData.id}(page=${pagingProperties.startPageOfNextPageGroup})}"><i class="fas fa-angle-right"></i></a>
                     </li>
                     <li class="paging-numbers__number">
-                        <a th:href="@{${categoryData.id}(page=${pagingProperties.totalPages})}"><i class="fas fa-angle-double-right"></i></a>
+                        <a th:href="@{${bookcaseData.id}(page=${pagingProperties.totalPages})}"><i class="fas fa-angle-double-right"></i></a>
                     </li>
                 </ol>
-                <form class="delete-form jsDeleteForm" th:action="@{/admin/category/__${categoryData.id}__}" method="post">
-                    <input type="submit" class="delete-form__submit jsDeleteButton" value="카테고리 삭제">
+                <form class="delete-form jsDeleteForm" th:action="@{/admin/bookcase/__${bookcaseData.id}__}" method="post">
+                    <input type="submit" class="delete-form__submit jsDeleteButton" value="도서위치 삭제">
                 </form>
             </div>
         </div>
@@ -114,5 +114,5 @@
     <script type="text/javascript" th:src="@{/js/checkBoxDataTableHandler.js}"></script>
     <script type="text/javascript" th:src="@{/js/deleteButtonHandler.js}"></script>
     <script type="text/javascript" th:src="@{/js/bookMoveRequest.js}"></script>
-    </body>
+</body>
 </html>

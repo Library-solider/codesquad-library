@@ -45,18 +45,18 @@
     <div class="main">
         <div class="container">
             <div class="main-contents">
-                <h2 class="main-contents__navigation-title">카테고리 목록</h2>
-                <ul class="category-list">
-                    <li class="category-list__item" th:each="category : ${categories}">
-                        <a th:href="@{/admin/category/__${category.id}__}">
-                            <i class="fab fa-buffer category-icon"></i>
-                            <span class="category-title" th:text="${category.title}"></span>
-                            <span class="book-count" th:text="${category.bookCount + '권'}"></span>
+                <h2 class="main-contents__navigation-title">도서위치 목록</h2>
+                <ul class="bookcase-list">
+                    <li class="bookcase-list__item" th:each="bookcase : ${bookcases}">
+                        <a th:href="@{/admin/bookcase/__${bookcase.id}__}">
+                            <i class="fas fa-map-marker-alt bookcase-icon"></i>
+                            <span class="bookcase-title" th:text="${bookcase.location}"></span>
+                            <span class="book-count" th:text="${bookcase.bookCount + '권'}"></span>
                         </a>
                         <div class="item-edit--enable jsEditBox">
                             <i class="fas fa-edit item-edit__icon--enable jsEditIcon"></i>
-                            <form th:action="@{/admin/category/__${category.id}__/title}" class="item-form--disable jsEditForm" th:method="post">
-                                <input type="text" class="item-form__input" name="title" placeholder="수정할 카테고리명을 입력하세요." maxlength="12" required>
+                            <form th:action="@{/admin/bookcase/__${bookcase.id}__/title}" class="item-form--disable jsEditForm" th:method="post">
+                                <input type="text" class="item-form__input" name="location" placeholder="수정할 도서위치명 입력하세요." maxlength="12" required>
                                 <div class="item-form__button-box">
                                     <button type="submit" class="item-form__submit-button"><i class="fas fa-check"></i></button>
                                     <button type="button" class="item-form__cancel-button jsEditCancelButton"><i class="fas fa-times"></i></button>
@@ -64,11 +64,11 @@
                             </form>
                         </div>
                     </li>
-                    <li class="category-list__item category-list__new">
+                    <li class="bookcase-list__item bookcase-list__new">
                         <div class="item-new jsNewBox">
                             <span class="item-new__icon--enable jsNewIcon">+ New</span>
-                            <form th:action="@{/admin/category}" class="item-form item-form--disable jsNewForm" th:method="post">
-                                <input type="text" name="title" class="item-form__input" placeholder="새로운 카테고리명을 입력하세요." maxlength="12" required>
+                            <form th:action="@{/admin/bookcase}" class="item-form item-form--disable jsNewForm" th:method="post">
+                                <input type="text" name="location" class="item-form__input" placeholder="새로운 도서위치명을 입력하세요." maxlength="12" required>
                                 <div class="item-form__button-box">
                                     <button type="submit" class="item-form__submit-button"><i class="fas fa-check"></i></button>
                                     <button type="button" class="item-form__cancel-button jsNewCancelButton"><i class="fas fa-times"></i></button>
