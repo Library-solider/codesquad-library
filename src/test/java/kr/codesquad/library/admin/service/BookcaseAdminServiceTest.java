@@ -7,6 +7,8 @@ import kr.codesquad.library.admin.domain.bookcase.BookcaseDetail;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseSummary;
 import kr.codesquad.library.admin.domain.category.CategorySummary;
 import kr.codesquad.library.domain.book.Book;
+import kr.codesquad.library.domain.bookcase.Bookcase;
+import kr.codesquad.library.global.error.exception.domain.BookcaseNotFoundException;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -66,9 +68,28 @@ class BookcaseAdminServiceTest {
         );
     }
 
+
+    @ParameterizedTest
+    @MethodSource("changeBookcaseLocationSource")
+    public void 도서위치의_이름을_변경한다(Long bookcaseId, String newLocation) {
+        //when
+        bookcaseAdminService.updateBookcaseLocation(bookcaseId, newLocation);
+        Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
+
+        //then
+        assertThat(bookcase.getLocation()).isEqualTo(newLocation);
+    }
+
     static Stream<Arguments> provideSpecificBookcaseDataSource() {
         return Stream.of(
                 Arguments.of(3L, 1, 10, 5, 15)
         );
+    }
+
+    static Stream<Arguments> changeBookcaseLocationSource() {
+        return Stream.of(
+                Arguments.of(1L, "새로운 도서 위치")
+        );
+
     }
 }
