@@ -1,15 +1,25 @@
 package kr.codesquad.library.admin.service;
 
+import kr.codesquad.library.admin.common.PagingProperties;
+import kr.codesquad.library.admin.domain.book.BookAdminRepository;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
+import kr.codesquad.library.admin.domain.bookcase.BookcaseDataResponse;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseDetail;
+import kr.codesquad.library.admin.domain.category.CategoryAdminRepository;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.bookcase.Bookcase;
+import kr.codesquad.library.domain.category.Category;
+import kr.codesquad.library.global.error.exception.domain.BookcaseNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static kr.codesquad.library.admin.common.ConstantsCoveringMagicNumber.ADMIN_PAGE_SIZE;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +27,8 @@ import java.util.stream.Collectors;
 public class BookcaseAdminService {
 
     private final BookcaseAdminRepository bookcaseAdminRepository;
+    private final BookAdminRepository bookAdminRepository;
+    private final CategoryAdminRepository categoryAdminRepository;
 
     public List<BookcaseDetail> findAllBookcases() {
         List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
@@ -26,5 +38,19 @@ public class BookcaseAdminService {
                                 return BookcaseDetail.of(bookcase, books.size());
                         })
                         .collect(Collectors.toList());
+    }
+
+    public BookcaseDataResponse findBookcaseDataById(Long bookcaseId, int page) {
+        Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
+        Page<Book> books = bookAdminRepository.findAllByBookcaseId(bookcaseId, PageRequest.of(page, ADMIN_PAGE_SIZE));
+        List<Category> categories = categoryAdminRepository.findAll();
+        List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
+        return BookcaseDataResponse.builder()
+                                   .bookcase(bookcase)
+                                   .books(books.getContent())
+                                   .categories(categories)
+                                   .bookcases(bookcases)
+                                   .pagingProperties(PagingProperties.from(books))
+                                   .build();
     }
 }
