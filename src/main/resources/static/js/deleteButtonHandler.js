@@ -11,8 +11,10 @@ function validateDeleteRequest(event, validationWord, deleteForm) {
         },
         function(inputValue){
             if (inputValue === validationWord) {
-               deleteForm.submit();
-               return;
+                swal({title: "", text:"요청이 전송 되었습니다.", type: "info"}, function() {
+                    deleteForm.submit();
+                });
+                return;
             }
             swal.showInputError("입력 값이 다릅니다. 다시 시도 해주세요!");
         });
