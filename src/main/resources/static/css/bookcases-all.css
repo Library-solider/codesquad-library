@@ -1,0 +1,59 @@
+/* Bookcase List */
+.bookcase-list {
+    margin-top: 50px;
+    margin-left: 30px;
+    width: 1000px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.bookcase-list .bookcase-list__item {
+    position: relative;
+    border: 1px solid lightslategray;
+    border-radius: 3px;
+    flex: 0 0 17%;
+    height: 170px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+    opacity: 0.5;
+}
+.bookcase-list .bookcase-list__item:hover {
+    box-shadow: 0 0 15px #018ABE;
+    opacity: 1;
+}
+.bookcase-list .bookcase-list__item:hover a i {
+    color: #018ABE;
+}
+.bookcase-list .bookcase-list__item a {
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+/* Bookcase Icon */
+.bookcase-icon {
+    margin-bottom: 10px;
+    font-size: 19px;
+}
+
+/* bookcase Title */
+.bookcase-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* Book Count */
+.book-count {
+    margin-top: 7px;
+    font-size: 12px;
+    opacity: 0.9;
+    color: gray;
+    font-weight: 500;
+}
+
