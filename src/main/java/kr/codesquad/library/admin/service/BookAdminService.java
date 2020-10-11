@@ -73,7 +73,6 @@ public class BookAdminService {
         Bookcase bookcase = bookcaseAdminRepository.findById(bookFormRequest.getBookcaseId())
                                                    .orElseThrow(BookcaseNotFoundException::new);
         Book newBook = bookAdminRepository.save(Book.of(bookFormRequest, category, bookcase));
-        log.debug("New Book ID ::: {}", newBook.getId());
         return newBook.getId();
     }
 
@@ -107,12 +106,10 @@ public class BookAdminService {
     public void changeGroup(BookMoveRequest bookMoveRequest) {
         List<Book> books = bookAdminRepository.findAllByIdIn(bookMoveRequest.getBookIds());
         Optional.ofNullable(bookMoveRequest.getCategoryId()).ifPresent(categoryId -> {
-            log.debug("Come To Map Category :::");
             Category category = categoryAdminRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
             books.forEach(book -> book.changeCategory(category));
         });
         Optional.ofNullable(bookMoveRequest.getBookcaseId()).ifPresent(bookcaseId -> {
-            log.debug("Come To Map Bookcase :::");
             Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
             books.forEach(book -> book.changeBookcase(bookcase));
         });
