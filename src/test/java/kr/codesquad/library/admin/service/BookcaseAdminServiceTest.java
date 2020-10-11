@@ -8,7 +8,9 @@ import kr.codesquad.library.admin.domain.bookcase.BookcaseSummary;
 import kr.codesquad.library.admin.domain.category.CategorySummary;
 import kr.codesquad.library.domain.book.Book;
 import kr.codesquad.library.domain.bookcase.Bookcase;
+import kr.codesquad.library.global.error.exception.admin.DeleteEntityDeniedException;
 import kr.codesquad.library.global.error.exception.domain.BookcaseNotFoundException;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
@@ -22,6 +24,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -91,6 +94,26 @@ class BookcaseAdminServiceTest {
         //then
         assertThat(bookcase.getLocation()).isEqualTo(location);
         assertThat(bookcases.size()).isEqualTo(bookcaseCount);
+    }
+
+    @CsvSource({"5, 1"})
+    @ParameterizedTest
+    public void 도서위치를_삭제한다(Long bookcaseId, Long bookExistBookcaseId) {
+        //when
+        List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
+        int oldCount = bookcases.size();
+
+        bookcaseAdminService.deleteBookcase(bookcaseId);
+
+       List<Bookcase> newBookcases = bookcaseAdminRepository.findAll();
+       int newCount = newBookcases.size();
+
+        //then
+        assertThat(oldCount).isEqualTo(newCount + 1);
+        assertThrows(DeleteEntityDeniedException.class,
+                () ->bookcaseAdminService.deleteBookcase(bookExistBookcaseId));
+        assertThrows(BookcaseNotFoundException.class,
+                () -> bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new));
     }
 
     static Stream<Arguments> provideSpecificBookcaseDataSource() {
