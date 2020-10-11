@@ -55,7 +55,6 @@ public class CategoryAdminController {
 
     @PostMapping("/{categoryId}")
     public String delete(@PathVariable Long categoryId) {
-        log.debug("Category Id ::: {}", categoryId);
         categoryAdminService.deleteCategory(categoryId);
         return "redirect:/admin/category";
     }

@@ -39,10 +39,7 @@ public class BookAdminController {
     @PostMapping("/groups")
     @ResponseBody
     public void move(@RequestBody BookMoveRequest bookMoveRequest) {
-        log.debug("BookMoveRequest ::: {}", bookMoveRequest);
-        log.debug("bookIds ::: {}", bookMoveRequest.getBookIds());
-        log.debug("categoryId ::: {}", bookMoveRequest.getCategoryId());
-        log.debug("bookcaseId ::: {}", bookMoveRequest.getBookcaseId());
+        log.info("BookMoveRequest ::: {}", bookMoveRequest);
         bookAdminService.changeGroup(bookMoveRequest);
     }
 
