@@ -29,6 +29,7 @@
     border: 2px solid lightgray;
     border-radius: 5px;
     outline: none;
+    text-align: center;
 }
 .item-form__input::placeholder {
     font-size: 11px;

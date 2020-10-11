@@ -1,5 +1,6 @@
 package kr.codesquad.library.global.error;
 
+import kr.codesquad.library.global.error.exception.AdminException;
 import kr.codesquad.library.global.error.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -9,6 +10,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.ConstraintViolationException;
 
@@ -60,6 +62,18 @@ public class GlobalRestExceptionHandler {
         final ErrorCode errorCode = e.getErrorCode();
         final ErrorResponse response = ErrorResponse.of(errorCode);
         return new ResponseEntity<>(response, HttpStatus.valueOf(errorCode.getStatus()));
+    }
+
+    /**
+     * 관리자 도구 에러
+     */
+    @ExceptionHandler(AdminException.class)
+    protected ModelAndView handleAdminException(final AdminException e) {
+        ExceptionView exceptionView = e.getExceptionView();
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName(exceptionView.getViewName());
+        modelAndView.setStatus(HttpStatus.FORBIDDEN);
+        return modelAndView;
     }
 
     /**

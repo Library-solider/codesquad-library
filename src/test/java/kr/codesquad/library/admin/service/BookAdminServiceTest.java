@@ -2,6 +2,7 @@ package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.book.BookAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookSummary;
+import kr.codesquad.library.admin.domain.book.request.BookMoveRequest;
 import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
@@ -9,15 +10,22 @@ import kr.codesquad.library.admin.domain.book.BookData;
 import kr.codesquad.library.admin.domain.book.request.BookFormRequest;
 import kr.codesquad.library.admin.domain.category.CategoryAdminRepository;
 import kr.codesquad.library.domain.book.Book;
+import kr.codesquad.library.domain.bookcase.Bookcase;
+import kr.codesquad.library.domain.category.Category;
 import kr.codesquad.library.global.error.exception.domain.BookNotFoundException;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -142,6 +150,42 @@ class BookAdminServiceTest {
                 () -> assertThat(book.getCategory().getId()).isEqualTo(categoryId),
                 () -> assertThat(book.getBookcase().getId()).isEqualTo(bookcaseId),
                 () -> assertThat(book.getPublicationDate()).isEqualTo(publicationDate)
+        );
+    }
+
+    @MethodSource("provideBookMoveRequestSource")
+    @ParameterizedTest
+    public void 도서를_다른_그룹으로_이동한다(List<Long> bookIds, Long categoryId,
+                                        Long bookcaseId, int bookCountAfterChange) {
+        //when
+        BookMoveRequest bookMoveRequest = BookMoveRequest.of(bookIds, categoryId, bookcaseId);
+        bookAdminService.changeGroup(bookMoveRequest);
+        List<Book> books = bookAdminRepository.findAllByIdIn(bookIds);
+        List<Book> newCategoryBooks = books.stream()
+                                           .filter(book -> {
+                                                Category category = book.getCategory();
+                                                Long changedCategoryId = category.getId();
+                                                return changedCategoryId.equals(categoryId);
+                                            })
+                                           .collect(Collectors.toList());
+        List<Book> newBookcaseBooks = books.stream()
+                                           .filter(book -> {
+                                               Bookcase bookcase = book.getBookcase();
+                                               Long changedBookcaseId = bookcase.getId();
+                                               return changedBookcaseId.equals(bookcaseId);
+                                           })
+                                           .collect(Collectors.toList());
+
+        //then
+        assertAll(
+                () -> assertThat(newCategoryBooks.size()).isEqualTo(bookCountAfterChange),
+                () -> assertThat(newBookcaseBooks.size()).isEqualTo(bookCountAfterChange)
+        );
+    }
+
+    static Stream<Arguments> provideBookMoveRequestSource() {
+        return Stream.of(
+                Arguments.of(Arrays.asList(458L, 457L, 456L), 3L, 3L, 3)
         );
     }
 }

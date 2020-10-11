@@ -18,4 +18,6 @@ public interface BookAdminRepository extends JpaRepository<Book, Long> {
     @Query(value ="SELECT b FROM Book b JOIN FETCH b.category WHERE b.category.id = :categoryId ORDER BY b.id DESC",
            countQuery = "SELECT COUNT(b) FROM Book b INNER JOIN b.category WHERE b.category.id = :categoryId")
     Page<Book> findAllByCategoryId(@Param("categoryId") Long categoryId, Pageable pageable);
+
+    List<Book> findAllByIdIn(List<Long> bookIds);
 }
