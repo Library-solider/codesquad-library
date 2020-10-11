@@ -10,12 +10,7 @@ function confirm(event) {
     }, function(confirm) {
         if (confirm) {
             event.preventDefault();
-            console.log('######');
             moveBooks();
-            swal('', '완료 되었습니다.', 'success', function() {
-                location.reload();
-                return;
-            });
         }
     });
 }
@@ -50,19 +45,29 @@ function createBookRequest(bookCheckBoxes) {
 
 function postAjaxRequest(bookRequest) {
     const ajaxRequest = new XMLHttpRequest();
-    ajaxRequest.open('PATCH', '/admin/books/test');
+    ajaxRequest.open('POST', '/admin/books/groups');
     ajaxRequest.setRequestHeader('Content-Type', 'application/json');
     ajaxRequest.send(JSON.stringify(bookRequest));
     ajaxRequest.onreadystatechange = function() {
         if (ajaxRequest.readyState !== ajaxRequest.DONE) { return; }
-        if (ajaxRequest.status === 200) { return; }
+        if (ajaxRequest.status === 200) {
+            swal({title: "요청 성공", text: "도서가 이동 되었습니다.", type: "success"}, function() {
+                location.reload();
+            });
+            return;
+        }
         swal('요청 실패', '요청을 다시 시도 해주세요.', 'error');
     }
 }
 
 function moveBooks() {
     const bookCheckBoxes = document.querySelectorAll('.jsNormalCheckBox');
+    console.log(bookCheckBoxes);
     const bookRequest = createBookRequest(bookCheckBoxes);
+    if (bookRequest.bookIds.length === 0) {
+        swal('요청 실패', '도서를 선택한 뒤 다시 요청 해주세요.', 'error');
+        return;
+    }
     postAjaxRequest(bookRequest);
 }
 
