@@ -1,8 +1,9 @@
 package kr.codesquad.library.admin.service;
 
 import kr.codesquad.library.admin.domain.account.AccountAdminRepository;
+import kr.codesquad.library.admin.domain.account.response.AccountDataResponse;
 import kr.codesquad.library.admin.domain.account.response.AccountDetailsResponse;
-import kr.codesquad.library.admin.domain.account.response.AccountSummaryResponse;
+import kr.codesquad.library.admin.domain.account.AccountSummary;
 import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.LibraryRole;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -43,12 +44,12 @@ class AccountAdminServiceTest {
         List<Long> guestAccountIds = Arrays.asList(firstGuestAccountId, secondGuestAccountId, thirdGuestAccountId);
 
         //when
-        List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccountsByRole(LibraryRole.GUEST);
+        List<AccountSummary> accountSummaries = accountAdminService.findAllAccountsByRole(LibraryRole.GUEST);
 
         //then
         assertEquals(accountSummaries.size(), countOfGuestAccount);
         assertEquals(accountSummaries.stream()
-                                     .map(AccountSummaryResponse::getId)
+                                     .map(AccountSummary::getId)
                                      .collect(Collectors.toList()), guestAccountIds);
     }
 
@@ -78,10 +79,11 @@ class AccountAdminServiceTest {
     @ParameterizedTest
     public void 모든_회원_목록을_조회한다(int defaultPageNumber, int countOfAllAccounts) {
         //when
-        List<AccountSummaryResponse> accounts = accountAdminService.findAllAccounts();
+        AccountDataResponse accounts = accountAdminService.findAllAccounts(defaultPageNumber);
+        List<AccountSummary> accountSummaries = accounts.getAccountSummaries();
 
         //then
-        assertThat(accounts.size()).isEqualTo(countOfAllAccounts);
+        assertThat(accountSummaries.size()).isEqualTo(countOfAllAccounts);
     }
 
     @CsvSource({"1, 11111, HONUX, honux77@github.com, http://img.honux, GUEST"})
