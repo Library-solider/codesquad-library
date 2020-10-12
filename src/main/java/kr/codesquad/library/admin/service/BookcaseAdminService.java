@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static kr.codesquad.library.admin.common.ConstantsCoveringMagicNumber.ADMIN_PAGE_SIZE;
+import static kr.codesquad.library.admin.common.ConstantsCoveringMagicNumber.MINIMUM_PAGE_NUMBER;
 
 @RequiredArgsConstructor
 @Service
@@ -44,7 +45,7 @@ public class BookcaseAdminService {
 
     public BookcaseDataResponse findBookcaseDataById(Long bookcaseId, int page) {
         Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
-        Page<Book> books = bookAdminRepository.findAllByBookcaseId(bookcaseId, PageRequest.of(page, ADMIN_PAGE_SIZE));
+        Page<Book> books = bookAdminRepository.findAllByBookcaseId(bookcaseId, PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE));
         List<Category> categories = categoryAdminRepository.findAll();
         List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
         return BookcaseDataResponse.builder()
@@ -74,5 +75,10 @@ public class BookcaseAdminService {
         Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
         if (bookcase.hasAnyBooks()) { throw new DeleteEntityDeniedException(); }
         bookcaseAdminRepository.delete(bookcase);
+    }
+
+    private int validatePageNumber(int page) {
+        if (page < MINIMUM_PAGE_NUMBER) { page = MINIMUM_PAGE_NUMBER; }
+        return page - 1;
     }
 }
