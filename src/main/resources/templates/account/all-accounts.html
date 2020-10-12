@@ -47,9 +47,9 @@
         <div class="container">
             <div class="main-contents">
                 <h2 class="main-contents__navigation-title">회원 목록</h2>
-                <form class="search-form">
+                <form th:action="@{/admin/users/search}" class="search-form" method="get">
                     <div class="search-form__box">
-                        <input type="search" class="search-form__bar" placeholder="검색어를 입력하세요."/>
+                        <input type="search" name="name" class="search-form__bar" placeholder="검색어를 입력하세요."/>
                         <i class="fas fa-search search-form__icon"></i>
                     </div>
                 </form>
