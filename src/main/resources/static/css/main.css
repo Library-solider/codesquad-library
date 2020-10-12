@@ -48,9 +48,17 @@
     transition: 0.3s;
 }
 
+.search-form .search-form__bar::placeholder {
+    opacity: 0.5;
+}
+
 .search-form .search-form__bar:focus {
     border: 1px solid lightgray;
-    box-shadow: 0 0 5px #173F5F;
+    box-shadow: 0 0 5px #0455BF;
+}
+
+.search-form .search-form__bar:focus::placeholder {
+    visibility: hidden;
 }
 
 .search-form .search-form__icon {
