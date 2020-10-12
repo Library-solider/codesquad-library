@@ -50,7 +50,7 @@ public class BookAdminService {
     private final InterparkProperties interparkProperties;
 
     public BookSummaryResponse findAllBooks(int page) {
-        Page<Book> books = bookAdminRepository.findAllWithCategory(PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE));
+        Page<Book> books = bookAdminRepository.findAllFetch(PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE));
         List<Book> bookEntities = books.getContent();
         List<BookSummary> bookSummaries = bookEntities.stream()
                                                       .map(BookSummary::from)

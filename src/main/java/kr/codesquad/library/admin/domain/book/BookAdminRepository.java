@@ -12,9 +12,9 @@ import java.util.List;
 
 public interface BookAdminRepository extends JpaRepository<Book, Long> {
 
-    @Query(value = "SELECT b FROM Book b JOIN FETCH b.category ORDER BY b.id DESC",
-           countQuery = "SELECT COUNT(b) FROM Book b INNER JOIN b.category")
-    Page<Book> findAllWithCategory(Pageable pageable);
+    @Query(value = "SELECT b FROM Book b JOIN FETCH b.category JOIN FETCH b.bookcase ORDER BY b.id DESC",
+           countQuery = "SELECT COUNT(b) FROM Book b INNER JOIN b.category INNER JOIN b.bookcase")
+    Page<Book> findAllFetch(Pageable pageable);
 
     @Query(value ="SELECT b FROM Book b JOIN FETCH b.category WHERE b.category.id = :categoryId ORDER BY b.id DESC",
            countQuery = "SELECT COUNT(b) FROM Book b INNER JOIN b.category WHERE b.category.id = :categoryId")
