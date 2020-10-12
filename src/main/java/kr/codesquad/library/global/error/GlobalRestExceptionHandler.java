@@ -72,7 +72,7 @@ public class GlobalRestExceptionHandler {
         ExceptionView exceptionView = e.getExceptionView();
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName(exceptionView.getViewName());
-        modelAndView.setStatus(HttpStatus.FORBIDDEN);
+        modelAndView.setStatus(HttpStatus.BAD_REQUEST);
         return modelAndView;
     }
 
