@@ -1,4 +1,4 @@
-package kr.codesquad.library.admin.domain.account.response;
+package kr.codesquad.library.admin.domain.account;
 
 import kr.codesquad.library.domain.account.Account;
 import kr.codesquad.library.domain.account.LibraryRole;
@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 
 @Getter
-public class AccountSummaryResponse {
+public class AccountSummary {
 
     private final Long id;
     private final Long oauthId;
@@ -15,7 +15,7 @@ public class AccountSummaryResponse {
     private final LibraryRole role;
 
     @Builder
-    private AccountSummaryResponse(Long id, Long oauthId, String name, String email, LibraryRole role) {
+    private AccountSummary(Long id, Long oauthId, String name, String email, LibraryRole role) {
         this.id = id;
         this.oauthId = oauthId;
         this.name = name;
@@ -23,8 +23,8 @@ public class AccountSummaryResponse {
         this.role = role;
     }
 
-    public static AccountSummaryResponse from(Account account) {
-        return AccountSummaryResponse.builder()
+    public static AccountSummary from(Account account) {
+        return AccountSummary.builder()
                                      .id(account.getId())
                                      .oauthId(account.getOauthId())
                                      .name(account.getName())

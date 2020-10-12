@@ -1,9 +1,11 @@
 package kr.codesquad.library.admin.domain.book.request;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor
 @Getter
 public class BookMoveRequest {
 

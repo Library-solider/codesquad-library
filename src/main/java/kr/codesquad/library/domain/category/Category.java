@@ -40,6 +40,10 @@ public class Category {
         return this;
     }
 
+    public boolean hasAnyBooks() {
+        return !books.isEmpty();
+    }
+
     public static Category from(String title) {
         return new Category(title);
     }

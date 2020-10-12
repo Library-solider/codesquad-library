@@ -3,7 +3,7 @@ package kr.codesquad.library.admin.service;
 import kr.codesquad.library.admin.domain.book.BookAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.request.BookMoveRequest;
-import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.book.response.BookSummaryResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookData;
@@ -29,6 +29,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Transactional
@@ -52,7 +53,7 @@ class BookAdminServiceTest {
                                 int totalPageGroups, int currentPageGroup, int startPageOfPageGroup,
                                 int endPageOfPageGroup, int endPageOfPreviousPageGroup, int startPageOfNextPageGroup) {
         //when
-        BooksWithPagingResponse books = bookAdminService.findAllBooks(page);
+        BookSummaryResponse books = bookAdminService.findAllBooks(page);
         List<BookSummary> bookSummaries = books.getBookSummaries();
         PagingProperties pagingProperties = books.getPagingProperties();
 
@@ -181,6 +182,24 @@ class BookAdminServiceTest {
                 () -> assertThat(newCategoryBooks.size()).isEqualTo(bookCountAfterChange),
                 () -> assertThat(newBookcaseBooks.size()).isEqualTo(bookCountAfterChange)
         );
+    }
+
+    @CsvSource({"458"})
+    @ParameterizedTest
+    public void 특정_도서를_삭제한다(Long bookId) {
+        //when
+        List<Book> books = bookAdminRepository.findAll();
+        int oldCount = books.size();
+
+        bookAdminService.deleteBook(bookId);
+
+        List<Book> newBooks = bookAdminRepository.findAll();
+        int newCount = newBooks.size();
+
+        //then
+        assertThrows(BookNotFoundException.class,
+                () -> bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new));
+        assertThat(oldCount).isEqualTo(newCount + 1);
     }
 
     static Stream<Arguments> provideBookMoveRequestSource() {

@@ -69,14 +69,10 @@ public class CategoryAdminService {
     @Transactional
     public void deleteCategory(Long categoryId) {
         Category category = categoryAdminRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
-        List<Book> books = category.getBooks();
-        if (hasAnyBooks(books)) { throw new DeleteEntityDeniedException(); }
+        if (category.hasAnyBooks()) { throw new DeleteEntityDeniedException(); }
         categoryAdminRepository.delete(category);
     }
 
-    private boolean hasAnyBooks(List<Book> books) {
-        return !books.isEmpty();
-    }
 
     @Transactional
     public Long updateCategoryTitle(Long categoryId, String title) {

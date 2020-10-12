@@ -1,7 +1,8 @@
 package kr.codesquad.library.admin.controller;
 
+import kr.codesquad.library.admin.domain.account.response.AccountDataResponse;
 import kr.codesquad.library.admin.domain.account.response.AccountDetailsResponse;
-import kr.codesquad.library.admin.domain.account.response.AccountSummaryResponse;
+import kr.codesquad.library.admin.domain.account.AccountSummary;
 import kr.codesquad.library.admin.service.AccountAdminService;
 import kr.codesquad.library.domain.account.LibraryRole;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,20 @@ public class AccountAdminController {
     private final AccountAdminService accountAdminService;
 
     @GetMapping("")
-    public String findAll(Model model) {
-        List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccounts();
-        model.addAttribute("accountSummaries", accountSummaries);
+    public String findAll(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+        AccountDataResponse accounts = accountAdminService.findAllAccounts(page);
+        model.addAttribute("accountSummaries", accounts.getAccountSummaries());
+        model.addAttribute("pagingProperties", accounts.getPagingProperties());
+        return "account/all-accounts";
+    }
+
+    @GetMapping("/search")
+    public String searchAccount(@RequestParam("name") String name,
+                                @RequestParam(value = "page", defaultValue = "1") int page,
+                                Model model) {
+        AccountDataResponse accounts = accountAdminService.searchAccounts(page, name);
+        model.addAttribute("accountSummaries", accounts.getAccountSummaries());
+        model.addAttribute("pagingProperties", accounts.getPagingProperties());
         return "account/all-accounts";
     }
 
@@ -37,15 +49,14 @@ public class AccountAdminController {
 
     @GetMapping("/guest")
     public String guestAccounts(Model model) {
-        List<AccountSummaryResponse> accountSummaries = accountAdminService.findAllAccountsByRole(LibraryRole.GUEST);
+        List<AccountSummary> accountSummaries = accountAdminService.findAllAccountsByRole(LibraryRole.GUEST);
         model.addAttribute("accountSummaries", accountSummaries);
         return "account/guest-accounts";
     }
 
     @PostMapping("/role")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
     public void authorizeAccount(@RequestBody List<Long> accountIds) {
-        log.debug("accountIds ::: {}", accountIds);
         accountAdminService.changeAllAccountRoleById(accountIds, LibraryRole.USER);
     }
 }

@@ -27,10 +27,10 @@
                     </div>
                 </a>
                 <ul class="navigation">
-                    <li class="navigation__item"><a href="#">공지사항 관리</a></li>
-                    <li class="navigation__item"><a th:href="@{/admin/books}">도서 관리</a></li>
                     <li class="navigation__item"><a th:href="@{/admin/users}">회원 관리</a></li>
-                    <li class="navigation__item navigation__item--clicked"><a th:href="@{/admin/category}">카테고리 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/books}">도서 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/category}">카테고리 관리</a></li>
+                    <li class="navigation__item navigation__item--clicked"><a th:href="@{/admin/bookcase}">도서위치 관리</a></li>
                 </ul>
                 <div class="user-info">
                     <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image">
@@ -38,7 +38,7 @@
                 </div>
             </div>
             <ul class="sub-navigation">
-                <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/category}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">카테고리 목록</span></a></li>
+                <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/bookcase}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">도서위치 목록</span></a></li>
             </ul>
         </div>
     </header>

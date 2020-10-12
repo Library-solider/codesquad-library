@@ -4,7 +4,7 @@ import kr.codesquad.library.admin.domain.book.BookAdminRepository;
 import kr.codesquad.library.admin.domain.book.request.BookMoveRequest;
 import kr.codesquad.library.admin.domain.book.response.BookDetailResponse;
 import kr.codesquad.library.admin.domain.book.BookSummary;
-import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.book.response.BookSummaryResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookData;
@@ -22,20 +22,14 @@ import kr.codesquad.library.global.error.exception.domain.BookcaseNotFoundExcept
 import kr.codesquad.library.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.MediaType;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,14 +49,14 @@ public class BookAdminService {
     private final RestTemplateConfig restTemplateConfig;
     private final InterparkProperties interparkProperties;
 
-    public BooksWithPagingResponse findAllBooks(int page) {
-        Page<Book> books = bookAdminRepository.findAllWithCategory(PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE));
+    public BookSummaryResponse findAllBooks(int page) {
+        Page<Book> books = bookAdminRepository.findAllFetch(PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE));
         List<Book> bookEntities = books.getContent();
         List<BookSummary> bookSummaries = bookEntities.stream()
                                                       .map(BookSummary::from)
                                                       .collect((Collectors.toList()));
         PagingProperties pagingProperties = PagingProperties.from(books);
-        return BooksWithPagingResponse.of(bookSummaries, pagingProperties);
+        return BookSummaryResponse.of(bookSummaries, pagingProperties);
     }
 
 
@@ -73,7 +67,6 @@ public class BookAdminService {
         Bookcase bookcase = bookcaseAdminRepository.findById(bookFormRequest.getBookcaseId())
                                                    .orElseThrow(BookcaseNotFoundException::new);
         Book newBook = bookAdminRepository.save(Book.of(bookFormRequest, category, bookcase));
-        log.debug("New Book ID ::: {}", newBook.getId());
         return newBook.getId();
     }
 
@@ -107,12 +100,10 @@ public class BookAdminService {
     public void changeGroup(BookMoveRequest bookMoveRequest) {
         List<Book> books = bookAdminRepository.findAllByIdIn(bookMoveRequest.getBookIds());
         Optional.ofNullable(bookMoveRequest.getCategoryId()).ifPresent(categoryId -> {
-            log.debug("Come To Map Category :::");
             Category category = categoryAdminRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
             books.forEach(book -> book.changeCategory(category));
         });
         Optional.ofNullable(bookMoveRequest.getBookcaseId()).ifPresent(bookcaseId -> {
-            log.debug("Come To Map Bookcase :::");
             Bookcase bookcase = bookcaseAdminRepository.findById(bookcaseId).orElseThrow(BookcaseNotFoundException::new);
             books.forEach(book -> book.changeBookcase(bookcase));
         });
@@ -126,6 +117,22 @@ public class BookAdminService {
                                   .stream()
                                   .findFirst()
                                   .orElseGet(BookData::new);
+    }
+
+    @Transactional
+    public void deleteBook(Long bookId) {
+        bookAdminRepository.deleteById(bookId);
+    }
+
+    public BookSummaryResponse searchBooks(int page, String title) {
+        PageRequest pageRequest = PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE);
+        Page<Book> books = bookAdminRepository.findAllByTitleContainingIgnoreCase(pageRequest, title);
+        PagingProperties pagingProperties = PagingProperties.from(books);
+        List<Book> bookEntities = books.getContent();
+        List<BookSummary> bookSummaries = bookEntities.stream()
+                                                      .map(BookSummary::from)
+                                                      .collect(Collectors.toList());
+        return BookSummaryResponse.of(bookSummaries, pagingProperties);
     }
 
     private BookWithRequiredFormDataResponse createRequiredFormData(BookData bookData) {

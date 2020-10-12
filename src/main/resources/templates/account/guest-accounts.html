@@ -27,14 +27,14 @@
                     </div>
                 </a>
                 <ul class="navigation">
-                    <li class="navigation__item"><a href="#">공지사항 관리</a></li>
-                    <li class="navigation__item"><a th:href="@{/admin/books}">도서 관리</a></li>
                     <li class="navigation__item navigation__item--clicked"><a th:href="@{/admin/users}">회원 관리</a></li>
-                    <li class="navigation__item"><a href="#">대여 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/books}">도서 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/category}">카테고리 관리</a></li>
+                    <li class="navigation__item"><a th:href="@{/admin/bookcase}">도서위치 관리</a></li>
                 </ul>
                 <div class="user-info">
                     <img th:src="@{/images/logo.png}" alt="USER IMAGE" class="user-info__image">
-                    <span class="user-info__name">USER_NAME</span>
+                    <span class="user-info__name">ADMIN_USER</span>
                 </div>
             </div>
             <ul class="sub-navigation">
@@ -47,13 +47,6 @@
         <div class="container">
             <div class="main-contents">
                 <h2 class="main-contents__navigation-title">승인 대기 목록</h2>
-                <form class="search-form">
-                    <div class="search-form__box">
-                        <input type="search" class="search-form__bar" placeholder="검색어를 입력하세요."/>
-                        <i class="fas fa-search search-form__icon"></i>
-                    </div>
-                </form>
-<!--                <form>-->
                 <table class="authorization-table">
                     <thead>
                         <tr>
@@ -61,8 +54,8 @@
                             <th class="authorization-table__column-name">OAuth ID</th>
                             <th class="authorization-table__column-name">이름</th>
                             <th class="authorization-table__column-name">이메일</th>
-                            <th class="authorization-table__column-name">등급</th>
-                            <th class="authorization-table__column-name">선택</th>
+                            <th class="authorization-table__column-name">권한</th>
+                            <th class="authorization-table__column-name"><input type="checkbox" class="data-table__checkbox js jsAllCheckBox"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -72,12 +65,11 @@
                             <td th:text="${accountSummary.name}" class="authorization-table__row jsData"></td>
                             <td th:text="${accountSummary.email}" class="authorization-table__row jsData"></td>
                             <td th:text="${accountSummary.role}" class="authorization-table__row jsData"></td>
-                            <td class="authorization-table__row"><input type="checkbox" class="data-table__checkbox jsAccountCheckBox" name="accountId"/></td>
+                            <td class="authorization-table__row"><input type="checkbox" class="data-table__checkbox jsAccountCheckBox jsNormalCheckBox" name="accountId"/></td>
                         </tr>
                     </tbody>
                 </table>
                 <button type="button" class="authorization-button jsAuthorizationButton">권한 승인</button>
-<!--                </form>-->
             </div>
         </div>
     </div>
@@ -88,6 +80,6 @@
         </div>
     </footer>
     <script type="text/javascript" th:src="@{/js/ajaxRequest.js}"></script>
-    <script type="text/javascript" th:src="@{/js/accountDataTableHandler.js}"></script>
+    <script type="text/javascript" th:src="@{/js/checkBoxDataTableHandler.js}"></script>
 </body>
 </html>
