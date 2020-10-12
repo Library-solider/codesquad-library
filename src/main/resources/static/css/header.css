@@ -94,6 +94,7 @@
 
 /* User Information */
 .user-info {
+    visibility: hidden;
     display: flex;
     justify-content: flex-end;
     align-items: center;
