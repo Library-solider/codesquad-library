@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static kr.codesquad.library.admin.common.ConstantsCoveringMagicNumber.ADMIN_PAGE_SIZE;
+import static kr.codesquad.library.admin.common.ConstantsCoveringMagicNumber.MINIMUM_PAGE_NUMBER;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -47,7 +48,7 @@ public class CategoryAdminService {
 
     public CategoryDataResponse findCategoryDataById(Long categoryId, int page) {
         Category category = categoryAdminRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
-        Page<Book> books = bookAdminRepository.findAllByCategoryId(categoryId, PageRequest.of(page, ADMIN_PAGE_SIZE));
+        Page<Book> books = bookAdminRepository.findAllByCategoryId(categoryId, PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE));
         List<Category> categories = categoryAdminRepository.findAll();
         List<Bookcase> bookcases = bookcaseAdminRepository.findAll();
         return CategoryDataResponse.builder()
@@ -79,5 +80,10 @@ public class CategoryAdminService {
         Category category = categoryAdminRepository.findById(categoryId).orElseThrow(CategoryNotFoundException::new);
         category.changeTitle(title);
         return category.getId();
+    }
+
+    private int validatePageNumber(int page) {
+        if (page < MINIMUM_PAGE_NUMBER) { page = MINIMUM_PAGE_NUMBER; }
+        return page - 1;
     }
 }
