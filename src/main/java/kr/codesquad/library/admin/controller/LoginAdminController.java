@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/admin")
-public class AuthAdminController {
+public class LoginAdminController {
 
     @GetMapping("")
     public String access() {
