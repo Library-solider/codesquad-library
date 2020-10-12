@@ -2,7 +2,7 @@ package kr.codesquad.library.admin.controller;
 
 import kr.codesquad.library.admin.domain.book.request.BookMoveRequest;
 import kr.codesquad.library.admin.domain.book.response.BookDetailResponse;
-import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.book.response.BookSummaryResponse;
 import kr.codesquad.library.admin.domain.book.response.BookWithRequiredFormDataResponse;
 import kr.codesquad.library.admin.domain.book.request.BookFormRequest;
 import kr.codesquad.library.admin.service.BookAdminService;
@@ -11,8 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -24,7 +22,17 @@ public class BookAdminController {
 
     @GetMapping("")
     public String findAll(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
-        BooksWithPagingResponse books = bookAdminService.findAllBooks(page);
+        BookSummaryResponse books = bookAdminService.findAllBooks(page);
+        model.addAttribute("bookSummaries", books.getBookSummaries());
+        model.addAttribute("pagingProperties", books.getPagingProperties());
+        return "book/books-all";
+    }
+
+    @GetMapping("/search")
+    public String searchBooks(@RequestParam("title") String name,
+                              @RequestParam(value = "page", defaultValue = "1") int page,
+                              Model model) {
+        BookSummaryResponse books = bookAdminService.searchBooks(page, name);
         model.addAttribute("bookSummaries", books.getBookSummaries());
         model.addAttribute("pagingProperties", books.getPagingProperties());
         return "book/books-all";

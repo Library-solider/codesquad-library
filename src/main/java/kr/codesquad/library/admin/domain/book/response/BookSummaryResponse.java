@@ -7,17 +7,17 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class BooksWithPagingResponse {
+public class BookSummaryResponse {
 
     private final List<BookSummary> bookSummaries;
     private final PagingProperties pagingProperties;
 
-    private BooksWithPagingResponse(List<BookSummary> bookSummaries, PagingProperties pagingProperties) {
+    private BookSummaryResponse(List<BookSummary> bookSummaries, PagingProperties pagingProperties) {
         this.bookSummaries = bookSummaries;
         this.pagingProperties = pagingProperties;
     }
 
-    public static BooksWithPagingResponse of(List<BookSummary> bookSummaries, PagingProperties pagingProperties) {
-        return new BooksWithPagingResponse(bookSummaries, pagingProperties);
+    public static BookSummaryResponse of(List<BookSummary> bookSummaries, PagingProperties pagingProperties) {
+        return new BookSummaryResponse(bookSummaries, pagingProperties);
     }
 }

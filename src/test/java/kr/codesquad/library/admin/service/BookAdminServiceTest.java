@@ -3,7 +3,7 @@ package kr.codesquad.library.admin.service;
 import kr.codesquad.library.admin.domain.book.BookAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookSummary;
 import kr.codesquad.library.admin.domain.book.request.BookMoveRequest;
-import kr.codesquad.library.admin.domain.book.response.BooksWithPagingResponse;
+import kr.codesquad.library.admin.domain.book.response.BookSummaryResponse;
 import kr.codesquad.library.admin.common.PagingProperties;
 import kr.codesquad.library.admin.domain.bookcase.BookcaseAdminRepository;
 import kr.codesquad.library.admin.domain.book.BookData;
@@ -53,7 +53,7 @@ class BookAdminServiceTest {
                                 int totalPageGroups, int currentPageGroup, int startPageOfPageGroup,
                                 int endPageOfPageGroup, int endPageOfPreviousPageGroup, int startPageOfNextPageGroup) {
         //when
-        BooksWithPagingResponse books = bookAdminService.findAllBooks(page);
+        BookSummaryResponse books = bookAdminService.findAllBooks(page);
         List<BookSummary> bookSummaries = books.getBookSummaries();
         PagingProperties pagingProperties = books.getPagingProperties();
 

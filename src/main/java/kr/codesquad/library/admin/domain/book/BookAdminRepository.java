@@ -25,4 +25,6 @@ public interface BookAdminRepository extends JpaRepository<Book, Long> {
     Page<Book> findAllByBookcaseId(@Param("bookcaseId") Long bookcaseId, Pageable pageable);
 
     List<Book> findAllByIdIn(List<Long> bookIds);
+
+    Page<Book> findAllByTitleContainingIgnoreCase(Pageable pageable, String title);
 }
