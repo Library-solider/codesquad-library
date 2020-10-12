@@ -30,6 +30,16 @@ public class AccountAdminController {
         return "account/all-accounts";
     }
 
+    @GetMapping("/search")
+    public String searchAccount(@RequestParam("name") String name,
+                                @RequestParam(value = "page", defaultValue = "1") int page,
+                                Model model) {
+        AccountDataResponse accounts = accountAdminService.searchAccounts(page, name);
+        model.addAttribute("accountSummaries", accounts.getAccountSummaries());
+        model.addAttribute("pagingProperties", accounts.getPagingProperties());
+        return "account/all-accounts";
+    }
+
     @GetMapping("/{accountId}")
     public String findDetails(@PathVariable Long accountId, Model model) {
         AccountDetailsResponse accountDetails = accountAdminService.findAccountDetails(accountId);

@@ -55,6 +55,17 @@ public class AccountAdminService {
         return AccountDetailsResponse.from(account);
     }
 
+    public AccountDataResponse searchAccounts(int page, String name) {
+        PageRequest pageRequest = PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE);
+        Page<Account> accounts = accountAdminRepository.findAllByNameContainingIgnoreCase(pageRequest, name);
+        PagingProperties pagingProperties = PagingProperties.from(accounts);
+        List<Account> accountEntities = accounts.getContent();
+        List<AccountSummary> accountSummaries = accountEntities.stream()
+                                                               .map(AccountSummary::from)
+                                                               .collect(Collectors.toList());
+        return AccountDataResponse.of(accountSummaries, pagingProperties);
+    }
+
     private int validatePageNumber(int page) {
         if (page < MINIMUM_PAGE_NUMBER) { page = MINIMUM_PAGE_NUMBER; }
         return page - 1;
