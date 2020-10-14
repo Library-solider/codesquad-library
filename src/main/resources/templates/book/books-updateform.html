@@ -77,14 +77,14 @@
                         <label for="category">카테고리</label>
                         <select id="category" name="categoryId" th:object="${categories}" required>
                             <option label="도서의 카테고리를 선택 해주세요."></option>
-                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}"></option>
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.title}" th:selected="${category.id==bookData.categoryId}"></option>
                         </select>
                     </div>
                     <div class="select-box">
                         <label for="bookcase">도서 위치</label>
                         <select id="bookcase" name="bookcaseId" th:object="${bookcases}" required>
                             <option label="도서 위치를 선택 해주세요."></option>
-                            <option th:each="bookcase : ${bookcases}" th:value="${bookcase.id}" th:text="${bookcase.location}"></option>
+                            <option th:each="bookcase : ${bookcases}" th:value="${bookcase.id}" th:text="${bookcase.location}" th:selected="${bookcase.id==bookData.bookcaseId}"></option>
                         </select>
                     </div>
                     <div class="textarea-box">

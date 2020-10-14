@@ -55,7 +55,7 @@
                             <th class="authorization-table__column-name">이름</th>
                             <th class="authorization-table__column-name">이메일</th>
                             <th class="authorization-table__column-name">권한</th>
-                            <th class="authorization-table__column-name"><input type="checkbox" class="data-table__checkbox js jsAllCheckBox"/></th>
+                            <th class="authorization-table__column-name"><input type="checkbox" class="data-table__checkbox account-table__checkbox jsAllCheckBox"/></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -65,7 +65,7 @@
                             <td th:text="${accountSummary.name}" class="authorization-table__row jsData"></td>
                             <td th:text="${accountSummary.email}" class="authorization-table__row jsData"></td>
                             <td th:text="${accountSummary.role}" class="authorization-table__row jsData"></td>
-                            <td class="authorization-table__row"><input type="checkbox" class="data-table__checkbox jsAccountCheckBox jsNormalCheckBox" name="accountId"/></td>
+                            <td class="authorization-table__row"><input type="checkbox" class="data-table__checkbox account-table__checkbox jsAccountCheckBox jsNormalCheckBox" name="accountId"/></td>
                         </tr>
                     </tbody>
                 </table>

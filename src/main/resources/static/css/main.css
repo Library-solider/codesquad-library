@@ -29,6 +29,8 @@
 /* Search Form */
 .search-form {
     margin-top: 30px;
+    display: flex;
+    justify-content: center;
 }
 
 .search-form .search-form__box {

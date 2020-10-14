@@ -3,6 +3,8 @@ package kr.codesquad.library.admin.domain.book;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import kr.codesquad.library.domain.book.Book;
+import kr.codesquad.library.domain.bookcase.Bookcase;
+import kr.codesquad.library.domain.category.Category;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,9 +26,12 @@ public class BookData {
     @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate publicationDate;
 
+    private Long categoryId;
+    private Long bookcaseId;
+
     @Builder
     private BookData(String title, String description, String author, String publisher,
-                     String isbn, String imageUrl, LocalDate publicationDate) {
+                     String isbn, String imageUrl, LocalDate publicationDate, Long categoryId, Long bookcaseId) {
         this.title = title;
         this.description = description;
         this.author = author;
@@ -34,9 +39,11 @@ public class BookData {
         this.isbn = isbn;
         this.imageUrl = imageUrl;
         this.publicationDate = publicationDate;
+        this.categoryId = categoryId;
+        this.bookcaseId = bookcaseId;
     }
 
-    public static BookData from(Book book) {
+    public static BookData of(Book book, Category category, Bookcase bookcase) {
         return BookData.builder()
                        .title(book.getTitle())
                        .description(book.getDescription())
@@ -45,6 +52,8 @@ public class BookData {
                        .isbn(book.getIsbn())
                        .imageUrl(book.getImageUrl())
                        .publicationDate(book.getPublicationDate())
+                       .categoryId(category.getId())
+                       .bookcaseId(bookcase.getId())
                        .build();
     }
 }

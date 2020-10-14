@@ -87,7 +87,9 @@ public class BookAdminService {
 
     public BookWithRequiredFormDataResponse findBookWithRequiredFormDataByBookId(Long bookId) {
         Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
-        BookData bookData = BookData.from(book);
+        Category assignedCategory = book.getCategory();
+        Bookcase assignedBookcase = book.getBookcase();
+        BookData bookData = BookData.of(book, assignedCategory, assignedBookcase);
         return createRequiredFormData(bookData);
     }
 
