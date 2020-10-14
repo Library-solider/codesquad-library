@@ -28,6 +28,15 @@
     width: 120px;
 }
 
+/* Account Table Checkbox */
+.account-table__checkbox {
+    width: 15px;
+    height: 15px;
+    line-height: 40px;
+    vertical-align: middle;
+    margin-top: -1px;
+}
+
 /* Account Table Row */
 .account-table .account-table__row {
     height: 40px;
