@@ -34,7 +34,7 @@ public class BookcaseAdminController {
     public String findDetail(@PathVariable Long bookcaseId,
                              @RequestParam(value = "page", defaultValue = "1") int page,
                              Model model) {
-        BookcaseDataResponse bookcaseData = bookcaseAdminService.findBookcaseDataById(bookcaseId, page - 1);
+        BookcaseDataResponse bookcaseData = bookcaseAdminService.findBookcaseDataById(bookcaseId, page);
         model.addAttribute("bookcaseData", bookcaseData.getBookcase());
         model.addAttribute("books", bookcaseData.getBooks());
         model.addAttribute("categories", bookcaseData.getCategories());
