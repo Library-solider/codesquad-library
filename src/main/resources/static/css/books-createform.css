@@ -112,6 +112,7 @@
     opacity: 0.5;
 }
 .book-form input[type=text],
+.book-form input[type=url],
 .book-form input[type=date] {
     width: inherit;
     height: 30px;
@@ -140,6 +141,7 @@
     outline: none;
 }
 .book-form input[type=text]:hover,
+.book-form input[type=url]:hover,
 .book-form input[type=date]:hover,
 .book-form select:hover,
 .book-form textarea:hover {
