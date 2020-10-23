@@ -35,7 +35,8 @@ public class BookAdminController {
         BookSummaryResponse books = bookAdminService.searchBooks(page, name);
         model.addAttribute("bookSummaries", books.getBookSummaries());
         model.addAttribute("pagingProperties", books.getPagingProperties());
-        return "book/books-all";
+        model.addAttribute("searchTitle", name);
+        return "book/books-searchall";
     }
 
     @PostMapping("")
