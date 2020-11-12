@@ -21,4 +21,7 @@ public class LoginAdminController {
 
     @GetMapping("/login/failure")
     public String accessFailure() { return "access-failure"; }
+
+    @GetMapping("/login/request")
+    public String loginRequest() { return "login-request"; }
 }
