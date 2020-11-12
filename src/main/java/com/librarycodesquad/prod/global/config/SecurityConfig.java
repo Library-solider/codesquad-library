@@ -6,6 +6,7 @@ import com.librarycodesquad.prod.global.config.oauth.security.CustomOAuth2UserSe
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,7 +16,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @RequiredArgsConstructor
 @EnableWebSecurity
-@Order(1)
+@Order(2)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomOAuth2UserService customOAuth2UserService;
@@ -50,16 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(authenticationEntryPoint)
                 .accessDeniedHandler(accessDeniedHandler);
 
-        http.antMatcher("/v1/**")
-                .authorizeRequests()
-                .antMatchers("/v1/main", "/v1/category/**", "/v1/search/**", "/v1/oauth2/redirect").permitAll()
-                .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER")
-                .anyRequest().authenticated();
+        http.antMatcher("/**")
+            .authorizeRequests()
+            .antMatchers("/v1/main", "/v1/category/**", "/v1/search/**").permitAll()
+            .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
+            .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER")
+            .anyRequest().authenticated();
 
         http.oauth2Login()
                 .authorizationEndpoint()
-                .baseUri("/v1/oauth2/redirect")
                 .and()
                 .defaultSuccessUrl(redirectUrl, true)
                 .userInfoEndpoint()

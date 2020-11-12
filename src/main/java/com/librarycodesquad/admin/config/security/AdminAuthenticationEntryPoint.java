@@ -8,16 +8,15 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RequiredArgsConstructor
-@Component("adminAuthenticationEntryPoint")
+@Component
 public class AdminAuthenticationEntryPoint implements AuthenticationEntryPoint {
-
-    private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
-                         AuthenticationException authException) {
-        handlerExceptionResolver.resolveException(request, response, null, authException);
+                         AuthenticationException authException) throws IOException {
+        response.sendRedirect("/admin/login/request");
     }
 }

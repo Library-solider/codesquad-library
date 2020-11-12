@@ -5,6 +5,7 @@ import com.librarycodesquad.admin.config.security.AdminAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -14,12 +15,12 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @RequiredArgsConstructor
-@EnableWebSecurity
-@Order(2)
+@Configuration
+@Order(1)
 public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final AdminAuthenticationEntryPoint authenticationEntryPoint;
-    private final AdminAccessDeniedHandler accessDeniedHandler;
+    private final AdminAuthenticationEntryPoint adminAuthenticationEntryPoint;
+    private final AdminAccessDeniedHandler adminAccessDeniedHandler;
 
     @Override
     public void configure(WebSecurity web) {
@@ -42,11 +43,12 @@ public class AdminSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .headers().frameOptions().disable();
         http.exceptionHandling()
-                .accessDeniedPage("/templates/access-failure");
+                .authenticationEntryPoint(adminAuthenticationEntryPoint)
+                .accessDeniedHandler(adminAccessDeniedHandler);
 
         http.antMatcher("/admin/**")
                 .authorizeRequests()
-                .antMatchers("/admin", "/admin/login/failure").permitAll()
+                .antMatchers("/admin", "/admin/login/failure", "/admin/login/request").permitAll()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .anyRequest().authenticated();
 

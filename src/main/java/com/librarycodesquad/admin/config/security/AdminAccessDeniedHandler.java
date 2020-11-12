@@ -8,16 +8,15 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RequiredArgsConstructor
-@Component("adminAccessDeniedHandler")
+@Component
 public class AdminAccessDeniedHandler implements AccessDeniedHandler {
-
-    private final HandlerExceptionResolver handlerExceptionResolver;
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response,
-                       AccessDeniedException accessDeniedException) {
-        handlerExceptionResolver.resolveException(request, response, null, accessDeniedException);
+                       AccessDeniedException accessDeniedException) throws IOException {
+        response.sendRedirect("/admin/login/request");
     }
 }
