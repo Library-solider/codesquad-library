@@ -40,7 +40,7 @@ logging:
     org.hibernate.SQL: debug
 
 app:
-  redirectUrl: http://localhost:8080/admin/accounts/guest
+  redirectUrl: http://localhost:3000
 
 ---
 spring:
