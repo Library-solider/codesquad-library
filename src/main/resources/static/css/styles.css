@@ -16,6 +16,7 @@
 @import "categories-books.css";
 @import "bookcases-all.css";
 @import "delete-denied.css";
+@import "login-redirect.css";
 
 /* Component */
 @import "authorization-table.css";
