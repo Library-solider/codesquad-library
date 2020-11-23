@@ -42,4 +42,9 @@ public class AccountService {
         Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
         return AccountProfileResponse.from(account);
     }
+
+    public boolean checkRole(Long accountId) {
+        Account account = accountRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
+        return account.isUserRole();
+    }
 }

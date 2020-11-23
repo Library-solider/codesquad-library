@@ -68,5 +68,9 @@ public class Account {
     public String getRoleKey() {
         return libraryRole.getKey();
     }
+
+    public boolean isUserRole() {
+        return libraryRole == LibraryRole.USER;
+    }
 }
 
