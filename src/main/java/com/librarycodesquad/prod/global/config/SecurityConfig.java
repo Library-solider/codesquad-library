@@ -6,7 +6,6 @@ import com.librarycodesquad.prod.global.config.oauth.security.CustomOAuth2UserSe
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -52,12 +51,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(accessDeniedHandler);
 
         http.antMatcher("/**")
-            .authorizeRequests()
-            .antMatchers("/v1/main", "/v1/category/**", "/v1/search/**").permitAll()
-            .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
-            .antMatchers(HttpMethod.POST, "/v1/books/**").hasRole("USER")
-            .antMatchers(HttpMethod.PUT, "/v1/books/**").hasRole("USER")
-            .anyRequest().authenticated();
+                .authorizeRequests()
+                .antMatchers("/v1/main", "/v1/category/**", "/v1/search/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/v1/books/**").hasRole("USER")
+                .antMatchers(HttpMethod.PUT, "/v1/books/**").hasRole("USER")
+                .anyRequest().authenticated();
 
         http.oauth2Login()
                 .authorizationEndpoint()
@@ -65,5 +64,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl(redirectUrl, true)
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
+        http.logout()
+                .logoutUrl("/v1/users/logout")
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutSuccessUrl(redirectUrl)
+                .deleteCookies("JSESSIONID").permitAll();
     }
 }
