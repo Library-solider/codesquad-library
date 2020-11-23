@@ -34,4 +34,9 @@ public class AccountController {
     public ApiResult<AccountProfileResponse> getProfile(@LoginAccount AccountPrincipal loginAccount) {
         return OK(accountService.getProfile(loginAccount.getId()));
     }
+
+    @GetMapping("/role")
+    public ApiResult<Boolean> checkAccountRole(@LoginAccount AccountPrincipal loginAccount) {
+        return OK(accountService.checkRole(loginAccount.getId()));
+    }
 }
