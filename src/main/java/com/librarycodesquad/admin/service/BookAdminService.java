@@ -7,10 +7,14 @@ import com.librarycodesquad.admin.domain.book.request.BookMoveRequest;
 import com.librarycodesquad.admin.domain.book.response.BookDetailResponse;
 import com.librarycodesquad.admin.domain.book.response.BookSummaryResponse;
 import com.librarycodesquad.admin.domain.book.response.BookWithRequiredFormDataResponse;
+import com.librarycodesquad.admin.domain.book.RentalBookSummary;
+import com.librarycodesquad.admin.domain.book.response.RentalBookAdminResponse;
 import com.librarycodesquad.admin.domain.bookcase.BookcaseAdminRepository;
 import com.librarycodesquad.admin.domain.category.CategoryAdminRepository;
+import com.librarycodesquad.admin.domain.rental.RentalAdminRepository;
 import com.librarycodesquad.prod.domain.book.Book;
 import com.librarycodesquad.prod.domain.category.Category;
+import com.librarycodesquad.prod.domain.rental.Rental;
 import com.librarycodesquad.prod.global.config.RestTemplateConfig;
 import com.librarycodesquad.prod.global.config.properties.InterparkProperties;
 import com.librarycodesquad.prod.global.error.exception.domain.BookNotFoundException;
@@ -35,6 +39,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.librarycodesquad.admin.common.ConstantsCoveringMagicNumber.ADMIN_PAGE_SIZE;
+import static com.librarycodesquad.admin.common.ConstantsCoveringMagicNumber.MINIMUM_PAGE_NUMBER;
+
 @RequiredArgsConstructor
 @Slf4j
 @Service
@@ -44,17 +51,28 @@ public class BookAdminService {
     private final BookAdminRepository bookAdminRepository;
     private final CategoryAdminRepository categoryAdminRepository;
     private final BookcaseAdminRepository bookcaseAdminRepository;
+    private final RentalAdminRepository rentalAdminRepository;
     private final RestTemplateConfig restTemplateConfig;
     private final InterparkProperties interparkProperties;
 
     public BookSummaryResponse findAllBooks(int page) {
-        Page<Book> books = bookAdminRepository.findAllFetch(PageRequest.of(validatePageNumber(page), ConstantsCoveringMagicNumber.ADMIN_PAGE_SIZE));
+        Page<Book> books = bookAdminRepository.findAllFetch(PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE));
         List<Book> bookEntities = books.getContent();
         List<BookSummary> bookSummaries = bookEntities.stream()
                                                       .map(BookSummary::from)
                                                       .collect((Collectors.toList()));
         PagingProperties pagingProperties = PagingProperties.from(books);
         return BookSummaryResponse.of(bookSummaries, pagingProperties);
+    }
+
+    public RentalBookAdminResponse findRentalBooks(int page) {
+        Page<Rental> rentals = rentalAdminRepository
+                .findAllByIsReturnedFalse(PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE));
+        List<RentalBookSummary> rentalBooks = rentals.stream()
+                                                       .map(RentalBookSummary::from)
+                                                       .collect(Collectors.toList());
+        PagingProperties pagingProperties = PagingProperties.from(rentals);
+        return RentalBookAdminResponse.of(rentalBooks, pagingProperties);
     }
 
 
@@ -125,7 +143,7 @@ public class BookAdminService {
     }
 
     public BookSummaryResponse searchBooks(int page, String title) {
-        PageRequest pageRequest = PageRequest.of(validatePageNumber(page), ConstantsCoveringMagicNumber.ADMIN_PAGE_SIZE);
+        PageRequest pageRequest = PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE);
         Page<Book> books = bookAdminRepository.findAllByTitleContainingIgnoreCase(pageRequest, title);
         PagingProperties pagingProperties = PagingProperties.from(books);
         List<Book> bookEntities = books.getContent();
@@ -142,7 +160,9 @@ public class BookAdminService {
     }
 
     private int validatePageNumber(int page) {
-        if (page < ConstantsCoveringMagicNumber.MINIMUM_PAGE_NUMBER) { page = ConstantsCoveringMagicNumber.MINIMUM_PAGE_NUMBER; }
+        if (page < MINIMUM_PAGE_NUMBER) {
+            page = MINIMUM_PAGE_NUMBER;
+        }
         return page - 1;
     }
 
