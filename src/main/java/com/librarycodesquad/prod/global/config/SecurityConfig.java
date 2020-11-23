@@ -55,7 +55,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/v1/main", "/v1/category/**", "/v1/search/**").permitAll()
             .antMatchers(HttpMethod.GET, "/v1/books/**").permitAll()
-            .antMatchers(HttpMethod.POST, "/v1/books/**").hasAnyRole("USER")
+            .antMatchers(HttpMethod.POST, "/v1/books/**").hasRole("USER")
+            .antMatchers(HttpMethod.PUT, "/v1/books/**").hasRole("USER")
             .anyRequest().authenticated();
 
         http.oauth2Login()
