@@ -110,8 +110,8 @@ public class BookAdminService {
 
     public BookDetailResponse findBookDetail(Long bookId) {
         Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
-        List<Rental> rentals = rentalAdminRepository.findAllByBookIdAndIsReturnedFalse(bookId);
-        return BookDetailResponse.of(book, rentals);
+        Rental rental = rentalAdminRepository.findByBookIdAndIsReturnedFalse(bookId).orElseGet(Rental::new);
+        return BookDetailResponse.of(book, rental);
     }
 
     @Transactional

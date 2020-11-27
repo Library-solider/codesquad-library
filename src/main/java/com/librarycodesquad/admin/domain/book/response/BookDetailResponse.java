@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Getter
 public class BookDetailResponse {
@@ -40,7 +39,7 @@ public class BookDetailResponse {
         this.location = location;
     }
 
-    public static BookDetailResponse of(Book book, List<Rental> rentalList) {
+    public static BookDetailResponse of(Book book, Rental rental) {
         BookDetailResponseBuilder builder = BookDetailResponse.builder();
         builder.title(book.getTitle())
                 .description(book.getDescription())
@@ -53,11 +52,9 @@ public class BookDetailResponse {
                 .categoryTitle(book.getCategory().getTitle())
                 .location(book.getBookcase().getLocation())
                 .build();
-        if (rentalList.isEmpty()) {
-            return builder.borrower("없습니다").build();
+        if (book.isAvailable()) {
+            return builder.build();
         }
-        // 대여자는 1명이기 때문에 0을 사용하여 대여자를 가져옵니다.
-        builder.borrower(rentalList.get(0).getAccountName());
-        return builder.build();
+        return builder.borrower(rental.getAccountName()).build();
     }
 }
