@@ -40,13 +40,27 @@ public class PagingProperties {
 
     private int calculateStartPageOfPageGroup() {
         int startPageOfPageGroup = (currentPageGroup - 1) * pageGroupSize + 1;
-        if (startPageOfPageGroup > totalPages) { startPageOfPageGroup = totalPages; }
+        if (startPageOfPageGroup > totalPages) {
+            startPageOfPageGroup = totalPages;
+        }
+
+        if (totalPages == 0) {
+            startPageOfPageGroup = 1;
+        }
+
         return startPageOfPageGroup;
     }
 
     private int calculateEndPageOfPageGroup() {
         int endPageOfPageGroup = startPageOfPageGroup + pageGroupSize - 1;
-        if (endPageOfPageGroup > totalPages) { endPageOfPageGroup = totalPages; }
+        if (endPageOfPageGroup > totalPages) {
+            endPageOfPageGroup = totalPages;
+        }
+
+        if (totalPages == 0) {
+            endPageOfPageGroup = 1;
+        }
+
         return endPageOfPageGroup;
     }
 

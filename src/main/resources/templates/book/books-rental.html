@@ -38,8 +38,8 @@
             </div>
         </div>
         <ul class="sub-navigation">
-            <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/books}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">도서 목록</span></a></li>
-            <li class="sub-navigation__item"><a th:href="@{/admin/books/rental}"><i class="fas fa-book-reader sub-navigation__icon"></i> <span class="sub-navigation__title">대여중인 도서</span></a></li>
+            <li class="sub-navigation__item"><a th:href="@{/admin/books}"><i class="fas fa-list-ol sub-navigation__icon"></i> <span class="sub-navigation__title">도서 목록</span></a></li>
+            <li class="sub-navigation__item sub-navigation__item--clicked"><a th:href="@{/admin/books/rental}"><i class="fas fa-book-reader sub-navigation__icon"></i> <span class="sub-navigation__title">대여중인 도서</span></a></li>
             <li class="sub-navigation__item"><a th:href="@{/admin/books/open_api/search_form}"><i class="fas fa-pen-square sub-navigation__icon"></i> <span class="sub-navigation__title">도서 등록</span></a></li>
         </ul>
     </div>
@@ -59,8 +59,8 @@
                 <tr>
                     <th class="book-table__column-name">ID</th>
                     <th class="book-table__column-name">제목</th>
-                    <th class="book-table__column-name">카테고리</th>
-                    <th class="book-table__column-name">위치</th>
+                    <th class="book-table__column-name">닉네임</th>
+                    <th class="book-table__column-name">납기일</th>
                     <th class="book-table__column-name">ISBN</th>
                 </tr>
                 </thead>
@@ -68,8 +68,8 @@
                 <tr th:each="bookSummary : ${bookSummaries}">
                     <td th:text="${bookSummary.id}" class="book-table__row jsData jsDataId"></td>
                     <td th:text="${bookSummary.title}" class="book-table__row jsData"></td>
-                    <td th:text="${bookSummary.categoryTitle}" class="book-table__row jsData"></td>
-                    <td th:text="${bookSummary.location}" class="book-table__row jsData"></td>
+                    <td th:text="${bookSummary.borrower}" class="book-table__row jsData"></td>
+                    <td th:text="${bookSummary.returnDate}" class="book-table__row jsData"></td>
                     <td th:text="${bookSummary.isbn}" class="book-table__row jsData"></td>
                 </tr>
                 </tbody>
@@ -77,19 +77,19 @@
             <ol class="paging-numbers"
                 th:with="start=${pagingProperties.startPageOfPageGroup}, end=${pagingProperties.endPageOfPageGroup}">
                 <li class="paging-numbers__number">
-                    <a th:href="@{search(title=${searchTitle}, page=1)}"><i class="fas fa-angle-double-left"></i></a>
+                    <a th:href="@{books(page=1)}"><i class="fas fa-angle-double-left"></i></a>
                 </li>
                 <li class="paging-numbers__number">
-                    <a th:href="@{search(title=${searchTitle}, page=${pagingProperties.endPageOfPreviousPageGroup})}"><i class="fas fa-angle-left"></i></a>
+                    <a th:href="@{books(page=${pagingProperties.endPageOfPreviousPageGroup})}"><i class="fas fa-angle-left"></i></a>
                 </li>
                 <li class="paging-numbers__number" th:each="page : ${#numbers.sequence(start, end)}" th:classappend="${page == pagingProperties.currentPage} ? 'paging-numbers__number--clicked'">
-                    <a th:href="@{search(title=${searchTitle}, page=${page})}" th:text="${page}"></a>
+                    <a th:href="@{books(page=${page})}" th:text="${page}"></a>
                 </li>
                 <li class="paging-numbers__number">
-                    <a th:href="@{search(title=${searchTitle}, page=${pagingProperties.startPageOfNextPageGroup})}"><i class="fas fa-angle-right"></i></a>
+                    <a th:href="@{books(page=${pagingProperties.startPageOfNextPageGroup})}"><i class="fas fa-angle-right"></i></a>
                 </li>
                 <li class="paging-numbers__number">
-                    <a th:href="@{search(title=${searchTitle}, page=${pagingProperties.totalPages})}"><i class="fas fa-angle-double-right"></i></a>
+                    <a th:href="@{books(page=${pagingProperties.totalPages})}"><i class="fas fa-angle-double-right"></i></a>
                 </li>
             </ol>
         </div>

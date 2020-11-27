@@ -1,10 +1,11 @@
 package com.librarycodesquad.admin.controller;
 
-import com.librarycodesquad.admin.domain.book.response.BookSummaryResponse;
+import com.librarycodesquad.admin.domain.book.request.BookFormRequest;
 import com.librarycodesquad.admin.domain.book.request.BookMoveRequest;
 import com.librarycodesquad.admin.domain.book.response.BookDetailResponse;
+import com.librarycodesquad.admin.domain.book.response.BookSummaryResponse;
 import com.librarycodesquad.admin.domain.book.response.BookWithRequiredFormDataResponse;
-import com.librarycodesquad.admin.domain.book.request.BookFormRequest;
+import com.librarycodesquad.admin.domain.book.response.RentalBookAdminResponse;
 import com.librarycodesquad.admin.service.BookAdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,15 @@ public class BookAdminController {
         model.addAttribute("pagingProperties", books.getPagingProperties());
         return "book/books-all";
     }
+
+    @GetMapping("/rental")
+    public String findRentalBooks(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+        RentalBookAdminResponse rentalBooks = bookAdminService.findRentalBooks(page);
+        model.addAttribute("bookSummaries", rentalBooks.getRentalBookSummaries());
+        model.addAttribute("pagingProperties", rentalBooks.getPagingProperties());
+        return "book/books-rental";
+    }
+
 
     @GetMapping("/search")
     public String searchBooks(@RequestParam("title") String name,

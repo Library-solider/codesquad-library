@@ -1,6 +1,7 @@
 package com.librarycodesquad.admin.domain.book.response;
 
 import com.librarycodesquad.prod.domain.book.Book;
+import com.librarycodesquad.prod.domain.rental.Rental;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -16,7 +17,7 @@ public class BookDetailResponse {
     private final LocalDate publicationDate;
     private final String isbn;
     private final String imageUrl;
-    private final String available;
+    private final String borrower;
     private final int recommendCount;
     private final String categoryTitle;
     private final String location;
@@ -24,7 +25,7 @@ public class BookDetailResponse {
     @Builder
     private BookDetailResponse(String title, String description, String author, String publisher,
                                LocalDate publicationDate, String isbn, String imageUrl,
-                               boolean available, int recommendCount, String categoryTitle, String location) {
+                               String borrower, int recommendCount, String categoryTitle, String location) {
         this.title = title;
         this.description = description;
         this.author = author;
@@ -32,30 +33,28 @@ public class BookDetailResponse {
         this.publicationDate = publicationDate;
         this.isbn = isbn;
         this.imageUrl = imageUrl;
-        this.available = mapToAvailable(available);
+        this.borrower = borrower;
         this.recommendCount = recommendCount;
         this.categoryTitle = categoryTitle;
         this.location = location;
     }
 
-    public static BookDetailResponse from(Book book) {
-        return BookDetailResponse.builder()
-                                 .title(book.getTitle())
-                                 .description(book.getDescription())
-                                 .author(book.getAuthor())
-                                 .publisher(book.getPublisher())
-                                 .publicationDate(book.getPublicationDate())
-                                 .isbn(book.getIsbn())
-                                 .imageUrl(book.getImageUrl())
-                                 .available(book.isAvailable())
-                                 .recommendCount(book.getRecommendCount())
-                                 .categoryTitle(book.getCategory().getTitle())
-                                 .location(book.getBookcase().getLocation())
-                                 .build();
-    }
-
-    private String mapToAvailable(boolean available) {
-        if (available) { return "Y"; }
-        return "N";
+    public static BookDetailResponse of(Book book, Rental rental) {
+        BookDetailResponseBuilder builder = BookDetailResponse.builder();
+        builder.title(book.getTitle())
+                .description(book.getDescription())
+                .author(book.getAuthor())
+                .publisher(book.getPublisher())
+                .publicationDate(book.getPublicationDate())
+                .isbn(book.getIsbn())
+                .imageUrl(book.getImageUrl())
+                .recommendCount(book.getRecommendCount())
+                .categoryTitle(book.getCategory().getTitle())
+                .location(book.getBookcase().getLocation())
+                .build();
+        if (book.isAvailable()) {
+            return builder.build();
+        }
+        return builder.borrower(rental.getAccountName()).build();
     }
 }

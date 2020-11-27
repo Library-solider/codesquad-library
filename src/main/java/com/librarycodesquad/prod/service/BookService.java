@@ -13,7 +13,6 @@ import com.librarycodesquad.prod.domain.category.Category;
 import com.librarycodesquad.prod.domain.category.CategoryRepository;
 import com.librarycodesquad.prod.domain.rental.Rental;
 import com.librarycodesquad.prod.domain.rental.RentalRepository;
-import com.librarycodesquad.prod.domain.rental.firstclass.Rentals;
 import com.librarycodesquad.prod.global.error.exception.domain.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,7 +32,7 @@ import static com.librarycodesquad.prod.domain.book.BookVO.PAGE_SIZE;
 @Transactional(readOnly = true)
 public class BookService {
 
-    private final int MAX_RENTAL_SIZE = 3;
+    private final static int MAX_RENTAL_SIZE = 3;
     private final CategoryRepository categoryRepository;
     private final BookRepository bookRepository;
     private final AccountRepository accountRepository;
@@ -75,8 +74,7 @@ public class BookService {
     public BookDetailResponse getBooksByBookId(Long bookId) {
         Book findBook = bookRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
         Bookcase bookcase = findBook.getBookcase();
-        Rentals rentals = Rentals.from(findBook.getRentals());
-        Rental rental = rentals.findByBook(findBook);
+        Rental rental = rentalRepository.findByBookIdAndIsReturnedFalse(findBook.getId()).orElseGet(Rental::new);
 
         return BookDetailResponse.of(findBook, rental, bookcase);
     }

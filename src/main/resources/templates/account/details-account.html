@@ -69,12 +69,13 @@
                         <td class="account-details__contents" th:text="${accountDetails.email}"></td>
                     </tr>
                     <tr>
-                        <th class="account-details__title"><i class="fas fa-book-reader"></i>총 대여 수</th>
-                        <td class="account-details__contents">611</td>
-                    </tr>
-                    <tr>
                         <th class="account-details__title"><i class="fas fa-book"></i>대여중인 도서</th>
-                        <td class="account-details__contents">웹 개발을 위한 Git Github 시작하기</td>
+                        <td class="account-details__contents">
+                            <ul th:each="book : ${accountDetails.accountRentalBooks}">
+                                <li th:text="${book.title}"></li>
+                                <li th:text="${book.returnDate}"></li>
+                            </ul>
+                        </td>
                     </tr>
                 </table>
             </div>
