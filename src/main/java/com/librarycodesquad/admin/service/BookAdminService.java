@@ -28,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -66,7 +67,8 @@ public class BookAdminService {
 
     public RentalBookAdminResponse findRentalBooks(int page) {
         Page<Rental> rentals = rentalAdminRepository
-                .findAllByIsReturnedFalse(PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE));
+                .findAllByIsReturnedFalse(PageRequest.of(validatePageNumber(page), ADMIN_PAGE_SIZE,
+                        Sort.by("returnDate")));
         List<RentalBookSummary> rentalBooks = rentals.stream()
                                                        .map(RentalBookSummary::from)
                                                        .collect(Collectors.toList());
