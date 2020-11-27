@@ -13,4 +13,6 @@ public interface RentalAdminRepository extends JpaRepository<Rental, Long> {
     Page<Rental> findAllByIsReturnedFalse(Pageable pageable);
 
     Optional<Rental> findByBookIdAndIsReturnedFalse(Long bookId);
+
+    List<Rental> findAllByAccountIdAndIsReturnedFalse(Long accountId);
 }

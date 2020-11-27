@@ -3,12 +3,14 @@ package com.librarycodesquad.admin.service;
 import com.librarycodesquad.admin.common.ConstantsCoveringMagicNumber;
 import com.librarycodesquad.admin.common.PagingProperties;
 import com.librarycodesquad.admin.domain.account.AccountAdminRepository;
-import com.librarycodesquad.admin.domain.account.response.AccountDataResponse;
-import com.librarycodesquad.prod.global.error.exception.domain.AccountNotFoundException;
-import com.librarycodesquad.admin.domain.account.response.AccountDetailsResponse;
 import com.librarycodesquad.admin.domain.account.AccountSummary;
+import com.librarycodesquad.admin.domain.account.response.AccountDataResponse;
+import com.librarycodesquad.admin.domain.account.response.AccountDetailsResponse;
+import com.librarycodesquad.admin.domain.rental.RentalAdminRepository;
 import com.librarycodesquad.prod.domain.account.Account;
 import com.librarycodesquad.prod.domain.account.LibraryRole;
+import com.librarycodesquad.prod.domain.rental.Rental;
+import com.librarycodesquad.prod.global.error.exception.domain.AccountNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class AccountAdminService {
 
     private final AccountAdminRepository accountAdminRepository;
+    private final RentalAdminRepository rentalAdminRepository;
 
     public List<AccountSummary> findAllAccountsByRole(LibraryRole role) {
         List<Account> accounts = accountAdminRepository.findAllByLibraryRole(role);
@@ -50,7 +53,8 @@ public class AccountAdminService {
 
     public AccountDetailsResponse findAccountDetails(Long accountId) {
         Account account = accountAdminRepository.findById(accountId).orElseThrow(AccountNotFoundException::new);
-        return AccountDetailsResponse.from(account);
+        List<Rental> rentals = rentalAdminRepository.findAllByAccountIdAndIsReturnedFalse(accountId);
+        return AccountDetailsResponse.of(account, rentals);
     }
 
     public AccountDataResponse searchAccounts(int page, String name) {
