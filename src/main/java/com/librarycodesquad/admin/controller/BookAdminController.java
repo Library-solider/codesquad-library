@@ -1,10 +1,10 @@
 package com.librarycodesquad.admin.controller;
 
-import com.librarycodesquad.admin.domain.book.response.BookSummaryResponse;
+import com.librarycodesquad.admin.domain.book.request.BookFormRequest;
 import com.librarycodesquad.admin.domain.book.request.BookMoveRequest;
 import com.librarycodesquad.admin.domain.book.response.BookDetailResponse;
+import com.librarycodesquad.admin.domain.book.response.BookSummaryResponse;
 import com.librarycodesquad.admin.domain.book.response.BookWithRequiredFormDataResponse;
-import com.librarycodesquad.admin.domain.book.request.BookFormRequest;
 import com.librarycodesquad.admin.domain.book.response.RentalBookAdminResponse;
 import com.librarycodesquad.admin.service.BookAdminService;
 import lombok.RequiredArgsConstructor;

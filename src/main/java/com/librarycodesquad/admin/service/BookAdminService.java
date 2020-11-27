@@ -1,30 +1,29 @@
 package com.librarycodesquad.admin.service;
 
-import com.librarycodesquad.admin.common.ConstantsCoveringMagicNumber;
 import com.librarycodesquad.admin.common.PagingProperties;
+import com.librarycodesquad.admin.domain.book.BookAdminRepository;
+import com.librarycodesquad.admin.domain.book.BookData;
+import com.librarycodesquad.admin.domain.book.BookSummary;
+import com.librarycodesquad.admin.domain.book.RentalBookSummary;
 import com.librarycodesquad.admin.domain.book.request.BookFormRequest;
 import com.librarycodesquad.admin.domain.book.request.BookMoveRequest;
 import com.librarycodesquad.admin.domain.book.response.BookDetailResponse;
 import com.librarycodesquad.admin.domain.book.response.BookSummaryResponse;
 import com.librarycodesquad.admin.domain.book.response.BookWithRequiredFormDataResponse;
-import com.librarycodesquad.admin.domain.book.RentalBookSummary;
 import com.librarycodesquad.admin.domain.book.response.RentalBookAdminResponse;
 import com.librarycodesquad.admin.domain.bookcase.BookcaseAdminRepository;
+import com.librarycodesquad.admin.domain.bookopenapi.BookDataFromOpenApi;
 import com.librarycodesquad.admin.domain.category.CategoryAdminRepository;
 import com.librarycodesquad.admin.domain.rental.RentalAdminRepository;
 import com.librarycodesquad.prod.domain.book.Book;
+import com.librarycodesquad.prod.domain.bookcase.Bookcase;
 import com.librarycodesquad.prod.domain.category.Category;
 import com.librarycodesquad.prod.domain.rental.Rental;
 import com.librarycodesquad.prod.global.config.RestTemplateConfig;
 import com.librarycodesquad.prod.global.config.properties.InterparkProperties;
 import com.librarycodesquad.prod.global.error.exception.domain.BookNotFoundException;
-import com.librarycodesquad.prod.global.error.exception.domain.CategoryNotFoundException;
-import com.librarycodesquad.admin.domain.book.BookAdminRepository;
-import com.librarycodesquad.admin.domain.book.BookSummary;
-import com.librarycodesquad.admin.domain.book.BookData;
-import com.librarycodesquad.admin.domain.bookopenapi.BookDataFromOpenApi;
-import com.librarycodesquad.prod.domain.bookcase.Bookcase;
 import com.librarycodesquad.prod.global.error.exception.domain.BookcaseNotFoundException;
+import com.librarycodesquad.prod.global.error.exception.domain.CategoryNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -111,7 +110,8 @@ public class BookAdminService {
 
     public BookDetailResponse findBookDetail(Long bookId) {
         Book book = bookAdminRepository.findById(bookId).orElseThrow(BookNotFoundException::new);
-        return BookDetailResponse.from(book);
+        List<Rental> rentals = rentalAdminRepository.findAllByBookIdAndIsReturnedFalse(bookId);
+        return BookDetailResponse.of(book, rentals);
     }
 
     @Transactional
