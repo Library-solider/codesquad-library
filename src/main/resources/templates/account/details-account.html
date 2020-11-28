@@ -71,9 +71,13 @@
                     <tr>
                         <th class="account-details__title"><i class="fas fa-book"></i>대여중인 도서</th>
                         <td class="account-details__contents">
-                            <ul th:each="book : ${accountDetails.accountRentalBooks}">
-                                <li th:text="${book.title}"></li>
-                                <li th:text="${book.returnDate}"></li>
+                            <ul>
+                                <li th:each="book : ${accountDetails.accountRentalBooks}">
+                                    <ul class="rental-books">
+                                        <li class="rental-books__title" th:text="${book.title}"></li>
+                                        <li class="rental-books__return"><span class="return-date" th:text="${book.returnDate}"></span></li>
+                                    </ul>
+                                </li>
                             </ul>
                         </td>
                     </tr>
