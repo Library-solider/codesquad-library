@@ -77,20 +77,24 @@
     margin-bottom: 35px;
 }
 
-.rental-books__title {
-    font-size: 12px;
+.rental-books .rental-books__title {
+    font-size: 13px;
     margin-bottom: 7px;
     font-weight: 500;
     text-align: left;
     line-height: 20px;
 }
 
-.rental-books__return {
+.rental-books .rental-books__return {
     font-size: 12px;
     font-weight: 600;
     opacity: 1;
     color: tomato;
     text-align: left;
+}
+
+.rental-books .rental-books__return i {
+    color: #171D23;
 }
 
 /* Return Form */

@@ -75,7 +75,7 @@
                                 <li th:each="book : ${accountDetails.accountRentalBooks}">
                                     <ul class="rental-books">
                                         <li class="rental-books__title" th:text="${book.title}"></li>
-                                        <li class="rental-books__return"><span class="return-date" th:text="${book.returnDate}"></span></li>
+                                        <li class="rental-books__return"><i class="far fa-calendar-check"></i> <span class="return-date" th:text="${book.returnDate}"></span></li>
                                     </ul>
                                 </li>
                             </ul>
