@@ -17,15 +17,16 @@ public class BookDetailResponse {
     private final LocalDate publicationDate;
     private final String isbn;
     private final String imageUrl;
-    private final String borrower;
+    private final Long borrowerId;
+    private final String borrowerName;
     private final int recommendCount;
     private final String categoryTitle;
     private final String location;
 
     @Builder
     private BookDetailResponse(String title, String description, String author, String publisher,
-                               LocalDate publicationDate, String isbn, String imageUrl,
-                               String borrower, int recommendCount, String categoryTitle, String location) {
+                               LocalDate publicationDate, String isbn, String imageUrl, Long borrowerId,
+                               String borrowerName, int recommendCount, String categoryTitle, String location) {
         this.title = title;
         this.description = description;
         this.author = author;
@@ -33,7 +34,8 @@ public class BookDetailResponse {
         this.publicationDate = publicationDate;
         this.isbn = isbn;
         this.imageUrl = imageUrl;
-        this.borrower = borrower;
+        this.borrowerId = borrowerId;
+        this.borrowerName = borrowerName;
         this.recommendCount = recommendCount;
         this.categoryTitle = categoryTitle;
         this.location = location;
@@ -55,6 +57,8 @@ public class BookDetailResponse {
         if (book.isAvailable()) {
             return builder.build();
         }
-        return builder.borrower(rental.getAccountName()).build();
+        return builder.borrowerId(rental.findAccountId())
+                      .borrowerName(rental.getAccountName())
+                      .build();
     }
 }
