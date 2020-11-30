@@ -74,7 +74,7 @@
                             <ul>
                                 <li th:each="book : ${accountDetails.accountRentalBooks}">
                                     <ul class="rental-books">
-                                        <li class="rental-books__title" th:text="${book.title}"></li>
+                                        <li class="rental-books__title"><a th:href="@{/admin/books/{bookId}(bookId = ${book.id})}" th:text="${book.title}"></a></li>
                                         <li class="rental-books__return"><i class="far fa-calendar-check"></i> <span class="return-date" th:text="${book.returnDate}"></span></li>
                                     </ul>
                                 </li>
