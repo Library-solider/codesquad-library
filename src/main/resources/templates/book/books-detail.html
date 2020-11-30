@@ -75,7 +75,7 @@
                                 </tr>
                                 <tr>
                                     <th class="book-detail__title">대여자</th>
-                                    <td class="book-detail__contents" th:text="${book.borrower}"></td>
+                                    <td class="book-detail__contents"><a th:href="@{/admin/users/{accountId}(accountId = ${book.borrowerId})}" th:text="${book.borrowerName}"></a></td>
                                 </tr>
                                 <tr>
                                     <th class="book-detail__title">추천수</th>
