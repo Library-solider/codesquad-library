@@ -72,7 +72,7 @@ spring:
 
 interpark:
   url: http://book.interpark.com/api/search.api
-  key: ENC(lUMKI+3wRsN1uviJdT9s4oZWH58eSHVViAkXOrCK0pApnolu4Z4GCFHAsd0z+5uUw71p3i/6xPRORAb+hj+VpEraz65H4/PSlP7AiwptG10=)
+  key: ${INTERPARK_KEY}
   output: json
   queryType: isbn
 
