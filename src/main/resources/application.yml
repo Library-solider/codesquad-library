@@ -58,9 +58,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: ENC(8pvdAxQRgIuKhtBrCfJVzn8DSb1UelH14Lrej4lzH45axRUnbph6unUK8O96oSANhxEwd0vgXDhGKZHpLKG9gMYbeDV4r/VgfFjHlL6r69vu4j19H+SX6mUp9rokcTF7+H50DxsFJhU=)
-    username: ENC(71gUI9lQ/y/BFvIU5GQsqQ==)
-    password: ENC(WBG3Dt2Mu/bxWIoOQqXW3A/gMD33Dw5d)
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
     open-in-view: false
