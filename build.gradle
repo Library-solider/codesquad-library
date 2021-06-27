@@ -29,13 +29,12 @@ dependencies {
 	// spring configuration-property
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-	// jasypt -> will delete
-	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.2'
+	// db
+	runtimeOnly 'mysql:mysql-connector-java'
 
 	// jwt
 	implementation  group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	compileOnly 'org.projectlombok:lombok'
-	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
 
