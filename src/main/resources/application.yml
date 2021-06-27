@@ -8,7 +8,7 @@ spring:
     active: local
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/library?useUnicode=yes&serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3309/library?useUnicode=yes&serverTimezone=UTC&characterEncoding=UTF-8
     username: admin
     password: tiger
   jpa:
