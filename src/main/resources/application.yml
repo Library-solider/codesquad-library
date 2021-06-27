@@ -1,11 +1,13 @@
 spring:
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile: local
 
 ---
 spring:
-  profiles:
-    active: local
+  config:
+    activate:
+      on-profile: local
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3309/library?useUnicode=yes&serverTimezone=UTC&characterEncoding=UTF-8
@@ -45,8 +47,9 @@ app:
 
 ---
 spring:
-  profiles:
-    active: prod
+  config:
+    activate:
+      on-profile: prod
   security:
     oauth2:
       client:
