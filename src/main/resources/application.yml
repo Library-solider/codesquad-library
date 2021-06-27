@@ -61,9 +61,9 @@ spring:
 
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: ${MYSQL_ADDRESS}
-    username: ${MYSQL_USERNAME}
-    password: ${MYSQL_PASSWORD}
+    url: ${LIBRARY_URL}
+    username: ${LIBRARY_USERNAME}
+    password: ${LIBRARY_PASSWORD}
   jpa:
     database-platform: org.hibernate.dialect.MySQL57InnoDBDialect
     open-in-view: false
